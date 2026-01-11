@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claim Control Center - Claim Navigator</title>
+  <link rel="stylesheet" href="/app/assets/css/resource-center.css">
+  
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+</head>
+<body>
+  <div class="control-center-container">
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+      <div class="top-nav-links">
+        <span style="color: #ffffff; font-weight: 600;">Claim Control Center</span>
+      </div>
+      <div class="top-nav-links">
+        <a href="/app/resource-center.html" class="top-nav-link">Reference Library</a>
+        <a href="/auth/login.html" class="top-nav-link" onclick="handleLogout(event)">Logout</a>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="protocol-container">
+      <!-- Progress Indicator -->
+      <div class="protocol-progress">
+        <div class="progress-header">
+          <div class="progress-step-label" id="step-label">Step 1 of 7</div>
+          <div class="progress-step-count" id="step-count">0% Complete</div>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="progress-bar" style="width: 14%"></div>
+        </div>
+        <div id="step-title-progress" style="color: #ffffff; font-weight: 600; margin-top: 8px;">Understanding Your Policy</div>
+        <div class="progress-consequence" id="consequence-text">⚠️ Skipping weakens your claim foundation</div>
+      </div>
+
+      <!-- Step Content Container -->
+      <div id="step-content-container">
+        <!-- Dynamic content loaded here -->
+      </div>
+    </div>
+  </div>
+
+  <script src="/app/assets/js/supabase-client.js"></script>
+  <script src="/app/assets/js/auth-session.js"></script>
+  <script src="/app/assets/js/toasts.js"></script>
+  <script src="/app/assets/js/loading.js"></script>
+  <script src="/app/assets/js/claim-success-protocol.js"></script>
+  <script>
+    async function handleLogout(e) {
+      e.preventDefault();
+      try {
+        const supabase = await window.getSupabaseClient();
+        await supabase.auth.signOut();
+        window.location.href = '/auth/login.html';
+      } catch (error) {
+        console.error('Logout error:', error);
+      }
+    }
+
+    // Initialize on load
+    (async () => {
+      // Require authentication
+      const isAuthenticated = await window.CNAuth?.requireAuth(true);
+      if (!isAuthenticated) return;
+
+      // Initialize protocol
+      if (window.ClaimSuccessProtocol) {
+        window.ClaimSuccessProtocol.init();
+      }
+    })();
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+

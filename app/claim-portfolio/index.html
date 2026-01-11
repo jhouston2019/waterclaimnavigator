@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claim Portfolio - Claim Navigator</title>
+  <link rel="stylesheet" href="/app/assets/css/resource-center.css">
+  
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+</head>
+<body>
+    <div id="portfolio-container">
+    <div id="portfolio-content-wrapper">
+    <h1>Claim Summary / Portfolio</h1>
+    <p>Generate a full insurer-ready PDF containing your claim details, evidence, documents, and compliance status.</p>
+    
+    <p style="font-size:12px; color:#9ca3af; margin-top:10px;">
+      This portfolio is a structured summary of your claim activity and documentation.
+      It is not legal advice and does not guarantee any claim outcome. Insurers may request additional information.
+    </p>
+
+    <button id="generate-portfolio-btn">Generate Claim Portfolio PDF</button>
+
+    <div id="portfolio-preview" style="margin-top:40px; display: none;"></div>
+    </div> <!-- End portfolio-content-wrapper -->
+  </div>
+
+  <script src="/app/assets/js/supabase-client.js"></script>
+  <script src="/app/assets/js/auth-session.js"></script>
+  <script src="/app/assets/js/paywall-enforcement.js"></script>
+  <script src="/app/assets/js/error-logging.js"></script>
+  <script src="/app/assets/js/toasts.js"></script>
+  <script src="/app/assets/js/loading.js"></script>
+  <script src="/app/assets/js/compliance-banner.js"></script>
+  <script src="/app/assets/js/claim-profile.js"></script>
+  <script src="/app/assets/js/document-watermark.js"></script>
+  <script src="/app/assets/js/claim-health-v2.js"></script>
+  <script src="/app/assets/js/claim-timeline.js"></script>
+  <script>
+    // Require authentication and check paywall
+    (async () => {
+      const isAuthenticated = await window.CNAuth?.requireAuth(true);
+      if (!isAuthenticated) return;
+      await window.checkPaywall?.();
+    })();
+  </script>
+
+  <script>
+    // Generate AI Claim Narrative
+    async function generateNarrative(profile) {
+      const description = profile.damage?.description || "";
+      const rooms = profile.damage?.roomsAffected || "";
+      const type = profile.claim?.claimType || "property loss";
+      const state = profile.property?.state || profile.claimant?.state || "";
+
+      // Basic client-side generation using concise prompt
+      return `
+        This claim involves a ${type} event affecting ${rooms || "multiple areas"}. 
+        The loss occurred in ${state || "the insured location"}, with the following description provided by the insured:
+
+        "${description || "No detailed description provided."}"
+
+        The claimant has taken measurable steps to document, organize, and respond to the insurer's handling of the claim.
+      `;
+    }
+
+    // Build Missing Items Checklist
+    function buildMissingItems(profile, health) {
+      const missing = [];
+
+      if (!profile.damage?.description) missing.push("Incident description");
+      if (!profile.damage?.roomsAffected) missing.push("Rooms/areas affected");
+      if (!profile.claim?.claimNumber) missing.push("Claim number");
+      if (!profile.claim?.carrier) missing.push("Carrier name");
+      if (parseInt(localStorage.getItem("cn_evidence_photo_count") || "0", 10) < 3) missing.push("Additional evidence photos");
+      if (parseInt(localStorage.getItem("cn_docs_generated") || "0", 10) < 1) missing.push("At least one claim document");
+
+      return missing.length > 0 ? missing.map(item => `<li>${item}</li>`).join("") : "<li>All required items are present.</li>";
+    }
+
+    document.getElementById("generate-portfolio-btn").onclick = async () => {
+      const btn = document.getElementById("generate-portfolio-btn");
+      const originalText = btn.textContent;
+      
+      try {
+        btn.disabled = true;
+        btn.textContent = "Generating...";
+        
+        if (window.CNLoading) {
+          window.CNLoading.show("Generating portfolio...");
+        }
+      const profile = CNClaimProfile.getClaimProfile();
+      const health = CNHealth.compute();
+
+      const photoCount = parseInt(localStorage.getItem("cn_evidence_photo_count") || "0", 10);
+      const docCount = parseInt(localStorage.getItem("cn_docs_generated") || "0", 10);
+
+      const healthScore = health.score ?? 0;
+
+      const narrative = await (async function generateNarrative(profile) {
+        const description = profile.damage?.description || "";
+        const rooms = profile.damage?.roomsAffected || "";
+        const type = profile.claim?.claimType || "property loss claim";
+        const state = profile.property?.state || profile.claimant?.state || "";
+
+        return `
+          This claim involves a ${type} event affecting ${rooms || "multiple areas of the property"}.
+          The loss occurred in ${state || "the insured's jurisdiction"}, with the following description provided by the insured:
+
+          "${description || "Claim description not yet provided."}"
+
+          The claimant has used Claim Navigator to document damage, organize evidence,
+          and prepare formal correspondence to support fair adjustment of this claim.
+        `;
+      })(profile);
+
+      const missingItems = (function buildMissingItems(profile, health) {
+        const missing = [];
+
+        if (!profile.damage?.description) missing.push("Incident description");
+        if (!profile.damage?.roomsAffected) missing.push("Rooms/areas affected");
+        if (!profile.claim?.claimNumber) missing.push("Claim number");
+        if (!profile.claim?.carrier) missing.push("Carrier name");
+        if (photoCount < 3) missing.push("Additional evidence photos");
+        if (docCount < 1) missing.push("At least one formal claim document");
+
+        return missing;
+      })(profile, health);
+
+      const timeline = JSON.parse(localStorage.getItem("cn_claim_timeline") || "[]");
+      const timelineHtml = timeline
+        .map(t => `<li>${new Date(t.ts).toLocaleString()} — ${String(t.action || "").replace(/_/g, " ")}</li>`)
+        .join("");
+
+      const docs = JSON.parse(localStorage.getItem("cn_document_list") || "[]");
+      const docListHtml = docs
+        .map(d => `<li>${new Date(d.timestamp).toLocaleDateString()} — ${d.title || "Claim Document"}</li>`)
+        .join("");
+
+      const evList = JSON.parse(localStorage.getItem("cn_evidence_list") || "[]");
+      const evidenceHtml = evList
+        .map(e => `
+          <li>
+            ${new Date(e.timestamp).toLocaleDateString()} — ${e.category || "Evidence"}${e.url ? ` (file)` : ""}
+          </li>
+        `)
+        .join("");
+
+      const subs = health.subscores || {};
+      const subsHtml = `
+        <ul>
+          <li><strong>Documentation:</strong> ${subs.documentation ?? "–"}</li>
+          <li><strong>Evidence:</strong> ${subs.evidence ?? "–"}</li>
+          <li><strong>Compliance:</strong> ${subs.compliance ?? "–"}</li>
+          <li><strong>Financials:</strong> ${subs.financials ?? "–"}</li>
+          <li><strong>Negotiation:</strong> ${subs.negotiation ?? "–"}</li>
+          <li><strong>Completeness:</strong> ${subs.completeness ?? "–"}</li>
+        </ul>
+      `;
+
+      const claimantName = profile.claimant?.name || "Claimant";
+      const addr = profile.claimant?.address || "";
+      const city = profile.claimant?.city || "";
+      const state = profile.claimant?.state || "";
+      const zip = profile.claimant?.zip || "";
+
+      const claimType = profile.claim?.claimType || "Property Loss";
+      const carrier = profile.claim?.carrier || "Carrier Not Set";
+      const claimNumber = profile.claim?.claimNumber || "N/A";
+      const lossDate = profile.claim?.lossDate || "N/A";
+
+      // ============ EXECUTIVE COVER PAGE ============
+
+      const coverHtml = `
+        <div class="cn-cover-wrapper">
+          <div class="cn-cover-bar"></div>
+          <div class="cn-cover-main">
+            <div class="cn-cover-title">Claim Navigator</div>
+            <div class="cn-cover-subtitle">Claim Summary Portfolio</div>
+            <div class="cn-cover-tagline">
+              Professional claim documentation, evidence, and correspondence prepared with Claim Navigator.
+            </div>
+
+            <div class="cn-cover-meta-grid">
+              <div class="cn-cover-meta-row">
+                <span class="cn-cover-meta-label">Prepared For:</span> ${claimantName}
+              </div>
+              <div class="cn-cover-meta-row">
+                <span class="cn-cover-meta-label">Claim Type:</span> ${claimType}
+              </div>
+              <div class="cn-cover-meta-row">
+                <span class="cn-cover-meta-label">Carrier:</span> ${carrier}
+              </div>
+              <div class="cn-cover-meta-row">
+                <span class="cn-cover-meta-label">Claim #:</span> ${claimNumber}
+              </div>
+              <div class="cn-cover-meta-row">
+                <span class="cn-cover-meta-label">Date of Loss:</span> ${lossDate}
+              </div>
+              <div class="cn-cover-meta-row">
+                <span class="cn-cover-meta-label">Prepared On:</span> ${new Date().toLocaleDateString()}
+              </div>
+              <div class="cn-cover-meta-row">
+                <span class="cn-cover-meta-label">Property:</span> ${addr || ""}${addr ? ", " : ""}${city}${city && state ? ", " : ""}${state} ${zip}
+              </div>
+              <div class="cn-cover-meta-row">
+                <span class="cn-cover-meta-label">Evidence Items:</span> ${photoCount}
+              </div>
+            </div>
+
+            <div class="cn-cover-footer">
+              This portfolio summarizes key claim details, documentation activity, and evidence organization
+              performed by the policyholder using Claim Navigator. It is designed to assist adjusters,
+              examiners, and supervisors in understanding the current state of the claim.
+            </div>
+          </div>
+
+          <div class="cn-cover-badge">
+            <div class="cn-cover-badge-label">Claim Health Score</div>
+            <div class="cn-cover-badge-score">${healthScore}</div>
+            <div class="cn-cover-badge-sub">Out of 100</div>
+          </div>
+        </div>
+      `;
+
+      // ============ REMAINDER OF PORTFOLIO ============
+
+      const html = `
+        ${coverHtml}
+
+        <h2>Claimant Information</h2>
+        <p><strong>${claimantName}</strong><br>
+        ${addr}<br>
+        ${city}${city && state ? ", " : ""}${state} ${zip}</p>
+
+        <h2>Claim Overview</h2>
+        <p><strong>Claim Type:</strong> ${claimType}</p>
+        <p><strong>Carrier:</strong> ${carrier}</p>
+        <p><strong>Claim #:</strong> ${claimNumber}</p>
+        <p><strong>Date of Loss:</strong> ${lossDate}</p>
+        <p><strong>Status:</strong> ${profile.status?.claimStatus || "Not specified"}</p>
+
+        <div class="page-break"></div>
+
+        <h2>Claim Narrative</h2>
+        <p>${narrative}</p>
+
+        <h2>Claim Health</h2>
+        <p><strong>Overall Score:</strong> ${healthScore}</p>
+        ${subsHtml}
+        <ul>${health.flags.map(f => `<li>${f}</li>`).join("")}</ul>
+
+        <h2>Missing Items Checklist</h2>
+        <ul>${missingItems.map(item => `<li>${item}</li>`).join("")}</ul>
+
+        <div class="page-break"></div>
+
+        <h2>Evidence Summary</h2>
+        <p><strong>Total Evidence Items:</strong> ${photoCount}</p>
+        <ul>${evidenceHtml}</ul>
+
+        <h2>Document Index</h2>
+        <p><strong>Total Documents Generated:</strong> ${docCount}</p>
+        <ul>${docListHtml}</ul>
+
+        <div class="page-break"></div>
+
+        <h2>Claim Timeline</h2>
+        <ul>${timelineHtml}</ul>
+      `;
+
+      const finalHtml = buildDocShell(html);
+      document.getElementById("portfolio-preview").innerHTML = finalHtml;
+      document.getElementById("portfolio-preview").style.display = "block";
+
+      // Scroll to preview
+      document.getElementById("portfolio-preview").scrollIntoView({ behavior: "smooth", block: "start" });
+
+      // Let user print/save as PDF
+      setTimeout(() => {
+        window.print();
+      }, 500);
+      
+      if (window.CNToast) {
+        window.CNToast.success("Portfolio generated successfully!");
+      }
+      } catch (error) {
+        console.error("CNError (Portfolio):", error);
+        if (window.CNModalError) {
+          window.CNModalError.show("Portfolio Generation Error", "The portfolio could not be generated. Please try again.", error.toString());
+        } else if (window.CNToast) {
+          window.CNToast.error("Failed to generate portfolio. Please try again.");
+        }
+      } finally {
+        if (window.CNLoading) {
+          window.CNLoading.hide();
+        }
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = originalText;
+        }
+      }
+    };
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,81 @@
+[build]
+  node_version = "18.20.2"
+  publish = "."
+  functions = "netlify/functions"
+
+[functions]
+  directory = "netlify/functions"
+  included_files = ["netlify/functions/data/**"]
+
+[[plugins]]
+package = "@netlify/plugin-functions-install-core"
+
+[[headers]]
+  for = "/.netlify/functions/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Headers = "Content-Type, Authorization, X-Admin-Email, x-admin-email"
+    Access-Control-Allow-Methods = "GET, POST, OPTIONS"
+    Access-Control-Allow-Credentials = "true"
+
+[[redirects]]
+  from = "/admin/console/check-admin"
+  to = "/.netlify/functions/admin-check-admin"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/generate-full-monitoring-data"
+  to = "/.netlify/functions/generate-full-monitoring-data"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/generate-corrected-monitoring-data"
+  to = "/.netlify/functions/generate-corrected-monitoring-data"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/.netlify/functions/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+  force = true
+
+# keep functions & assets from SPA rewrite
+[[redirects]]
+  from = "/app/assets/*"
+  to = "/app/assets/:splat"
+  status = 200
+
+# Resource Center routing
+[[redirects]]
+  from = "/app/resource-center/*"
+  to = "/app/resource-center/:splat"
+  status = 200
+
+# Document generator routing
+[[redirects]]
+  from = "/app/resource-center/document-generator/generate.html"
+  to = "/app/resource-center/document-generator/generate.html"
+  status = 200
+
+# Advisory routing - specific paths first
+[[redirects]]
+  from = "/app/response-center/situational-advisory/*"
+  to = "/app/response-center/situational-advisory/index.html"
+  status = 200
+
+# API routing
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/gateway"
+  status = 200
+
+
+
+# optional SPA fallback for /app (place last)
+[[redirects]]
+  from = "/app/*"
+  to = "/app/index.html"
+  status = 200

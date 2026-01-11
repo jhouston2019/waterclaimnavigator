@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Negotiation Scripts</title>
+  <link rel="stylesheet" href="/app/assets/css/style.css">
+  <link rel="stylesheet" href="/app/css/design-system.css">
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+  <script src="/app/assets/js/navigation-template.js"></script>
+</head>
+<body class="tool-page">
+  <script>createNavigationBar('Negotiation Tools');</script>
+
+  <section class="hero-section hero-navy">
+    <div class="hero-content">
+      <h1>Negotiation Scripts</h1>
+      <p class="subtitle">Clear guidance for this step of your claim.</p>
+    </div>
+  </section>
+
+  <main>
+    <section class="page-section">
+      <div class="frosted-card">
+        <h2>How to use these scripts</h2>
+        <p>Use the prepared language below to handle first calls, follow-ups, counter-offers, and escalations. Copy the text, customize specifics, and log every outreach in your Claim Journal.</p>
+        <p><a class="button secondary" href="/app/claim-journal.html">Open Claim Journal</a></p>
+      </div>
+    </section>
+
+    <section class="page-section">
+      <div class="grid-3">
+        <div class="frosted-card">
+          <h3>First Call Script</h3>
+          <p>“Hello, I'm calling to report a [Claim Type] loss filed on [Date of Loss]. I have documentation and photos ready. I'd like to schedule an inspection. What's the next step?”</p>
+          <a class="button primary copy-btn" data-script="Hello, I'm calling to report a [Claim Type] loss filed on [Date of Loss]. I have documentation and photos ready. I'd like to schedule an inspection. What's the next step?">Copy Script</a>
+        </div>
+        <div class="frosted-card">
+          <h3>Follow-Up Script</h3>
+          <p>“I'm following up on my claim filed on [Date of Loss]. I have additional documentation and would like to discuss the next steps. When can I expect an update?”</p>
+          <a class="button primary copy-btn" data-script="I'm following up on my claim filed on [Date of Loss]. I have additional documentation and would like to discuss the next steps. When can I expect an update?">Copy Script</a>
+        </div>
+        <div class="frosted-card">
+          <h3>Lowball Offer Response</h3>
+          <p>“I appreciate your offer, but based on my documentation and comparable claims, the settlement should reflect the full extent of damages totaling [Evidence]. Can we discuss revising this?”</p>
+          <a class="button primary copy-btn" data-script="I appreciate your offer, but based on my documentation and comparable claims, the settlement should reflect the full extent of damages totaling [Evidence]. Can we discuss revising this?">Copy Script</a>
+        </div>
+        <div class="frosted-card">
+          <h3>Counter-Offer Script</h3>
+          <p>“I've reviewed your offer of $[X]. Based on my contractor's estimate of $[Y], I'm prepared to accept that amount to fairly settle this claim.”</p>
+          <a class="button primary copy-btn" data-script="I've reviewed your offer of $[X]. Based on my contractor's estimate of $[Y], I'm prepared to accept that amount to fairly settle this claim.">Copy Script</a>
+        </div>
+        <div class="frosted-card">
+          <h3>Policy Copy Request</h3>
+          <p>“Please provide a complete copy of my policy, all endorsements, and the applicable declarations page. I'd also like a written explanation of coverage limits and exclusions.”</p>
+          <a class="button primary copy-btn" data-script="Please provide a complete copy of my policy, all endorsements, and the applicable declarations page. I'd also like a written explanation of coverage limits and exclusions.">Copy Script</a>
+        </div>
+        <div class="frosted-card">
+          <h3>Supervisor Escalation</h3>
+          <p>“I'd like to speak with a supervisor about delays and unresolved issues in my claim. A higher-level review seems necessary at this point.”</p>
+          <a class="button primary copy-btn" data-script="I'd like to speak with a supervisor about delays and unresolved issues in my claim. A higher-level review seems necessary at this point.">Copy Script</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section">
+      <div class="grid-2">
+        <div class="frosted-card">
+          <h2>Advanced negotiation tactics</h2>
+          <ul>
+            <li>Anchor high and use evidence first.</li>
+            <li>Set polite deadlines to maintain momentum.</li>
+            <li>Reference state timelines and policy obligations.</li>
+            <li>Document every promise in writing.</li>
+          </ul>
+        </div>
+        <div class="frosted-card">
+          <h2>Pair with these tools</h2>
+          <ul>
+            <li><a href="/app/evidence-organizer.html">Evidence Organizer</a> for exhibits.</li>
+            <li><a href="/app/claim-playbook.html">Claim Playbook</a> for escalation language.</li>
+            <li><a href="/app/deadlines.html">Deadlines Tool</a> for response clocks.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const buttons = document.querySelectorAll('.copy-btn');
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const text = btn.getAttribute('data-script');
+        try {
+          await navigator.clipboard.writeText(text);
+          const original = btn.textContent;
+          btn.textContent = 'Copied!';
+          setTimeout(() => {
+            btn.textContent = original;
+          }, 1200);
+        } catch (err) {
+          alert('Unable to copy. Please copy manually.');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+
+

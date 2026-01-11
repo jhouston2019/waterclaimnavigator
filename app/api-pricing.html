@@ -1,0 +1,93 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>API & OEM Pricing • Claim Navigator</title>
+    <link rel="stylesheet" href="/app/assets/css/style.css">
+    <link rel="stylesheet" href="/app/assets/css/design-system.css">
+    <link rel="stylesheet" href="/app/assets/css/resource-center.css">
+
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+</head>
+<body class="resource-center api-pricing-page">
+<header class="header">
+  <div class="bar container">
+    <div class="brand"><div class="logo"></div><div>Claim Navigation AI</div></div>
+    <nav class="nav">
+      <a href="/app/index.html">Home</a>
+      <span>></span>
+      <a href="/app/api-marketplace.html">API Marketplace</a>
+      <span>></span>
+      <span>Pricing</span>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div class="pricing-container">
+    <div class="pricing-hero">
+      <h1>API & OEM Pricing</h1>
+      <p class="sub">Usage-based and OEM plans for firms, TPAs, SaaS, and carriers.</p>
+    </div>
+
+    <div class="pricing-grid">
+      <div class="plan">
+        <h2>Developer</h2>
+        <p class="price">$0</p>
+        <ul>
+          <li>1 API key</li>
+          <li>Up to 1,000 calls / month</li>
+          <li>Non-production use</li>
+          <li>Community support</li>
+          <li>All core APIs</li>
+        </ul>
+        <button onclick="location.href='/app/developer.html'" class="btn-outline">Start Free</button>
+      </div>
+
+      <div class="plan highlight">
+        <h2>Production</h2>
+        <p class="price">$499 <span>/ month</span></p>
+        <ul>
+          <li>Up to 100,000 calls / month</li>
+          <li>Email support</li>
+          <li>Roadmap, Compliance, AI Agent APIs</li>
+          <li>Evidence Organizer API</li>
+          <li>Claim Health Score API</li>
+          <li>99.9% uptime SLA</li>
+        </ul>
+        <button onclick="location.href='/app/enterprise-contact.html'" class="btn-primary">Talk to Sales</button>
+      </div>
+
+      <div class="plan">
+        <h2>OEM / White-Label</h2>
+        <p class="price">Custom</p>
+        <ul>
+          <li>Unlimited API calls</li>
+          <li>Brandable UI components</li>
+          <li>Dedicated environment</li>
+          <li>Priority support</li>
+          <li>Custom integrations</li>
+          <li>Revenue share options</li>
+        </ul>
+        <button onclick="location.href='/app/enterprise-contact.html'" class="btn-outline">Request Quote</button>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: rgba(255, 255, 255, 0.05); border-radius: 12px;">
+      <h3 style="color: #ffffff !important; margin: 0 0 1rem 0;">Need Enterprise Pricing?</h3>
+      <p style="color: #dbeafe !important; margin: 0 0 1.5rem 0;">Contact us for volume discounts, custom SLAs, and dedicated infrastructure.</p>
+      <a href="/app/enterprise-contact.html" class="btn-primary">Contact Enterprise Sales</a>
+    </div>
+  </div>
+</main>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  if (window.CNAnalytics) {
+    CNAnalytics.log("api_pricing_viewed");
+  }
+});
+</script>
+
+
+
+</body></html>
+

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Success - Claim Navigator</title>
+  
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: #f3f4f6;
+      padding: 2rem;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #10b981;
+      margin-bottom: 1rem;
+    }
+    h2 {
+      color: #1e40af;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+    button {
+      background: #1e40af;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin: 0.5rem 0;
+    }
+    button:hover {
+      background: #3b82f6;
+    }
+    button:disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+    }
+    textarea {
+      width: 100%;
+      min-height: 200px;
+      padding: 1rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      font-family: inherit;
+      margin: 1rem 0;
+      resize: vertical;
+    }
+    pre {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      margin: 1rem 0;
+      white-space: pre-wrap;
+      font-family: inherit;
+    }
+    .user-info {
+      background: #f0f9ff;
+      border: 1px solid #0ea5e9;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+    .credit-counter {
+      background: #fef3c7;
+      border: 1px solid #f59e0b;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      margin: 1rem 0;
+      text-align: center;
+    }
+    .error {
+      background: #fee;
+      color: #dc2626;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #dc2626;
+      margin: 1rem 0;
+    }
+    .success {
+      background: #d1fae5;
+      color: #065f46;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #10b981;
+      margin: 1rem 0;
+    }
+    .loading {
+      display: none;
+      color: #6b7280;
+      margin: 1rem 0;
+      text-align: center;
+    }
+    .loading.active {
+      display: block;
+    }
+    .logout-btn {
+      background: #dc2626;
+      float: right;
+    }
+    .logout-btn:hover {
+      background: #b91c1c;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="verifying-payment" class="loading">
+      <h2>⏳ Verifying Your Payment...</h2>
+      <p>Please wait while we confirm your purchase...</p>
+    </div>
+    
+    <div id="payment-confirmed" style="display:none;">
+      <h1>✅ Payment Confirmed</h1>
+      <p>Thank you for purchasing the AI Claim Toolkit!</p>
+      
+      <div class="user-info">
+        <p><strong>User:</strong> <span id="user-email"></span></p>
+        <p><strong>Credits Available:</strong> <span id="credits"></span></p>
+      </div>
+      
+      <h2>🤖 AI Response Generator</h2>
+      <p>Paste the insurer's letter below and our AI will generate a professional response:</p>
+      
+      <textarea id="input-text" placeholder="Paste the insurer's letter here..."></textarea>
+      
+      <button id="generate">Generate AI Response</button>
+      
+      <div id="loading" class="loading">
+        <p>⏳ Analyzing letter and generating response... This may take 10-30 seconds.</p>
+      </div>
+      
+      <div id="error" class="error" style="display:none;"></div>
+      <div id="success" class="success" style="display:none;"></div>
+      
+      <pre id="output" style="display:none;"></pre>
+      
+      <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #e5e7eb;">
+        <button class="logout-btn" onclick="logout()">Logout</button>
+      </div>
+    </div>
+    
+    <div id="payment-error" style="display:none;">
+      <h1>❌ Payment Verification Failed</h1>
+      <p>We couldn't verify your payment. This could happen if:</p>
+      <ul style="margin: 1rem 0; padding-left: 2rem;">
+        <li>You accessed this page directly without completing payment</li>
+        <li>Your payment is still processing</li>
+        <li>There was a technical issue</li>
+      </ul>
+      <p>Please contact support at support@Claim Navigator.com with your order details.</p>
+      <button onclick="window.location.href='/'">Return to Homepage</button>
+    </div>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+    // Initialize Supabase client with dynamic configuration
+    let supabase = null;
+    
+    async function initSupabase() {
+      try {
+        const response = await fetch('/.netlify/functions/get-supabase-config');
+        const config = await response.json();
+        supabase = createClient(config.supabaseUrl, config.supabaseAnonKey);
+        console.log('✅ Supabase initialized');
+      } catch (error) {
+        console.error('❌ Failed to initialize Supabase:', error);
+        document.body.innerHTML = `
+          <div style="padding:40px;text-align:center;">
+            <h2>Configuration Error</h2>
+            <p>Unable to connect to the service. Please try again later.</p>
+          </div>
+        `;
+        return false;
+      }
+      return true;
+    }
+
+    // Initial loading message
+    document.body.innerHTML = `
+      <div style="padding:40px;max-width:700px;margin:auto;text-align:center;">
+        <h2>Loading your Claim Resource Center...</h2>
+        <p>Please wait while we verify your account.</p>
+      </div>
+    `;
+
+    async function loadUserDashboard() {
+      const { data: { user } } = await supabase.auth.getUser();
+
+      if (!user) {
+        // If no user session, prompt login
+        document.body.innerHTML = `
+          <div style="padding:40px;text-align:center;">
+            <h2>Login Required</h2>
+            <p>Enter your email to access your Claim Resource Center.</p>
+            <input id="email" type="email" placeholder="Enter your email" style="padding:10px;width:260px;"><br><br>
+            <button id="loginBtn">Send Login Link</button>
+          </div>
+        `;
+        document.getElementById('loginBtn').onclick = async () => {
+          const email = document.getElementById('email').value;
+          if (!email) return alert('Enter a valid email.');
+          await supabase.auth.signInWithOtp({ email });
+          alert('Login link sent! Check your email.');
+        };
+        return;
+      }
+
+      // ✅ Logged in user: Show dashboard with purchases panel
+      document.body.innerHTML = `
+        <div style="padding:40px;max-width:900px;margin:auto;font-family:sans-serif;">
+          <h2>✅ Payment Confirmed</h2>
+          <p>Welcome, <strong>${user.email}</strong></p>
+          
+          <div id="my-purchases" style="margin-top:20px;padding:20px;background:#f9fafb;border-radius:8px;border:1px solid #e5e7eb;">
+            <h3>My Claim Tools</h3>
+            <ul id="tool-list" style="margin:10px 0;padding-left:20px;">
+              <li>AI Response & Analysis Center</li>
+              <li>Claim Document Library</li>
+              <li>Claim Playbook</li>
+            </ul>
+            <p><strong>Credits Remaining:</strong> <span id="credits-count">Loading…</span></p>
+            <button id="buy-more" style="padding:8px 16px;background:#1e40af;color:white;border:none;border-radius:4px;cursor:pointer;">Buy More Responses ($29)</button>
+          </div>
+          
+          <div style="margin:20px 0;padding:20px;background:#f0f9ff;border-radius:8px;border:1px solid #0ea5e9;">
+            <h3>🎯 Access Your Claim Resource & AI Response Center</h3>
+            <p>You'll have access to:</p>
+            <ul style="text-align:left;margin:10px 0;">
+              <li>🤖 AI Response Generator</li>
+              <li>📄 Document Library</li>
+              <li>🛠️ Claim Analysis Tools</li>
+              <li>📊 Professional Templates</li>
+            </ul>
+            <a href="/app/claim-management-center.html" style="display:inline-block;padding:10px 20px;background:#1e40af;color:white;text-decoration:none;border-radius:4px;margin-top:10px;">Access Claim Management Center</a>
+            <p style="margin-top:10px;font-size:14px;color:#666;">⏱️ You'll be automatically redirected to the Claim Management Center in <span id="countdown">5</span> seconds...</p>
+          </div>
+        </div>
+      `;
+
+      // Load user credits
+      const { data: creditsData, error } = await supabase
+        .from('user_credits')
+        .select('credits')
+        .eq('user_id', user.id)
+        .single();
+
+      if (error) {
+        console.error('Credit fetch error:', error);
+        document.getElementById('credits-count').innerText = 'Error loading credits';
+      } else {
+        document.getElementById('credits-count').innerText = creditsData?.credits ?? 0;
+      }
+
+      // Auto-redirect to response center after 5 seconds with countdown
+      let countdown = 5;
+      const countdownElement = document.getElementById('countdown');
+      
+      const countdownInterval = setInterval(() => {
+        countdown--;
+        if (countdownElement) {
+          countdownElement.textContent = countdown;
+        }
+        if (countdown <= 0) {
+          clearInterval(countdownInterval);
+          window.location.href = '/app/claim-management-center.html';
+        }
+      }, 1000);
+
+      // Handle buy more responses
+      document.getElementById('buy-more').onclick = async () => {
+        try {
+          const resp = await fetch('/.netlify/functions/checkout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              priceId: 'price_additional_ai_response' // You'll need to set this in your Stripe dashboard
+            })
+          });
+          
+          // Check if response is ok and content type is JSON
+          if (!resp.ok) {
+            const errorText = await resp.text();
+            console.error('Checkout error response:', errorText);
+            throw new Error(`HTTP ${resp.status}: ${resp.statusText}`);
+          }
+          
+          const contentType = resp.headers.get('content-type');
+          if (!contentType || !contentType.includes('application/json')) {
+            const htmlText = await resp.text();
+            console.error('Non-JSON response:', htmlText);
+            throw new Error('Server returned HTML instead of JSON');
+          }
+          
+          const data = await resp.json();
+          if (data.url) {
+            window.location.href = data.url;
+          } else {
+            alert('Unable to create checkout session. Please try again.');
+          }
+        } catch (error) {
+          console.error('Checkout error:', error);
+          alert('Error creating checkout session. Please try again.');
+        }
+      };
+    }
+
+    // Initialize dashboard
+    async function startApp() {
+      const supabaseReady = await initSupabase();
+      if (supabaseReady) {
+        loadUserDashboard();
+      }
+    }
+    
+    startApp();
+  </script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estimate Review & Comparison - ClaimNavigatorAI</title>
+    
+    <!-- CRITICAL: Access guard must load first -->
+    <script src="/app/assets/js/supabase-client.js"></script>
+    <script src="/app/assets/js/auth.js" type="module"></script>
+    <script src="/app/assets/js/access-guard.js"></script>
+    
+    <link rel="stylesheet" href="/app/assets/css/style.css">
+    <link rel="stylesheet" href="/app/css/design-system.css">
+    <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://unpkg.com/jspdf-autotable@3.5.31/dist/jspdf.plugin.autotable.min.js"></script>
+    <script src="/app/assets/js/estimate-comparison-table.js"></script>
+    <script src="/app/assets/js/navigation-template.js"></script>
+</head>
+<body class="tool-page">
+  <script>createNavigationBar('Estimate Review');</script>
+
+  <section class="hero-section hero-navy">
+    <div class="hero-content">
+      <h1>Estimate Review &amp; Comparison</h1>
+      <p class="subtitle">Clear guidance for this step of your claim.</p>
+    </div>
+  </section>
+
+  <main>
+    <section class="page-section">
+      <div class="frosted-card">
+        <h2>📊 Estimate Review &amp; Comparison</h2>
+        <p>Compare contractor estimates, validate pricing, and identify discrepancies in repair bids.</p>
+
+        <label>Upload Estimates:
+          <div class="file-upload">
+            <input type="file" id="estimates" class="input" multiple accept=".pdf,.doc,.docx,.txt,.xlsx,.xls">
+            <p>Upload PDF, DOC, DOCX, TXT, or Excel files</p>
+          </div>
+        </label>
+
+        <label>Labor Rate ($/hour):
+          <input id="laborRate" class="input" placeholder="Enter hourly labor rate" type="number" step="0.01">
+        </label>
+
+        <label>Tax Rate (%):
+          <input id="taxRate" class="input" placeholder="Enter tax rate percentage" type="number" step="0.01">
+        </label>
+
+        <div class="checkbox-item">
+          <input type="checkbox" id="includeOverhead">
+          <label for="includeOverhead">Include Overhead &amp; Profit (typically 10-20%)</label>
+        </div>
+
+        <label>Brief Context (Optional, max 500 chars):
+          <textarea id="notes" class="input" maxlength="500" rows="3" placeholder="e.g., Need to compare roofing estimates..."></textarea>
+        </label>
+
+        <button class="button primary" onclick="runAnalysis('estimates')">Compare Estimates</button>
+        <div id="result-estimates" class="results"></div>
+      </div>
+    </section>
+  </main>
+
+    <!-- Fallback removed - module script is the ONLY execution path -->
+    <script type="module" src="/app/assets/js/tools/claim-analysis-estimate.js"></script>
+</body>
+</html>

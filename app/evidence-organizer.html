@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evidence Organizer - ClaimNavigatorAI</title>
+  
+  <!-- CRITICAL: Access guard must load first -->
+  <script src="/app/assets/js/supabase-client.js"></script>
+  <script src="/app/assets/js/auth.js" type="module"></script>
+  <script src="/app/assets/js/access-guard.js"></script>
+  
+  <link rel="stylesheet" href="/app/assets/css/style.css">
+  <link rel="stylesheet" href="/app/css/design-system.css">
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+  <script src="/storage/claimStorage.js"></script>
+  <script src="/app/assets/js/navigation-template.js"></script>
+</head>
+<body class="tool-page">
+  <script>createNavigationBar('Evidence Organizer');</script>
+
+  <section class="hero-section hero-navy">
+    <div class="hero-content">
+      <h1>Evidence Organizer</h1>
+      <p class="subtitle">Clear guidance for this step of your claim.</p>
+    </div>
+  </section>
+
+  <main>
+    <section class="page-section">
+      <div class="frosted-card">
+        <h2>What this tool does</h2>
+        <p>Upload, categorize, and track all documentation needed to support your property claim. Keep every file aligned to deadlines, journal entries, and negotiation steps.</p>
+      </div>
+
+      <div class="grid-3">
+        <div class="frosted-card">
+          <h3>Evidence Upload Manager</h3>
+          <p>Drag, drop, or browse to add files with clear status indicators and size checks.</p>
+        </div>
+        <div class="frosted-card">
+          <h3>Auto-tagging Engine</h3>
+          <p>AI proposes categories and tags so every file is searchable in seconds.</p>
+        </div>
+        <div class="frosted-card">
+          <h3>Category Sorting</h3>
+          <p>Organize by damage, financials, communications, estimates, and receipts.</p>
+        </div>
+        <div class="frosted-card">
+          <h3>File Timeline View</h3>
+          <p>See uploads plotted chronologically to spot activity gaps quickly.</p>
+        </div>
+        <div class="frosted-card">
+          <h3>Evidence Gap Detection</h3>
+          <p>Receive prompts for missing items like estimates, invoices, or mitigation proof.</p>
+        </div>
+        <div class="frosted-card">
+          <h3>Printable Evidence Package</h3>
+          <p>Create polished PDFs that bundle files, categories, and notes for submission.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section">
+      <div class="grid-3">
+        <div class="frosted-card">
+          <h2>Attach to Claim Journal</h2>
+          <p>Link documents directly to journal entries for fast cross-references and dispute prep.</p>
+          <p><a class="button secondary" href="/app/claim-journal.html">Open Claim Journal</a></p>
+        </div>
+        <div class="frosted-card">
+          <h2>Align to Deadlines</h2>
+          <p>Pair uploads with required due dates so submissions never slip.</p>
+          <p><a class="button secondary" href="/app/deadlines.html">View Deadlines</a></p>
+        </div>
+        <div class="frosted-card">
+          <h2>Generate Packages</h2>
+          <p>Bundle selected items, categories, and notes into a submission-ready Evidence Package PDF.</p>
+          <p><a class="button primary" href="/app/document-generator.html">Generate Documents</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
+
+

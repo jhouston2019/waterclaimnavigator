@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Policyholder Rights Overview</title>
+    <link rel="stylesheet" href="/app/css/design-system.css" />
+    <script src="/assets/js/navigation-template.js"></script>
+</head>
+
+<body>
+    <script>createNavigationBar();</script>
+
+
+<section class="hero-section hero-navy">
+    <div class="hero-content">
+        <h1>Policyholder Rights Overview</h1>
+        <p class="subtitle">Core legal protections for notice, communication, prompt payment, appeal options, and freedom from retaliation.</p>
+    </div>
+</section>
+
+<div class="authority-layout">
+    <?php include($_SERVER['DOCUMENT_ROOT'] . '/app/partials/authority-sidebar.html'); ?>
+
+    <div class="authority-content">
+        <div class="breadcrumbs">
+            <a href="/app/authority-guides.html">Authority Guides</a> ›
+            <span>Policyholder Rights Overview</span>
+        </div>
+        <div class="toc-container">
+            <h3>On This Page</h3>
+            <ul id="toc-list"></ul>
+        </div>
+        <div class="container standard-page">
+            <div class="frosted-card">
+                <h2>Overview</h2>
+                <p>Policyholders are protected by state unfair claims acts, prompt-payment statutes, and policy duties of good faith. You have rights to timely responses, clear explanations, fair investigation, and payment of what is owed without harassment or retaliation.</p>
+
+                <h2>Key Rules & Requirements</h2>
+                <ul>
+                    <li><strong>Timely communication:</strong> Carriers must acknowledge claims and respond to inquiries within statutory deadlines.</li>
+                    <li><strong>Fair investigation:</strong> Adjusters must conduct a thorough, unbiased investigation before denying claims.</li>
+                    <li><strong>Written decisions:</strong> Denials and reservations must cite policy provisions and factual bases.</li>
+                    <li><strong>Payment of undisputed benefits:</strong> Even if parts are disputed, undisputed amounts must be paid promptly.</li>
+                    <li><strong>Appeal/complaint rights:</strong> You can escalate internally and file complaints with the state regulator without penalty.</li>
+                    <li><strong>Anti-retaliation:</strong> Carriers cannot cancel or non-renew solely because you file a claim or complaint.</li>
+                </ul>
+
+                <h2>Step-by-Step Guidance</h2>
+                <ol>
+                    <li>Ask for <strong>all deadlines</strong> in writing (acknowledgment, inspection, decision, payment).</li>
+                    <li>Request <strong>written coverage positions</strong> with specific policy citations.</li>
+                    <li>Track all communications in a <strong>claim log</strong> with dates and commitments.</li>
+                    <li>If deadlines are missed, send a <strong>statutory reminder</strong> and request supervisor review.</li>
+                    <li>Escalate unresolved issues to the state department of insurance and note complaint numbers.</li>
+                    <li>Consult counsel before suit limitations expire if the claim remains unpaid or unfairly denied.</li>
+                </ol>
+
+                <h2>Required Documentation</h2>
+                <ul>
+                    <li>Policy documents and declarations page.</li>
+                    <li>Communication log and copies of emails/letters.</li>
+                    <li>Adjuster reports, estimates, and decision letters.</li>
+                    <li>Proof of loss, receipts, and evidence supporting your claim.</li>
+                    <li>Complaint filings or escalation letters, if any.</li>
+                </ul>
+
+                <h2>Common Insurer Tactics</h2>
+                <ul>
+                    <li>Providing verbal decisions without written support.</li>
+                    <li>Delaying investigations through serial document requests.</li>
+                    <li>Failing to separate undisputed amounts from disputed items.</li>
+                    <li>Using broad exclusions without analyzing specific facts.</li>
+                </ul>
+
+                <h2>Red Flags to Watch For</h2>
+                <ul>
+                    <li>No acknowledgment or status updates within required timeframes.</li>
+                    <li>Denials lacking policy citations or factual detail.</li>
+                    <li>Pressure to accept low settlements without justification.</li>
+                    <li>Threats of cancellation or non-renewal related to claim activity.</li>
+                </ul>
+
+                <h2>Best Practices for Policyholders</h2>
+                <ul>
+                    <li>Keep everything in writing; confirm phone calls by email.</li>
+                    <li>Quote state statutes when following up on missed deadlines.</li>
+                    <li>Request undisputed payments early and often.</li>
+                    <li>Escalate respectfully but firmly; involve supervisors and regulators when needed.</li>
+                    <li>Monitor suit limitations and seek advice before they expire.</li>
+                </ul>
+
+                <a href="/app/authority-guides.html" class="back-link">← Back to Authority Guides</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const search = document.getElementById("authority-search");
+    const links = document.querySelectorAll(".authority-nav ul li");
+
+    if (!search) return;
+
+    search.addEventListener("input", () => {
+        const query = search.value.toLowerCase();
+
+        links.forEach(li => {
+            const text = li.textContent.toLowerCase();
+            li.style.display = text.includes(query) ? "" : "none";
+        });
+    });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const content = document.querySelector('.frosted-card');
+    const headings = content.querySelectorAll('h2, h3');
+
+    const tocList = document.getElementById('toc-list');
+
+    headings.forEach((heading, index) => {
+        const id = heading.innerText.replace(/\s+/g, '-').toLowerCase() + '-' + index;
+        heading.id = id;
+
+        const li = document.createElement('li');
+        li.classList.add(heading.tagName.toLowerCase());
+
+        const link = document.createElement('a');
+        link.href = '#' + id;
+        link.innerText = heading.innerText;
+
+        li.appendChild(link);
+        tocList.appendChild(li);
+    });
+
+    // ScrollSpy
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            const link = tocList.querySelector(`a[href="#${entry.target.id}"]`);
+            if (entry.isIntersecting) {
+                tocList.querySelectorAll('a').forEach(a => a.classList.remove('active'));
+                if (link) link.classList.add('active');
+            }
+        });
+    }, { threshold: 0.4 });
+
+    headings.forEach(heading => observer.observe(heading));
+});
+</script>
+
+</body>
+</html>

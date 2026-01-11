@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coverage Decoder - Claim Navigator</title>
+    <link rel="stylesheet" href="/app/assets/css/style.css">
+    <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+    
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="bar container">
+            <div class="brand"><div class="logo"></div><div>Claim Navigation AI</div></div>
+            <nav class="nav">
+                <a href="/app/index.html">Home</a>
+                <span class="nav-separator">></span>
+                <span class="nav-current">Coverage Decoder</span>
+                <span class="nav-separator">></span>
+                <a href="/app/resource-center.html">Resource Center</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="card">
+            <h2>⚖️ Policy Review & Coverage Analysis</h2>
+            <p>Upload or paste policy text to generate a detailed coverage summary, exclusion list, and recommendations.</p>
+            
+            <label>Upload Policy Document:
+                <input type="file" id="policyUpload" class="input" accept=".pdf,.txt,.doc,.docx">
+            </label>
+
+            <label>Policy Type:
+                <select id="policyType" class="input">
+                    <option value="">Select Policy Type</option>
+                    <option value="homeowners">Homeowners</option>
+                    <option value="commercial">Commercial</option>
+                    <option value="auto">Auto</option>
+                    <option value="renters">Renters</option>
+                    <option value="flood">Flood</option>
+                    <option value="umbrella">Umbrella</option>
+                    <option value="other">Other</option>
+                </select>
+            </label>
+
+            <label>Jurisdiction: 
+                <input id="jurisdiction" class="input" placeholder="State / Province">
+            </label>
+
+            <label>Deductible: 
+                <input id="deductible" class="input" placeholder="Enter deductible amount" type="number" step="0.01">
+            </label>
+
+            <button class="button primary" onclick="runAnalysis('policy')">Analyze Coverage</button>
+            <div id="result-policy" class="results"></div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 Claim Navigator • Policy Review Tool</p>
+        </div>
+    </footer>
+
+    <script>
+        async function runAnalysis(module) {
+            const resultDiv = document.getElementById('result-' + module);
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '<p><em>Analyzing, please wait...</em></p>';
+
+            const inputs = {
+                policyText: document.getElementById('policyText').value,
+                policyType: document.getElementById('policyType').value,
+                jurisdiction: document.getElementById('jurisdiction').value,
+                deductible: document.getElementById('deductible').value
+            };
+
+            try {
+                const res = await fetch('/.netlify/functions/claim-analysis', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ module, inputs })
+                });
+                
+                const data = await res.json();
+                resultDiv.innerHTML = data.ok ? data.html : '<p class="error">Error: ' + (data.error || 'No response') + '</p>';
+            } catch (e) {
+                resultDiv.innerHTML = '<p class="error">Network error. Try again.</p>';
+            }
+        }
+    </script>
+    <script type="module" src="/app/assets/js/tools/coverage-decoder.js"></script>
+</body>
+</html>

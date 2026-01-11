@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Water Damage Claims Guide</title>
+    <link rel="stylesheet" href="/app/css/design-system.css" />
+    <script src="/assets/js/navigation-template.js"></script>
+</head>
+
+<body>
+    <script>createNavigationBar();</script>
+
+
+<section class="hero-section hero-navy">
+    <div class="hero-content">
+        <h1>Water Damage Claims Guide</h1>
+        <p class="subtitle">Mitigate quickly, document moisture, and navigate exclusions for seepage, mold, and drainage.</p>
+    </div>
+</section>
+
+<div class="authority-layout">
+    <?php include($_SERVER['DOCUMENT_ROOT'] . '/app/partials/authority-sidebar.html'); ?>
+
+    <div class="authority-content">
+        <div class="breadcrumbs">
+            <a href="/app/authority-guides.html">Authority Guides</a> ›
+            <span>Water Damage Claims Guide</span>
+        </div>
+        <div class="toc-container">
+            <h3>On This Page</h3>
+            <ul id="toc-list"></ul>
+        </div>
+        <div class="container standard-page">
+            <div class="frosted-card">
+                <h2>Overview</h2>
+                <p>Water losses hinge on source (sudden vs. gradual), speed of mitigation, and mold prevention. Coverage may differ for plumbing breaks, drain backups, roof leaks, or foundation seepage. Rapid documentation reduces disputes over long-term seepage exclusions.</p>
+
+                <h2>Key Rules & Requirements</h2>
+                <ul>
+                    <li><strong>Immediate mitigation:</strong> Most policies require you to protect property from further damage—start drying quickly.</li>
+                    <li><strong>Source identification:</strong> Sudden accidental discharge is usually covered; repeated seepage, groundwater, and surface water often are not.</li>
+                    <li><strong>Mold sublimits:</strong> Many policies cap mold remediation; some require endorsements for higher limits.</li>
+                    <li><strong>Plumbing access/tear-out:</strong> Some policies pay to access and repair damaged portions to reach broken pipes.</li>
+                    <li><strong>Documentation of moisture:</strong> Moisture mapping and readings help prove the loss timing and affected areas.</li>
+                </ul>
+
+                <h2>Step-by-Step Guidance</h2>
+                <ol>
+                    <li>Shut off water, stop the source, and photograph the scene before moving items.</li>
+                    <li>Hire mitigation professionals to perform <strong>moisture mapping, extraction, and drying</strong>; keep equipment logs.</li>
+                    <li>Collect plumber reports and photos pinpointing the exact failure (burst pipe, supply line, appliance hose).</li>
+                    <li>Request a <strong>same-day or next-day inspection</strong> from the carrier; share mitigation findings.</li>
+                    <li>Prepare an estimate including <strong>tear-out, drying, material replacement, and repairs</strong> to pre-loss condition.</li>
+                    <li>Track <strong>mold conditions</strong> and ensure any remediation follows IICRC S500/S520 standards.</li>
+                    <li>Submit invoices and estimates; ask for payment of undisputed drying and demolition costs promptly.</li>
+                </ol>
+
+                <h2>Required Documentation</h2>
+                <ul>
+                    <li>Moisture readings, drying logs, and photos of affected areas.</li>
+                    <li>Plumber or contractor report identifying the cause and location.</li>
+                    <li>Mitigation invoices, equipment lists, and daily monitoring notes.</li>
+                    <li>Repair estimate with materials specified (drywall, insulation, flooring, cabinets).</li>
+                    <li>Mold assessment/remediation plan if fungal growth occurred.</li>
+                    <li>Receipts for personal property cleaning or replacement.</li>
+                </ul>
+
+                <h2>Common Insurer Tactics</h2>
+                <ul>
+                    <li>Labeling damage as “long-term seepage” without supporting evidence.</li>
+                    <li>Refusing to pay tear-out or access costs to reach the failed component.</li>
+                    <li>Limiting payments to drying only and excluding material replacement.</li>
+                    <li>Applying mold sublimits broadly, even where mold growth was prevented or limited.</li>
+                </ul>
+
+                <h2>Red Flags to Watch For</h2>
+                <ul>
+                    <li>Adjuster delays that allow secondary mold growth.</li>
+                    <li>No measurement of moisture content or failure to inspect hidden cavities.</li>
+                    <li>Denial that conflicts with plumber evidence of sudden failure.</li>
+                    <li>Use of generic exclusions without analyzing the specific water source.</li>
+                </ul>
+
+                <h2>Best Practices for Policyholders</h2>
+                <ul>
+                    <li>Document day-by-day moisture reduction to show prompt mitigation.</li>
+                    <li>Preserve failed parts (pipes, hoses) for inspection.</li>
+                    <li>Separate <strong>mitigation invoices</strong> from <strong>rebuild estimates</strong> to speed partial payment.</li>
+                    <li>Request reinspection if demolition reveals additional affected areas.</li>
+                    <li>If backup/sewer is excluded, check for <strong>endorsements</strong> or limited coverage and present qualifying facts.</li>
+                </ul>
+
+                <a href="/app/authority-guides.html" class="back-link">← Back to Authority Guides</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const search = document.getElementById("authority-search");
+    const links = document.querySelectorAll(".authority-nav ul li");
+
+    if (!search) return;
+
+    search.addEventListener("input", () => {
+        const query = search.value.toLowerCase();
+
+        links.forEach(li => {
+            const text = li.textContent.toLowerCase();
+            li.style.display = text.includes(query) ? "" : "none";
+        });
+    });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const content = document.querySelector('.frosted-card');
+    const headings = content.querySelectorAll('h2, h3');
+
+    const tocList = document.getElementById('toc-list');
+
+    headings.forEach((heading, index) => {
+        const id = heading.innerText.replace(/\s+/g, '-').toLowerCase() + '-' + index;
+        heading.id = id;
+
+        const li = document.createElement('li');
+        li.classList.add(heading.tagName.toLowerCase());
+
+        const link = document.createElement('a');
+        link.href = '#' + id;
+        link.innerText = heading.innerText;
+
+        li.appendChild(link);
+        tocList.appendChild(li);
+    });
+
+    // ScrollSpy
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            const link = tocList.querySelector(`a[href="#${entry.target.id}"]`);
+            if (entry.isIntersecting) {
+                tocList.querySelectorAll('a').forEach(a => a.classList.remove('active'));
+                if (link) link.classList.add('active');
+            }
+        });
+    }, { threshold: 0.4 });
+
+    headings.forEach(heading => observer.observe(heading));
+});
+</script>
+
+</body>
+</html>

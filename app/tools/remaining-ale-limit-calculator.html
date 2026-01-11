@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Remaining ALE Limit Calculator - Claim Navigator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/tool-visual-alignment.css">
+  <script src="../../storage/claimStorage.js"></script>
+  <script src="../assets/js/tool-registry.js"></script>
+</head>
+<body class="tool-page">
+  
+  <!-- Tool Header -->
+  <div class="tool-page-header">
+    <h1 class="tool-page-title">Remaining ALE Limit Calculator</h1>
+    <p class="tool-page-subtitle">Calculate remaining ALE coverage</p>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="tool-content-area">
+    
+    <!-- Tool Content -->
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <h2 class="tool-card-title">Step 6 Tool</h2>
+      </div>
+      <div class="tool-card-body">
+        <p>This tool is part of Step 6 of the Step-by-Step Claim Guide.</p>
+        
+        
+
+        
+        <!-- L2 Calculation Form -->
+        <form data-tool-form class="tool-form">
+          <div class="tool-form-group">
+            <label for="totalALELimit" class="tool-label">Total ALE Limit ($)</label>
+            <input 
+              type="number" 
+              id="totalALELimit" 
+              name="totalALELimit" 
+              class="tool-input" 
+              step="0.01"
+              min="0"
+              placeholder="0.00"
+              required
+            />
+          </div>
+
+          <div class="tool-form-group">
+            <label for="spentToDate" class="tool-label">Amount Spent to Date ($)</label>
+            <input 
+              type="number" 
+              id="spentToDate" 
+              name="spentToDate" 
+              class="tool-input" 
+              step="0.01"
+              min="0"
+              placeholder="0.00"
+              required
+            />
+          </div>
+
+          <div class="tool-form-group">
+            <label for="daysDisplaced" class="tool-label">Days Displaced So Far</label>
+            <input 
+              type="number" 
+              id="daysDisplaced" 
+              name="daysDisplaced" 
+              class="tool-input" 
+              min="0"
+              placeholder="0"
+              required
+            />
+          </div>
+
+          <div class="tool-form-group">
+            <label for="estimatedTotalDays" class="tool-label">Estimated Total Days Displaced</label>
+            <input 
+              type="number" 
+              id="estimatedTotalDays" 
+              name="estimatedTotalDays" 
+              class="tool-input" 
+              min="0"
+              placeholder="0"
+              required
+            />
+          </div>
+
+          <div class="tool-form-actions">
+            <button type="submit" data-analyze-btn class="tool-btn tool-btn-primary">
+              Calculate Remaining Limit
+            </button>
+          </div>
+        </form>
+
+        <!-- Output Area -->
+        <div data-tool-output id="output" class="tool-output" style="display: none;">
+          <h3 class="tool-section-title">Analysis Results</h3>
+          <div class="tool-output-content"></div>
+          
+          <div class="tool-form-actions" style="margin-top: 1.5rem;">
+            <button data-export-pdf class="tool-btn tool-btn-secondary">
+              Export as PDF
+            </button>
+            <button data-copy-clipboard class="tool-btn tool-btn-secondary">
+              Copy to Clipboard
+            </button>
+          </div>
+        </div>
+
+
+        <div class="tool-section">
+          <h3 class="tool-section-title">What This Tool Does</h3>
+          <p>Calculate remaining ALE coverage</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="tool-section">
+      <button class="tool-btn tool-btn-secondary" onclick="goBack()">
+        ← Back to Claim Guide
+      </button>
+      
+    </div>
+
+  </div>
+
+  <script>
+    function goBack() {
+      window.location.href = '../../step-by-step-claim-guide.html?step=6';
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Tool loaded: remaining-ale-limit-calculator');
+    });
+  </script>
+
+
+  <script type="module">
+    import { AIToolController } from '../assets/js/controllers/index.js';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await AIToolController.initTool({
+        toolId: 'remaining-ale-limit-calculator',
+        toolName: 'Remaining ALE Limit Calculator',
+        backendFunction: '/.netlify/functions/ai-rom-estimator',
+        outputFormat: 'calculation'
+      });
+    });
+  </script>
+
+</body>
+</html>

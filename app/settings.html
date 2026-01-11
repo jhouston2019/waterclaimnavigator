@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Settings - Claim Navigator</title>
+  
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+</head>
+<body>
+  <div class="settings-container">
+    <h1>Settings</h1>
+    <p><strong>Email:</strong> <span id="user-email">Loading...</span></p>
+    <p><strong>Credits:</strong> <span id="user-credits">Loading...</span></p>
+    
+    <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #e5e7eb;">
+      <h2 style="font-size: 1.25rem; margin-bottom: 1rem; color: #1e40af;">Developer Access</h2>
+      <p style="margin-bottom: 1rem; color: #666;">Manage API keys for programmatic access</p>
+      <a href="/app/settings/api-keys.html" style="display: block; padding: 0.75rem; background: #1e40af; color: white; text-decoration: none; border-radius: 0.5rem; font-weight: 600; text-align: center;">
+        Manage API Keys
+      </a>
+      <a href="/app/api-docs.html" style="display: block; margin-top: 0.5rem; padding: 0.75rem; background: #3b82f6; color: white; text-decoration: none; border-radius: 0.5rem; font-weight: 600; text-align: center;">
+        View API Documentation
+      </a>
+      <a href="/app/settings/api-logs.html" style="display: block; margin-top: 0.5rem; padding: 0.75rem; background: #10b981; color: white; text-decoration: none; border-radius: 0.5rem; font-weight: 600; text-align: center;">
+        View API Logs
+      </a>
+    </div>
+    
+    <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #e5e7eb;">
+      <h2 style="font-size: 1.25rem; margin-bottom: 1rem; color: #1e40af;">AI Reasoning Console</h2>
+      <p style="margin-bottom: 1rem; color: #666;">Manage system prompts, rulesets, examples, and output formats</p>
+      <a href="/app/admin/ai-console/index.html" style="display: block; padding: 0.75rem; background: #7c3aed; color: white; text-decoration: none; border-radius: 0.5rem; font-weight: 600; text-align: center;">
+        Open AI Console
+      </a>
+      <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #9ca3af;">Admin access required</p>
+    </div>
+    
+    <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #e5e7eb;">
+      <h2 style="font-size: 1.25rem; margin-bottom: 1rem; color: #1e40af;">Enterprise Monitoring</h2>
+      <p style="margin-bottom: 1rem; color: #666;">Monitor system health, performance, errors, usage, and costs</p>
+      <a href="/app/admin/monitoring/index.html" style="display: block; padding: 0.75rem; background: #059669; color: white; text-decoration: none; border-radius: 0.5rem; font-weight: 600; text-align: center;">
+        Open Monitoring Dashboard
+      </a>
+      <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #9ca3af;">Admin access required</p>
+    </div>
+    
+    <button id="logout-btn" style="margin-top: 2rem;">Log Out</button>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+    // ✅ Initialize Supabase
+    const supabase = createClient(
+      "{{ SUPABASE_URL }}",
+      "{{ SUPABASE_ANON_KEY }}"
+    );
+
+    async function loadUser() {
+      const { data: { user }, error } = await supabase.auth.getUser();
+
+      if (error) {
+        console.error("Auth error:", error.message);
+        alert("Session expired. Please log in again.");
+        window.location.href = "login.html";
+        return;
+      }
+
+      if (!user) {
+        window.location.href = "login.html";
+        return;
+      }
+
+      document.getElementById("user-email").innerText = user.email;
+
+      // Use Netlify function to get credits with proper authentication
+      try {
+        const response = await fetch("/.netlify/functions/verify-entitlement", {
+          method: "POST",
+          headers: { 
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`
+          },
+          body: JSON.stringify({ email: user.email })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.credits !== undefined) {
+          document.getElementById("user-credits").innerText = data.credits;
+        } else {
+          console.error("Credits fetch error:", data.error);
+          document.getElementById("user-credits").innerText = "0";
+        }
+      } catch (err) {
+        console.error("Error fetching credits:", err);
+        document.getElementById("user-credits").innerText = "Error";
+      }
+    }
+
+    async function logout() {
+      await supabase.auth.signOut();
+      window.location.href = "login.html";
+    }
+
+    document.getElementById("logout-btn").addEventListener("click", logout);
+    document.addEventListener("DOMContentLoaded", loadUser);
+  </script>
+<script type="module" src="/app/assets/js/diagnostics.js"></script>
+<script type="module" src="/app/assets/js/window-bridge.js"></script>
+</body>
+</html>

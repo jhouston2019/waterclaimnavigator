@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Cost Tracking - Monitoring Dashboard</title>
+  <link rel="stylesheet" href="/app/assets/css/style.css">
+  
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+</head>
+<body>
+  <div class="admin-container">
+    <aside class="sidebar">
+      <h2>📊 Monitoring</h2>
+      <nav>
+        <a href="/app/admin/monitoring/index.html">Dashboard</a>
+        <a href="/app/admin/monitoring/errors.html">Errors</a>
+        <a href="/app/admin/monitoring/performance.html">Performance</a>
+        <a href="/app/admin/monitoring/usage.html">Usage</a>
+        <a href="/app/admin/monitoring/ai-costs.html" class="active">AI Costs</a>
+        <a href="/app/admin/monitoring/rate-limits.html">Rate Limits</a>
+        <a href="/app/admin/monitoring/events.html">Events</a>
+        <a href="/app/admin/monitoring/health.html">Health</a>
+      </nav>
+    </aside>
+    <main class="main-content">
+      <h1>AI Token Cost Tracking</h1>
+      <div class="cost-summary">
+        <div class="cost-card">
+          <div class="cost-value" id="total-cost">$0.00</div>
+          <div>Total Cost (24h)</div>
+        </div>
+        <div class="cost-card">
+          <div class="cost-value" id="total-tokens">0</div>
+          <div>Total Tokens</div>
+        </div>
+        <div class="cost-card">
+          <div class="cost-value" id="input-tokens">0</div>
+          <div>Input Tokens</div>
+        </div>
+        <div class="cost-card">
+          <div class="cost-value" id="output-tokens">0</div>
+          <div>Output Tokens</div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Cost by Tool</h3>
+        <table id="cost-by-tool">
+          <thead>
+            <tr>
+              <th>Tool</th>
+              <th>Input Tokens</th>
+              <th>Output Tokens</th>
+              <th>Cost</th>
+            </tr>
+          </thead>
+          <tbody id="cost-tbody">Loading...</tbody>
+        </table>
+      </div>
+      <div class="card">
+        <h3>Cost Over Time</h3>
+        <div id="cost-chart" style="height: 300px;"></div>
+      </div>
+    </main>
+  </div>
+  <script type="module" src="/app/assets/js/admin/monitoring/ai-costs.js"></script>
+</body>
+</html>
+
+

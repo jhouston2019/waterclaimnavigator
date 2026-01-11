@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Property Claims Guide</title>
+    <link rel="stylesheet" href="/app/css/design-system.css" />
+    <script src="/assets/js/navigation-template.js"></script>
+</head>
+
+<body>
+    <script>createNavigationBar();</script>
+
+
+<section class="hero-section hero-navy">
+    <div class="hero-content">
+        <h1>Property Claims Guide</h1>
+        <p class="subtitle">Document the loss, prove scope and value, and ensure timely payments for structural and contents claims.</p>
+    </div>
+</section>
+
+<div class="authority-layout">
+    <?php include($_SERVER['DOCUMENT_ROOT'] . '/app/partials/authority-sidebar.html'); ?>
+
+    <div class="authority-content">
+        <div class="breadcrumbs">
+            <a href="/app/authority-guides.html">Authority Guides</a> ›
+            <span>Property Claims Guide</span>
+        </div>
+        <div class="toc-container">
+            <h3>On This Page</h3>
+            <ul id="toc-list"></ul>
+        </div>
+        <div class="container standard-page">
+            <div class="frosted-card">
+                <h2>Overview</h2>
+                <p>Property claims focus on proving covered physical damage, establishing replacement cost or actual cash value, and documenting repairs. You must also comply with duties after loss such as mitigation and cooperation with inspections.</p>
+
+                <h2>Key Rules & Requirements</h2>
+                <ul>
+                    <li><strong>Prompt notice and mitigation:</strong> Secure the property, stop ongoing damage, and keep receipts.</li>
+                    <li><strong>Duties after loss:</strong> Show damaged property, provide records, and submit proof of loss if requested.</li>
+                    <li><strong>Valuation method:</strong> Policies often pay <strong>ACV first</strong> then hold back depreciation until repairs are completed (recoverable depreciation).</li>
+                    <li><strong>Like kind and quality:</strong> Repairs must restore to comparable materials; upgrades beyond code may be limited unless ordinance or law coverage applies.</li>
+                    <li><strong>Suit limitation:</strong> Many policies require suit within 1–2 years; track this alongside state tolling rules.</li>
+                </ul>
+
+                <h2>Step-by-Step Guidance</h2>
+                <ol>
+                    <li>Give <strong>prompt notice</strong> and request a written acknowledgment with the claim number.</li>
+                    <li>Photograph all damage before mitigation; save invoices for tarps, drying, or board-up.</li>
+                    <li>Meet the adjuster on-site with your contractor to discuss <strong>scope</strong> (what is damaged) before debating price.</li>
+                    <li>Obtain an <strong>independent estimate</strong> using industry pricing (e.g., Xactimate) and compare line items.</li>
+                    <li>If requested, submit a <strong>proof of loss</strong> with supporting estimates and inventories.</li>
+                    <li>Request payment of <strong>undisputed ACV</strong> while supplementing for differences in scope or pricing.</li>
+                    <li>Document repairs and submit invoices to release <strong>recoverable depreciation</strong>.</li>
+                </ol>
+
+                <h2>Required Documentation</h2>
+                <ul>
+                    <li>Photos/videos (pre- and post-mitigation) and room-by-room damage notes.</li>
+                    <li>Contractor or public adjuster estimate with line items and pricing database.</li>
+                    <li>Mitigation invoices, temporary repair receipts, and material costs.</li>
+                    <li>Proof of loss (if requested) and correspondence logs.</li>
+                    <li>Building permits, code upgrade letters, and inspection reports if applicable.</li>
+                </ul>
+
+                <h2>Common Insurer Tactics</h2>
+                <ul>
+                    <li>Limiting scope by excluding hidden damage (sheathing, insulation, subfloor) after a brief inspection.</li>
+                    <li>Applying excessive depreciation or using outdated price lists.</li>
+                    <li>Delaying recoverable depreciation payments by requesting duplicate documents.</li>
+                    <li>Invoking wear-and-tear exclusions even when sudden damage is the primary cause.</li>
+                </ul>
+
+                <h2>Red Flags to Watch For</h2>
+                <ul>
+                    <li>Estimate lacks line-item detail or uses generic lump sums.</li>
+                    <li>No allowance for code upgrades where ordinance or law coverage applies.</li>
+                    <li>Carrier refuses reinspection despite new evidence of hidden damage.</li>
+                    <li>Undisputed ACV not paid promptly after scope agreement.</li>
+                </ul>
+
+                <h2>Best Practices for Policyholders</h2>
+                <ul>
+                    <li>Separate <strong>scope vs. price</strong> disputes—align on scope first.</li>
+                    <li>Use <strong>side-by-side estimate comparisons</strong> to show missing items.</li>
+                    <li>Keep damaged materials until the carrier agrees they can be discarded.</li>
+                    <li>Track depreciation by line item to ensure full recovery after repairs.</li>
+                    <li>If negotiations stall, request appraisal or mediation per the policy.</li>
+                </ul>
+
+                <a href="/app/authority-guides.html" class="back-link">← Back to Authority Guides</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const search = document.getElementById("authority-search");
+    const links = document.querySelectorAll(".authority-nav ul li");
+
+    if (!search) return;
+
+    search.addEventListener("input", () => {
+        const query = search.value.toLowerCase();
+
+        links.forEach(li => {
+            const text = li.textContent.toLowerCase();
+            li.style.display = text.includes(query) ? "" : "none";
+        });
+    });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const content = document.querySelector('.frosted-card');
+    const headings = content.querySelectorAll('h2, h3');
+
+    const tocList = document.getElementById('toc-list');
+
+    headings.forEach((heading, index) => {
+        const id = heading.innerText.replace(/\s+/g, '-').toLowerCase() + '-' + index;
+        heading.id = id;
+
+        const li = document.createElement('li');
+        li.classList.add(heading.tagName.toLowerCase());
+
+        const link = document.createElement('a');
+        link.href = '#' + id;
+        link.innerText = heading.innerText;
+
+        li.appendChild(link);
+        tocList.appendChild(li);
+    });
+
+    // ScrollSpy
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            const link = tocList.querySelector(`a[href="#${entry.target.id}"]`);
+            if (entry.isIntersecting) {
+                tocList.querySelectorAll('a').forEach(a => a.classList.remove('active'));
+                if (link) link.classList.add('active');
+            }
+        });
+    }, { threshold: 0.4 });
+
+    headings.forEach(heading => observer.observe(heading));
+});
+</script>
+
+</body>
+</html>

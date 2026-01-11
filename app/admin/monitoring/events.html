@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System Events - Monitoring Dashboard</title>
+  <link rel="stylesheet" href="/app/assets/css/style.css">
+  
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+</head>
+<body>
+  <div class="admin-container">
+    <aside class="sidebar">
+      <h2>📊 Monitoring</h2>
+      <nav>
+        <a href="/app/admin/monitoring/index.html">Dashboard</a>
+        <a href="/app/admin/monitoring/errors.html">Errors</a>
+        <a href="/app/admin/monitoring/performance.html">Performance</a>
+        <a href="/app/admin/monitoring/usage.html">Usage</a>
+        <a href="/app/admin/monitoring/ai-costs.html">AI Costs</a>
+        <a href="/app/admin/monitoring/rate-limits.html">Rate Limits</a>
+        <a href="/app/admin/monitoring/events.html" class="active">Events</a>
+        <a href="/app/admin/monitoring/health.html">Health</a>
+      </nav>
+    </aside>
+    <main class="main-content">
+      <h1>System Events Stream</h1>
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+          <h3 style="margin: 0;">Real-time Events</h3>
+          <label><input type="checkbox" id="auto-refresh" checked> Auto-refresh</label>
+        </div>
+        <div class="event-stream" id="events-stream">Loading...</div>
+      </div>
+    </main>
+  </div>
+  <script type="module" src="/app/assets/js/admin/monitoring/events.js"></script>
+</body>
+</html>
+
+

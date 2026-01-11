@@ -1,0 +1,865 @@
+/**
+ * Claim Navigator — TOOL VISUAL ALIGNMENT LAYER
+ * 
+ * This CSS-only layer aligns all 52 tools to match the Claim Management Center visual style.
+ * 
+ * CONSTRAINTS:
+ * - CSS-only (no JavaScript, no HTML changes)
+ * - Solid colors only (no gradients, images, icons, SVGs)
+ * - Reuses existing Claim Management Center design tokens
+ * - Applied uniformly to all tools
+ * 
+ * Date: January 3, 2026
+ */
+
+/* ============================================
+   DESIGN TOKENS (from Claim Management Center)
+   ============================================ */
+:root {
+  --navy-primary: #1e3a5f;
+  --navy-dark: #0f1f3d;
+  --navy-light: #2c5282;
+  --gold-accent: #d4af37;
+  --gold-light: #f0e5c5;
+  --bg-page: #e3e5eb;
+  --bg-white: #ffffff;
+  --bg-cream: #fafaf8;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f8f9fb;
+  --border-light: #e8edf2;
+  --border-medium: #d1dce6;
+  --border-dark: #b8c5d3;
+  --text-primary: #1a202c;
+  --text-secondary: #4a5568;
+  --text-muted: #718096;
+  --text-white: #ffffff;
+  --accent-blue: #3b82f6;
+  --accent-green: #10b981;
+  --accent-red: #ef4444;
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.15);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.2);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.25);
+}
+
+/* ============================================
+   GLOBAL BODY & PAGE BACKGROUND
+   ============================================ */
+body.tool-page {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  background: var(--bg-page) !important;
+  color: var(--text-primary) !important;
+  min-height: 100vh !important;
+  line-height: 1.6 !important;
+  margin: 0;
+  padding: 0;
+}
+
+/* ============================================
+   PAGE HEADER (matches CMC header)
+   ============================================ */
+.tool-page-header,
+div.tool-page-header,
+body .tool-page-header,
+body div.tool-page-header {
+  background: #1e3a5f !important;
+  background-color: #1e3a5f !important;
+  padding: 32px 40px !important;
+  text-align: center !important;
+  border-bottom: 3px solid #d4af37 !important;
+  margin-bottom: 0 !important;
+}
+
+.tool-page-title,
+h1.tool-page-title,
+.tool-page-header .tool-page-title,
+.tool-page-header h1 {
+  font-size: 32px !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  letter-spacing: -0.02em !important;
+  margin-bottom: 8px !important;
+  line-height: 1.3 !important;
+}
+
+.tool-page-subtitle,
+p.tool-page-subtitle,
+.tool-page-header .tool-page-subtitle,
+.tool-page-header p {
+  font-size: 16px !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  max-width: 800px !important;
+  margin: 0 auto !important;
+  line-height: 1.5 !important;
+}
+
+/* ============================================
+   MAIN CONTENT CONTAINER
+   ============================================ */
+.tool-content-area {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px 40px;
+  background: var(--bg-page);
+}
+
+/* ============================================
+   CARD STYLES (matches CMC accordion cards)
+   ============================================ */
+.tool-card {
+  background: var(--bg-white) !important;
+  border: 1px solid var(--border-light) !important;
+  border-left: 4px solid var(--border-dark) !important;
+  border-radius: 12px !important;
+  padding: 24px !important;
+  margin-bottom: 24px !important;
+  box-shadow: var(--shadow-md) !important;
+  transition: all 0.2s ease !important;
+}
+
+.tool-card:hover {
+  border-left-color: var(--accent-blue);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.tool-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--border-light);
+}
+
+.tool-card-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--navy-primary);
+  margin: 0;
+}
+
+.tool-card-body {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* ============================================
+   SECTION HEADERS
+   ============================================ */
+.tool-section {
+  margin-bottom: 32px;
+}
+
+.tool-section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy-primary);
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--border-medium);
+}
+
+.tool-section-description {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+/* ============================================
+   BUTTONS (matches CMC button styles)
+   ============================================ */
+.tool-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 12px 24px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  text-decoration: none !important;
+  gap: 8px !important;
+}
+
+.tool-btn-primary {
+  background: var(--navy-primary) !important;
+  color: var(--text-white) !important;
+  border: 2px solid var(--navy-primary) !important;
+}
+
+.tool-btn-primary:hover {
+  background: var(--navy-dark) !important;
+  border-color: var(--navy-dark) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+.tool-btn-secondary {
+  background: var(--bg-white) !important;
+  color: var(--navy-primary) !important;
+  border: 2px solid var(--border-medium) !important;
+}
+
+.tool-btn-secondary:hover {
+  background: var(--bg-cream) !important;
+  border-color: var(--navy-primary) !important;
+}
+
+.tool-btn-accent {
+  background: var(--gold-accent);
+  color: var(--navy-dark);
+  border: 2px solid var(--gold-accent);
+}
+
+.tool-btn-accent:hover {
+  background: var(--gold-light);
+  border-color: var(--gold-accent);
+  transform: translateY(-1px);
+}
+
+/* ============================================
+   FORM INPUTS (matches CMC form styles)
+   ============================================ */
+.tool-form-group {
+  margin-bottom: 20px;
+}
+
+.tool-form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.tool-form-input,
+.tool-form-textarea,
+.tool-form-select {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 14px;
+  color: var(--text-primary);
+  background: var(--bg-white);
+  border: 2px solid var(--border-medium);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.tool-form-input:focus,
+.tool-form-textarea:focus,
+.tool-form-select:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.tool-form-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.tool-form-help {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+/* ============================================
+   TABLES (matches CMC table styles)
+   ============================================ */
+.tool-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--bg-white);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tool-table thead {
+  background: var(--bg-cream);
+}
+
+.tool-table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--border-medium);
+}
+
+.tool-table td {
+  padding: 12px 16px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.tool-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.tool-table tbody tr:hover {
+  background: var(--bg-card-hover);
+}
+
+/* ============================================
+   ALERTS & NOTICES (matches CMC warning styles)
+   ============================================ */
+.tool-alert {
+  padding: 16px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border-left: 4px solid;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.tool-alert-info {
+  background: #eff6ff;
+  border-color: var(--accent-blue);
+  color: #1e40af;
+}
+
+.tool-alert-success {
+  background: #f0fdf4;
+  border-color: var(--accent-green);
+  color: #166534;
+}
+
+.tool-alert-warning {
+  background: #fef3c7;
+  border-color: #f59e0b;
+  color: #92400e;
+}
+
+.tool-alert-error {
+  background: #fee2e2;
+  border-color: var(--accent-red);
+  color: #991b1b;
+}
+
+.tool-alert-title {
+  font-weight: 700;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ============================================
+   LISTS (matches CMC list styles)
+   ============================================ */
+.tool-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tool-list-item {
+  padding: 12px 16px;
+  background: var(--bg-white);
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  margin-bottom: 8px;
+  transition: all 0.2s ease;
+}
+
+.tool-list-item:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-medium);
+  transform: translateX(4px);
+}
+
+.tool-list-item:last-child {
+  margin-bottom: 0;
+}
+
+/* ============================================
+   BADGES & TAGS
+   ============================================ */
+.tool-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tool-badge-primary {
+  background: var(--navy-primary);
+  color: var(--text-white);
+}
+
+.tool-badge-secondary {
+  background: var(--border-medium);
+  color: var(--text-secondary);
+}
+
+.tool-badge-success {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.tool-badge-warning {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.tool-badge-error {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* ============================================
+   GRID LAYOUTS
+   ============================================ */
+.tool-grid {
+  display: grid;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.tool-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.tool-grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.tool-grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 1024px) {
+  .tool-grid-3,
+  .tool-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .tool-grid-2,
+  .tool-grid-3,
+  .tool-grid-4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================
+   LOADING & EMPTY STATES
+   ============================================ */
+.tool-loading {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+  font-size: 16px;
+}
+
+.tool-empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  background: var(--bg-white);
+  border: 2px dashed var(--border-medium);
+  border-radius: 12px;
+  color: var(--text-muted);
+}
+
+.tool-empty-state-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.tool-empty-state-text {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ============================================
+   RESPONSIVE UTILITIES
+   ============================================ */
+@media (max-width: 768px) {
+  .tool-page-header {
+    padding: 24px 20px;
+  }
+
+  .tool-page-title {
+    font-size: 24px;
+  }
+
+  .tool-page-subtitle {
+    font-size: 14px;
+  }
+
+  .tool-content-area {
+    padding: 20px 16px;
+  }
+
+  .tool-card {
+    padding: 16px;
+  }
+
+  .tool-card-title {
+    font-size: 18px;
+  }
+
+  .tool-btn {
+    padding: 10px 20px;
+    font-size: 13px;
+  }
+}
+
+/* ============================================
+   TYPOGRAPHY UTILITIES
+   ============================================ */
+.tool-text-primary {
+  color: var(--text-primary);
+}
+
+.tool-text-secondary {
+  color: var(--text-secondary);
+}
+
+.tool-text-muted {
+  color: var(--text-muted);
+}
+
+.tool-text-white {
+  color: var(--text-white);
+}
+
+.tool-text-navy {
+  color: var(--navy-primary);
+}
+
+.tool-text-gold {
+  color: var(--gold-accent);
+}
+
+/* ============================================
+   SPACING UTILITIES
+   ============================================ */
+.tool-mb-0 { margin-bottom: 0; }
+.tool-mb-1 { margin-bottom: 8px; }
+.tool-mb-2 { margin-bottom: 16px; }
+.tool-mb-3 { margin-bottom: 24px; }
+.tool-mb-4 { margin-bottom: 32px; }
+
+.tool-mt-0 { margin-top: 0; }
+.tool-mt-1 { margin-top: 8px; }
+.tool-mt-2 { margin-top: 16px; }
+.tool-mt-3 { margin-top: 24px; }
+.tool-mt-4 { margin-top: 32px; }
+
+/* ============================================
+   UNIVERSAL FALLBACK STYLES
+   (Works with any class names or HTML structure)
+   ============================================ */
+
+/* Apply to ALL body elements - HIGHEST PRIORITY */
+body,
+body.resource-center,
+body.agent-page,
+body.rom-page,
+body.authority-page,
+body:has(main.container),
+body:has(.main-grid),
+body:has(#main) {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  background: var(--bg-page) !important;
+  color: var(--text-primary) !important;
+  line-height: 1.6 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Generic header styling - OVERRIDE ALL */
+header,
+.header,
+body .header,
+body:has(main.container) .header,
+body:has(.main-grid) .header,
+body:has(#main) .header {
+  background: var(--navy-primary) !important;
+  color: var(--text-white) !important;
+  padding: 16px 32px !important;
+  border-bottom: 2px solid var(--gold-accent) !important;
+  box-shadow: none !important;
+}
+
+/* Generic navigation */
+nav, .nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+nav a, .nav a {
+  color: var(--text-white) !important;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+nav a:hover, .nav a:hover {
+  color: var(--gold-accent) !important;
+}
+
+/* Generic containers - OVERRIDE ALL */
+.container,
+main,
+.main,
+main.container,
+body .container,
+body main,
+body:has(main.container) .container,
+body:has(.main-grid) .container,
+body:has(#main) .container {
+  max-width: 1400px !important;
+  margin: 0 auto !important;
+  padding: 32px !important;
+  background: var(--bg-page) !important;
+}
+
+/* Generic content boxes/cards - match ANY class ending in -container, -card, -box, -panel */
+[class*="-container"],
+[class*="-card"],
+[class*="-box"],
+[class*="-panel"],
+[class*="-wrapper"] {
+  background: var(--bg-white) !important;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-md);
+}
+
+/* Generic headers within containers */
+[class*="-header"] {
+  background: var(--bg-cream) !important;
+  padding: 20px 24px;
+  border-radius: 8px 8px 0 0;
+  border-bottom: 2px solid var(--border-light);
+  margin: -24px -24px 24px -24px;
+}
+
+[class*="-header"] h1,
+[class*="-header"] h2 {
+  color: var(--navy-dark) !important;
+  margin: 0 0 8px 0;
+  font-weight: 700;
+}
+
+[class*="-header"] p {
+  color: var(--text-secondary) !important;
+  margin: 0;
+}
+
+/* Generic buttons - match ANY class containing "button" or "btn" - OVERRIDE ALL */
+button,
+[class*="button"],
+[class*="btn"],
+[class*="action"],
+input[type="submit"],
+input[type="button"],
+body button,
+body [class*="button"],
+body [class*="btn"],
+body:has(main.container) button,
+body:has(main.container) .btn,
+body:has(.main-grid) button,
+body:has(.main-grid) .btn,
+body:has(#main) button,
+body:has(#main) .btn {
+  font-family: 'Inter', sans-serif !important;
+  padding: 12px 24px !important;
+  border-radius: 6px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  border: 2px solid var(--navy-primary) !important;
+  background: var(--bg-white) !important;
+  color: var(--navy-primary) !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+button:hover,
+[class*="button"]:hover,
+[class*="btn"]:hover,
+[class*="action"]:hover,
+body button:hover,
+body [class*="button"]:hover,
+body [class*="btn"]:hover,
+body:has(main.container) button:hover,
+body:has(main.container) .btn:hover,
+body:has(.main-grid) button:hover,
+body:has(.main-grid) .btn:hover,
+body:has(#main) button:hover,
+body:has(#main) .btn:hover {
+  background: var(--navy-primary) !important;
+  color: var(--text-white) !important;
+  border-color: var(--navy-dark) !important;
+  box-shadow: var(--shadow-md) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Primary action buttons */
+[class*="primary"],
+button[type="submit"] {
+  background: var(--navy-primary) !important;
+  color: var(--text-white) !important;
+  border-color: var(--navy-primary);
+}
+
+[class*="primary"]:hover,
+button[type="submit"]:hover {
+  background: var(--navy-dark) !important;
+}
+
+/* Generic form inputs */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+input[type="number"],
+textarea,
+select {
+  font-family: 'Inter', sans-serif !important;
+  padding: 10px 14px;
+  border: 1px solid var(--border-medium);
+  border-radius: 6px;
+  font-size: 14px;
+  background: var(--bg-white) !important;
+  color: var(--text-primary) !important;
+  width: 100%;
+  max-width: 100%;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--navy-primary);
+  box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
+}
+
+/* Generic status badges */
+[class*="badge"],
+[class*="status"],
+[class*="tag"] {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--bg-cream) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-light);
+}
+
+/* Generic action grids */
+[class*="-actions"],
+[class*="-grid"] {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+
+/* Generic lists */
+ul, ol {
+  color: var(--text-primary) !important;
+}
+
+/* Generic headings */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--navy-dark) !important;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-top: 0;
+}
+
+h1 { font-size: 32px; margin-bottom: 16px; }
+h2 { font-size: 24px; margin-bottom: 12px; }
+h3 { font-size: 20px; margin-bottom: 10px; }
+h4 { font-size: 18px; margin-bottom: 8px; }
+
+/* Generic paragraphs */
+p {
+  color: var(--text-secondary) !important;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+/* Generic links */
+a {
+  color: var(--accent-blue) !important;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--navy-primary) !important;
+  text-decoration: underline;
+}
+
+/* Generic tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--bg-white) !important;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+th {
+  background: var(--navy-primary) !important;
+  color: var(--text-white) !important;
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+}
+
+td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-light);
+  color: var(--text-primary) !important;
+}
+
+tr:hover {
+  background: var(--bg-cream) !important;
+}
+
+/* Generic alerts/messages */
+[class*="alert"],
+[class*="message"],
+[class*="notice"] {
+  padding: 16px 20px;
+  border-radius: 6px;
+  border-left: 4px solid var(--accent-blue);
+  background: var(--bg-cream) !important;
+  color: var(--text-primary) !important;
+  margin-bottom: 16px;
+}
+
+/* ============================================
+   END OF TOOL VISUAL ALIGNMENT LAYER
+   ============================================ */
+

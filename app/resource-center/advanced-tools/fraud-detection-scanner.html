@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraud Detection Scanner - Claim Navigator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/app/assets/css/style.css">
+    <link rel="stylesheet" href="/app/assets/css/design-system.css">
+    <link rel="stylesheet" href="/app/assets/css/claim-analysis.css">
+    <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+    <link rel="stylesheet" href="/app/assets/css/advanced-tools-layout.css">
+</head>
+<body class="fraud-scanner-page">
+    <!-- Header -->
+    <header class="header">
+        <div class="bar container">
+            <div class="brand">
+                <div class="logo"></div>
+                <div>Claim Navigation AI</div>
+            </div>
+            <nav class="nav">
+                <a href="/app/index.html">Home</a>
+                <span>></span>
+                <a href="/app/resource-center.html">Resource Center</a>
+                <span>></span>
+                <a href="/app/resource-center/advanced-tools/advanced-tools.html">Advanced Tools Suite</a>
+                <span>></span>
+                <span>Fraud Detection Scanner</span>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Header -->
+    <section class="tool-hero">
+        <div class="tool-hero-container">
+            <p class="tool-hero-eyebrow">Advanced Tools</p>
+            <h1 class="tool-hero-title">Fraud Detection Scanner</h1>
+            <p class="tool-hero-subtitle">Identify potential insurance fraud patterns, suspicious claim handling practices, and red flags in adjuster communications.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="tool-container" style="padding-top: 80px;">
+        <div class="card">
+            <h2 style="margin-top: 0;">Upload Insurer Letter</h2>
+            
+            <div class="upload-area" id="upload-area">
+                <p style="font-size: 1.25rem; margin-bottom: 0.5rem;">📄 Drag and drop PDF or image here</p>
+                <p style="color: rgba(255, 255, 255, 0.7);">or click to browse</p>
+                <input type="file" id="file-input" accept=".pdf,.jpg,.jpeg,.png" style="display: none;">
+            </div>
+            
+            <div id="file-preview" style="display: none; margin-top: 1rem;">
+                <p><strong>Selected file:</strong> <span id="file-name"></span></p>
+            </div>
+            
+            <div style="margin-top: 1.5rem;">
+                <label for="extracted-text">Extracted Text Preview</label>
+                <textarea id="extracted-text" placeholder="Text will appear here after upload..." readonly></textarea>
+            </div>
+            
+            <div style="margin-top: 1.5rem;">
+                <button class="btn btn-primary" id="analyze-btn" disabled>Analyze for Fraud Patterns</button>
+            </div>
+        </div>
+        
+        <div class="card results-panel" id="results-panel" data-export-target="#results-panel">
+            <h2>AI Risk Analysis</h2>
+            
+            <div style="text-align: center; margin: 2rem 0;">
+                <p style="margin-bottom: 0.5rem;">Fraud Pattern Detection Score</p>
+                <div class="risk-score" id="risk-score">0</div>
+                <p style="color: rgba(255, 255, 255, 0.7);">out of 100</p>
+            </div>
+            
+            <div id="suspicious-sections"></div>
+            
+            <div style="margin-top: 2rem;">
+                <h3>Recommended Actions</h3>
+                <div id="recommended-actions" style="margin-top: 1rem;"></div>
+            </div>
+            
+            <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                <button class="btn btn-primary export-pdf-btn" id="export-pdf" data-export-target="#results-panel" data-export-filename="fraud-detection-scan.pdf">Export to PDF</button>
+                <button class="btn btn-secondary" id="generate-action-plan">Generate Action Plan</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 Claim Navigator • Fraud Detection Scanner</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="/app/assets/js/utils/pdf-export.js"></script>
+    <script src="/app/assets/js/advanced-tools/fraud-detection-scanner.js"></script>
+</body>
+</html>
+

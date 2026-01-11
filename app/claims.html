@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>My Claims • Claim Navigator</title>
+  <link rel="stylesheet" href="/app/assets/css/style.css">
+  <link rel="stylesheet" href="/app/assets/css/design-system.css">
+  <link rel="stylesheet" href="/app/assets/css/resource-center.css">
+  
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+</head>
+<body class="claims-page">
+  <header class="header">
+    <div class="bar container">
+      <div class="brand">
+        <div class="logo"></div>
+        <div>Claim Navigation AI</div>
+      </div>
+      <nav class="nav">
+        <a href="/app/index.html">Home</a>
+        <span class="nav-separator">></span>
+        <span class="nav-current">My Claims</span>
+      </nav>
+    </div>
+  </header>
+
+  <main class="claims-container">
+    <!-- Breadcrumb Navigation -->
+    <nav class="breadcrumb">
+      <a href="/">Home</a>
+      <span class="breadcrumb-separator">></span>
+      <span>My Claims</span>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <h1>My Claims</h1>
+      <p>Manage and track all your insurance claims in one place</p>
+      <div class="page-header-actions">
+        <a href="/app/claims/new.html" class="btn btn-primary">+ New Claim</a>
+        <a href="/app/resource-center.html" class="btn btn-secondary">Resource Center</a>
+      </div>
+    </div>
+
+    <div id="error-message" class="error" style="display: none;"></div>
+
+    <div id="loading" class="loading" style="display: block;">
+      Loading your claims...
+    </div>
+
+    <div id="empty-state" class="empty-state" style="display: none;">
+      <h3>No Claims Yet</h3>
+      <p>You haven't created any claims yet. Start by creating your first claim to track its progress and manage all your claim-related activities.</p>
+      <a href="/app/claims/new.html" class="btn btn-primary" style="margin-top: 1rem;">Create Your First Claim</a>
+    </div>
+
+    <div id="claims-grid" class="claims-grid" style="display: none;">
+      <!-- Claim cards will be inserted here -->
+    </div>
+  </main>
+
+  <script src="/app/assets/js/auth-utils.js"></script>
+  <script>
+    async function initializeApp() {
+      // Check authentication using shared utility
+      const authenticated = await window.AuthUtils.requireAuth();
+      if (!authenticated) {
+        return;
+      }
+
+      // Load claims
+      await loadClaims();
+    }
+
+    // Initialize when page loads
+    document.addEventListener('DOMContentLoaded', initializeApp);
+
+    async function loadClaims() {
+      const loadingEl = document.getElementById('loading');
+      const emptyStateEl = document.getElementById('empty-state');
+      const gridEl = document.getElementById('claims-grid');
+      const errorEl = document.getElementById('error-message');
+
+      try {
+        if (false) { // Force production mode
+          // Mock data for development
+          const mockClaims = [
+            {
+              id: '1',
+              date_of_loss: '2024-01-15',
+              type_of_loss: 'fire',
+              loss_location: {
+                address: '123 Main St',
+                city: 'Anytown',
+                state: 'CA',
+                zip: '12345'
+              },
+              insured_name: 'John Doe',
+              policy_number: 'POL123456',
+              insurer: 'State Farm',
+              status: 'pending',
+              property_type: 'residential',
+              created_at: '2024-01-16T10:00:00Z'
+            },
+            {
+              id: '2',
+              date_of_loss: '2024-02-01',
+              type_of_loss: 'water',
+              loss_location: {
+                address: '456 Oak Ave',
+                city: 'Somewhere',
+                state: 'TX',
+                zip: '67890'
+              },
+              insured_name: 'Jane Smith',
+              policy_number: 'POL789012',
+              insurer: 'Allstate',
+              status: 'new',
+              property_type: 'commercial',
+              created_at: '2024-02-02T14:30:00Z'
+            }
+          ];
+          
+          displayClaims(mockClaims);
+          return;
+        }
+
+        // Production mode - fetch from API
+        const response = await window.AuthUtils.authenticatedFetch('/.netlify/functions/list-claims');
+
+        if (!response) {
+          // Authentication failed, redirect handled by authenticatedFetch
+          return;
+        }
+
+        if (!response.ok) {
+          throw new Error('Failed to load claims');
+        }
+
+        const { claims } = await response.json();
+        displayClaims(claims);
+
+      } catch (error) {
+        console.error('Error loading claims:', error);
+        loadingEl.style.display = 'none';
+        errorEl.textContent = 'Failed to load claims. Please try again.';
+        errorEl.style.display = 'block';
+      }
+    }
+
+    function displayClaims(claims) {
+      const loadingEl = document.getElementById('loading');
+      const emptyStateEl = document.getElementById('empty-state');
+      const gridEl = document.getElementById('claims-grid');
+
+      loadingEl.style.display = 'none';
+
+      if (!claims || claims.length === 0) {
+        emptyStateEl.style.display = 'block';
+        return;
+      }
+
+      gridEl.style.display = 'grid';
+      gridEl.innerHTML = '';
+
+      claims.forEach(claim => {
+        const card = document.createElement('div');
+        card.className = 'claim-card';
+        
+        const location = claim.loss_location || {};
+        const locationStr = location.address 
+          ? `${location.address}, ${location.city}, ${location.state} ${location.zip}`
+          : 'Location not specified';
+
+        card.innerHTML = `
+          <div class="claim-card-header">
+            <h3 class="claim-card-title">${escapeHtml(claim.insured_name || 'Unnamed Claim')}</h3>
+            <div class="claim-card-status">
+              <span class="status-badge status-${claim.status || 'new'}">${claim.status || 'new'}</span>
+            </div>
+          </div>
+          <div class="claim-card-body">
+            <div class="claim-info-row">
+              <span class="claim-info-label">Date of Loss</span>
+              <span class="claim-info-value">${formatDate(claim.date_of_loss)}</span>
+            </div>
+            <div class="claim-info-row">
+              <span class="claim-info-label">Type of Loss</span>
+              <span class="claim-info-value">
+                <span class="type-badge">${formatTypeOfLoss(claim.type_of_loss)}</span>
+              </span>
+            </div>
+            <div class="claim-info-row">
+              <span class="claim-info-label">Location</span>
+              <span class="claim-info-value" style="font-size: 0.8rem; max-width: 60%; text-align: right;">${escapeHtml(locationStr)}</span>
+            </div>
+            ${claim.insurer ? `
+            <div class="claim-info-row">
+              <span class="claim-info-label">Insurer</span>
+              <span class="claim-info-value">${escapeHtml(claim.insurer)}</span>
+            </div>
+            ` : ''}
+            ${claim.policy_number ? `
+            <div class="claim-info-row">
+              <span class="claim-info-label">Policy Number</span>
+              <span class="claim-info-value">${escapeHtml(claim.policy_number)}</span>
+            </div>
+            ` : ''}
+            ${claim.property_type ? `
+            <div class="claim-info-row">
+              <span class="claim-info-label">Property Type</span>
+              <span class="claim-info-value">${formatTypeOfLoss(claim.property_type)}</span>
+            </div>
+            ` : ''}
+          </div>
+          <div class="claim-card-footer">
+            <a href="/app/claim-stage-tracker.html?claim_id=${claim.id}" class="btn btn-primary btn-sm" style="flex: 1;">Track Stages</a>
+            <a href="/app/claim.html?id=${claim.id}" class="btn btn-secondary btn-sm" style="flex: 1;">View Details</a>
+          </div>
+        `;
+        
+        gridEl.appendChild(card);
+      });
+    }
+
+    function formatDate(dateString) {
+      if (!dateString) return 'N/A';
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      });
+    }
+
+    function formatTypeOfLoss(type) {
+      if (!type) return 'N/A';
+      return type.charAt(0).toUpperCase() + type.slice(1).replace(/_/g, ' ');
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+  </script>
+<script type="module" src="/app/assets/js/diagnostics.js"></script>
+<script type="module" src="/app/assets/js/window-bridge.js"></script>
+</body>
+</html>

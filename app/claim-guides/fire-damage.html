@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fire Claims Guide</title>
+    <link rel="stylesheet" href="/app/css/design-system.css" />
+    <script src="/assets/js/navigation-template.js"></script>
+</head>
+
+<body>
+    <script>createNavigationBar();</script>
+
+
+<section class="hero-section hero-navy">
+    <div class="hero-content">
+        <h1>Fire Claims Guide</h1>
+        <p class="subtitle">Handle origin-and-cause questions, smoke/soot impacts, debris removal, and valuation of structure and contents.</p>
+    </div>
+</section>
+
+<div class="authority-layout">
+    <?php include($_SERVER['DOCUMENT_ROOT'] . '/app/partials/authority-sidebar.html'); ?>
+
+    <div class="authority-content">
+        <div class="breadcrumbs">
+            <a href="/app/authority-guides.html">Authority Guides</a> ›
+            <span>Fire Claims Guide</span>
+        </div>
+        <div class="toc-container">
+            <h3>On This Page</h3>
+            <ul id="toc-list"></ul>
+        </div>
+        <div class="container standard-page">
+            <div class="frosted-card">
+                <h2>Overview</h2>
+                <p>Fire claims involve structural damage, smoke/soot contamination, and potential origin-and-cause investigations. Coverage may include debris removal, code upgrades, ALE/LOU (loss of use), and personal property replacement.</p>
+
+                <h2>Key Rules & Requirements</h2>
+                <ul>
+                    <li><strong>Origin and cause:</strong> Cooperate with investigations; arson defenses require reasonable basis and timely communication.</li>
+                    <li><strong>Smoke and soot:</strong> Damage from smoke, ash, and odor is generally covered even without direct flame contact.</li>
+                    <li><strong>Debris removal:</strong> Usually covered up to a percentage of Coverage A/C, with additional limits after total loss.</li>
+                    <li><strong>Code compliance:</strong> Ordinance or law coverage can fund upgrades required by building code after a fire.</li>
+                    <li><strong>Contents valuation:</strong> Most policies pay ACV first and RCV after replacement receipts are provided.</li>
+                </ul>
+
+                <h2>Step-by-Step Guidance</h2>
+                <ol>
+                    <li>Secure the site, board openings, and notify the carrier immediately.</li>
+                    <li>Request a <strong>certified smoke/soot cleaning plan</strong> for structure and contents; avoid premature cleaning that could alter evidence.</li>
+                    <li>Invite your contractor to the inspection to document <strong>structural and mechanical impacts</strong> (HVAC, electrical, plumbing).</li>
+                    <li>Prepare a <strong>room-by-room inventory</strong> of damaged contents with age, condition, and replacement pricing.</li>
+                    <li>Obtain an <strong>RCV estimate</strong> for the structure and identify any code-required upgrades.</li>
+                    <li>Track <strong>ALE/LOU expenses</strong> (temporary housing, meals) with receipts and policy limits in mind.</li>
+                    <li>Request payment of undisputed structure ACV, debris removal allowances, and ALE advances promptly.</li>
+                </ol>
+
+                <h2>Required Documentation</h2>
+                <ul>
+                    <li>Fire department report and any photos/video from responders.</li>
+                    <li>Contractor estimate with line items for demolition, cleaning, deodorization, and rebuild.</li>
+                    <li>Industrial hygienist or restoration contractor <strong>soot/smoke testing</strong> and cleaning protocol.</li>
+                    <li>Contents inventory spreadsheet with pricing sources.</li>
+                    <li>Receipts for ALE/LOU, board-up, and debris removal.</li>
+                    <li>Permits and code upgrade notices from local authorities.</li>
+                </ul>
+
+                <h2>Common Insurer Tactics</h2>
+                <ul>
+                    <li>Delaying payments while pursuing lengthy origin-and-cause reviews without clear evidence.</li>
+                    <li>Limiting smoke cleaning to visible damage and excluding hidden cavities or HVAC systems.</li>
+                    <li>Applying heavy depreciation to contents or using outdated price sources.</li>
+                    <li>Denying code upgrades despite authority requirements.</li>
+                </ul>
+
+                <h2>Red Flags to Watch For</h2>
+                <ul>
+                    <li>No written explanation for withholding undisputed ACV during investigations.</li>
+                    <li>Refusal to test for soot in adjacent rooms or ductwork.</li>
+                    <li>Estimates that exclude deodorization or sealing of surfaces.</li>
+                    <li>Delays in issuing ALE despite uninhabitable conditions.</li>
+                </ul>
+
+                <h2>Best Practices for Policyholders</h2>
+                <ul>
+                    <li>Keep samples of materials and HVAC filters showing soot for evidence.</li>
+                    <li>Use professional <strong>inventory tools</strong> to speed contents valuation and reduce depreciation disputes.</li>
+                    <li>Ask the carrier to identify <strong>all undisputed amounts</strong> and pay them immediately.</li>
+                    <li>Request reinspection after demolition to capture hidden structural impacts.</li>
+                    <li>Clarify ALE limits early and submit receipts weekly to avoid disruption.</li>
+                </ul>
+
+                <a href="/app/authority-guides.html" class="back-link">← Back to Authority Guides</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const search = document.getElementById("authority-search");
+    const links = document.querySelectorAll(".authority-nav ul li");
+
+    if (!search) return;
+
+    search.addEventListener("input", () => {
+        const query = search.value.toLowerCase();
+
+        links.forEach(li => {
+            const text = li.textContent.toLowerCase();
+            li.style.display = text.includes(query) ? "" : "none";
+        });
+    });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const content = document.querySelector('.frosted-card');
+    const headings = content.querySelectorAll('h2, h3');
+
+    const tocList = document.getElementById('toc-list');
+
+    headings.forEach((heading, index) => {
+        const id = heading.innerText.replace(/\s+/g, '-').toLowerCase() + '-' + index;
+        heading.id = id;
+
+        const li = document.createElement('li');
+        li.classList.add(heading.tagName.toLowerCase());
+
+        const link = document.createElement('a');
+        link.href = '#' + id;
+        link.innerText = heading.innerText;
+
+        li.appendChild(link);
+        tocList.appendChild(li);
+    });
+
+    // ScrollSpy
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            const link = tocList.querySelector(`a[href="#${entry.target.id}"]`);
+            if (entry.isIntersecting) {
+                tocList.querySelectorAll('a').forEach(a => a.classList.remove('active'));
+                if (link) link.classList.add('active');
+            }
+        });
+    }, { threshold: 0.4 });
+
+    headings.forEach(heading => observer.observe(heading));
+});
+</script>
+
+</body>
+</html>

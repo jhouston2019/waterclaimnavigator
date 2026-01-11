@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hurricane / Windstorm Claims Guide</title>
+    <link rel="stylesheet" href="/app/css/design-system.css" />
+    <script src="/assets/js/navigation-template.js"></script>
+</head>
+
+<body>
+    <script>createNavigationBar();</script>
+
+
+<section class="hero-section hero-navy">
+    <div class="hero-content">
+        <h1>Hurricane / Windstorm Claims Guide</h1>
+        <p class="subtitle">Handle hurricane deductibles, wind vs. flood causation, catastrophe timelines, and widespread damage documentation.</p>
+    </div>
+</section>
+
+<div class="authority-layout">
+    <?php include($_SERVER['DOCUMENT_ROOT'] . '/app/partials/authority-sidebar.html'); ?>
+
+    <div class="authority-content">
+        <div class="breadcrumbs">
+            <a href="/app/authority-guides.html">Authority Guides</a> ›
+            <span>Hurricane / Windstorm Claims Guide</span>
+        </div>
+        <div class="toc-container">
+            <h3>On This Page</h3>
+            <ul id="toc-list"></ul>
+        </div>
+        <div class="container standard-page">
+            <div class="frosted-card">
+                <h2>Overview</h2>
+                <p>Windstorm claims often involve roof, exterior, and water intrusion damage, with competing causation arguments between wind and flood. Catastrophe events can extend certain timelines but carriers still owe prompt investigation and payment of undisputed amounts.</p>
+
+                <h2>Key Rules & Requirements</h2>
+                <ul>
+                    <li><strong>Hurricane/wind deductible:</strong> Applied when triggers are met (named storm, windspeed thresholds); verify the percentage and base (Coverage A or total insured value).</li>
+                    <li><strong>Anti-concurrent causation (ACC):</strong> Some policies exclude combined wind/flood losses; evidence of wind-created openings is critical.</li>
+                    <li><strong>Ordinance or law:</strong> Code-driven roof replacements or upgrades may be covered if endorsed.</li>
+                    <li><strong>CAT timeline adjustments:</strong> States may adjust response windows but still require reasonable progress and communication.</li>
+                    <li><strong>Supplemental claims:</strong> Additional damage discovered later can be submitted; keep the claim open until completion.</li>
+                </ul>
+
+                <h2>Step-by-Step Guidance</h2>
+                <ol>
+                    <li>Document exterior damage immediately: shingles, siding, windows, fences, detached structures.</li>
+                    <li>Capture <strong>interior water intrusion</strong> locations tied to roof or window failures; note dates of rainfall.</li>
+                    <li>Obtain a <strong>roofing or engineering inspection</strong> to identify wind-created openings, uplift, and soft decking.</li>
+                    <li>Separate <strong>wind vs. flood</strong> damage with photos, moisture mapping, and high-water marks.</li>
+                    <li>Prepare a detailed estimate including <strong>code upgrades</strong> where required by local ordinances.</li>
+                    <li>Request <strong>advance or undisputed ACV payment</strong> promptly to fund temporary repairs and tarping.</li>
+                    <li>Submit supplements as hidden damage is exposed during repairs.</li>
+                </ol>
+
+                <h2>Required Documentation</h2>
+                <ul>
+                    <li>Photos/video of roof slopes, missing shingles, creased tabs, and damaged accessories.</li>
+                    <li>Interior moisture readings and ceiling/wall damage mapped to exterior openings.</li>
+                    <li>Contractor or engineer reports attributing damage to wind forces.</li>
+                    <li>Detailed estimates with line items for code-required nailing patterns, underlayment, and decking replacement.</li>
+                    <li>Receipts for tarps, board-up, generators, and debris removal.</li>
+                    <li>Proof of ALE/LOU expenses if the home is uninhabitable.</li>
+                </ul>
+
+                <h2>Common Insurer Tactics</h2>
+                <ul>
+                    <li>Blaming damage on pre-existing wear rather than wind uplift.</li>
+                    <li>Paying patch repairs despite widespread creasing or brittleness that prevents matching.</li>
+                    <li>Applying flood exclusions broadly without segregating wind-caused portions.</li>
+                    <li>Denying code upgrades even when required for full roof replacement.</li>
+                </ul>
+
+                <h2>Red Flags to Watch For</h2>
+                <ul>
+                    <li>No ladder assist or roof-level inspection before denial.</li>
+                    <li>Estimates omitting drip edge, starter, ridge, or ventilation components.</li>
+                    <li>Failure to test brittleness or document shingle repairability.</li>
+                    <li>Undisputed wind damage identified but held until flood disputes resolve.</li>
+                </ul>
+
+                <h2>Best Practices for Policyholders</h2>
+                <ul>
+                    <li>Request the carrier’s photos and roof measurements to compare scope.</li>
+                    <li>Use local code citations and manufacturer requirements to justify full replacement.</li>
+                    <li>Keep separate files for NFIP/flood and wind claims to avoid commingling evidence.</li>
+                    <li>Log every weather event date/time to connect interior damages to wind intrusion.</li>
+                    <li>Push for partial payments to address temporary repairs and safety issues quickly.</li>
+                </ul>
+
+                <a href="/app/authority-guides.html" class="back-link">← Back to Authority Guides</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const search = document.getElementById("authority-search");
+    const links = document.querySelectorAll(".authority-nav ul li");
+
+    if (!search) return;
+
+    search.addEventListener("input", () => {
+        const query = search.value.toLowerCase();
+
+        links.forEach(li => {
+            const text = li.textContent.toLowerCase();
+            li.style.display = text.includes(query) ? "" : "none";
+        });
+    });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const content = document.querySelector('.frosted-card');
+    const headings = content.querySelectorAll('h2, h3');
+
+    const tocList = document.getElementById('toc-list');
+
+    headings.forEach((heading, index) => {
+        const id = heading.innerText.replace(/\s+/g, '-').toLowerCase() + '-' + index;
+        heading.id = id;
+
+        const li = document.createElement('li');
+        li.classList.add(heading.tagName.toLowerCase());
+
+        const link = document.createElement('a');
+        link.href = '#' + id;
+        link.innerText = heading.innerText;
+
+        li.appendChild(link);
+        tocList.appendChild(li);
+    });
+
+    // ScrollSpy
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            const link = tocList.querySelector(`a[href="#${entry.target.id}"]`);
+            if (entry.isIntersecting) {
+                tocList.querySelectorAll('a').forEach(a => a.classList.remove('active'));
+                if (link) link.classList.add('active');
+            }
+        });
+    }, { threshold: 0.4 });
+
+    headings.forEach(heading => observer.observe(heading));
+});
+</script>
+
+</body>
+</html>

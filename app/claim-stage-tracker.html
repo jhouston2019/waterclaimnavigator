@@ -1,0 +1,774 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Claim Stage Tracker • Claim Navigator</title>
+  <link rel="stylesheet" href="/app/assets/css/style.css">
+  <link rel="stylesheet" href="/app/assets/css/design-system.css">
+  <link rel="stylesheet" href="/app/assets/css/resource-center.css">
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm" type="module"></script>
+  <script src="/assets/js/auth-utils.js" defer></script>
+  
+</head>
+<body class="stage-tracker-page resource-center">
+  <header class="header">
+    <div class="bar container">
+      <div class="brand"><div>Claim Navigation AI</div></div>
+      <nav class="nav">
+        <a href="/app/index.html">Home</a>
+        <span class="nav-separator">></span>
+        <span class="nav-current">Claim Stage Tracker</span>
+        <span class="nav-separator">></span>
+        <a href="/app/resource-center.html">Resource Center</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="tracker-container">
+    <div class="tracker-header">
+      <h1>Claim Stage Tracker</h1>
+      <p>Track your claim's progress through each stage with visual timeline and detailed notes.</p>
+    </div>
+
+    <div id="claimSelector" class="claim-selector" style="display: none;">
+      <label for="claimSelect">Select Claim:</label>
+      <select id="claimSelect">
+        <option value="">Loading claims...</option>
+      </select>
+    </div>
+
+    <div id="progressSection" style="display: none;">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-text" id="progressText"></div>
+    </div>
+
+    <div id="timelineView" class="timeline-view" style="display: none;"></div>
+
+    <div id="stages" class="stage-container">
+      <div class="loading">Loading claim stages...</div>
+    </div>
+  </div>
+
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+let supabase = null;
+let currentClaimId = null;
+let currentUser = null;
+let claims = [];
+
+// Utility functions
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function showToast(message, type = 'success') {
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  
+  setTimeout(() => {
+    toast.style.animation = 'slideIn 0.3s ease reverse';
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+// Initialize Supabase with fallback
+async function initializeSupabase() {
+  if (supabase) return supabase;
+
+  try {
+    // Try to get config from Netlify function first
+    let supabaseUrl = '{{ SUPABASE_URL }}';
+    let supabaseAnonKey = '{{ SUPABASE_ANON_KEY }}';
+
+    // Check if placeholders weren't replaced (local dev or build issue)
+    if (supabaseUrl.includes('{{') || supabaseAnonKey.includes('{{')) {
+      console.warn('Supabase config placeholders not replaced, trying to fetch from API...');
+      try {
+        const configRes = await fetch('/.netlify/functions/get-supabase-config');
+        if (configRes.ok) {
+          const config = await configRes.json();
+          supabaseUrl = config.SUPABASE_URL;
+          supabaseAnonKey = config.SUPABASE_ANON_KEY;
+        }
+      } catch (e) {
+        console.error('Could not fetch Supabase config:', e);
+        showToast('Supabase configuration error. Please check your environment variables.', 'error');
+        return null;
+      }
+    }
+
+    // Validate that we have valid values
+    if (!supabaseUrl || !supabaseAnonKey || supabaseUrl.includes('{{') || supabaseAnonKey.includes('{{')) {
+      console.error('Invalid Supabase configuration');
+      showToast('Supabase configuration is missing. Please contact support.', 'error');
+      return null;
+    }
+
+    supabase = createClient(supabaseUrl, supabaseAnonKey);
+    console.log('Supabase initialized successfully');
+    return supabase;
+  } catch (error) {
+    console.error('Failed to initialize Supabase:', error);
+    showToast('Failed to initialize database connection. Please refresh the page.', 'error');
+    return null;
+  }
+}
+
+// Check authentication
+async function checkAuth() {
+  const client = await initializeSupabase();
+  if (!client) {
+    return false;
+  }
+
+  try {
+    const { data: { session }, error } = await client.auth.getSession();
+    if (error || !session) {
+      showToast('Please log in to access the claim stage tracker', 'error');
+      setTimeout(() => {
+        window.location.href = '/app/login.html';
+      }, 2000);
+      return false;
+    }
+    currentUser = session.user;
+    console.log('User authenticated:', currentUser.email);
+    return true;
+  } catch (error) {
+    console.error('Auth error:', error);
+    showToast('Authentication error. Please try again.', 'error');
+    return false;
+  }
+}
+
+// Load user's claims
+async function loadClaims() {
+  const client = await initializeSupabase();
+  if (!client) return;
+
+  try {
+    const { data: { session } } = await client.auth.getSession();
+    if (!session) {
+      showToast('Session expired. Please log in again.', 'error');
+      return;
+    }
+
+    const headers = {
+      'Authorization': `Bearer ${session.access_token}`,
+      'Content-Type': 'application/json'
+    };
+
+    console.log('Fetching claims from API...');
+    const res = await fetch('/.netlify/functions/list-claims', { headers });
+    
+    console.log('Response status:', res.status, res.statusText);
+    
+    // Read the response body once
+    const responseText = await res.text();
+    console.log('Raw response text:', responseText);
+    
+    if (!res.ok) {
+      // Try to parse as JSON
+      let errorData = {};
+      try {
+        errorData = JSON.parse(responseText);
+        console.error('Parsed error data:', errorData);
+      } catch (e) {
+        console.error('Could not parse error as JSON:', e);
+        errorData = { 
+          raw: responseText,
+          parseError: e.message
+        };
+      }
+      
+      const errorMessage = errorData.error || errorData.message || `HTTP ${res.status}: ${res.statusText}`;
+      
+      console.error('API Error Details:', {
+        status: res.status,
+        statusText: res.statusText,
+        message: errorMessage,
+        fullError: errorData
+      });
+      
+      // Create a more detailed error with all the info
+      const detailedError = new Error(errorMessage);
+      detailedError.status = res.status;
+      detailedError.details = errorData;
+      throw detailedError;
+    }
+
+    // Parse successful response
+    let data = {};
+    try {
+      data = JSON.parse(responseText);
+    } catch (e) {
+      console.error('Could not parse response as JSON:', e);
+      throw new Error('Invalid response from server');
+    }
+    console.log('Claims data received:', data);
+
+    // Check if response has error property
+    if (data.error) {
+      throw new Error(data.error);
+    }
+
+    if (data.claims && data.claims.length > 0) {
+      console.log(`Found ${data.claims.length} claim(s)`);
+      claims = data.claims;
+      populateClaimSelector();
+      
+      // Auto-select claim from localStorage or URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const claimIdFromUrl = urlParams.get('claim_id');
+      const claimIdFromStorage = localStorage.getItem('claim_id');
+      
+      const selectedClaimId = claimIdFromUrl || claimIdFromStorage || claims[0].id;
+      if (document.getElementById('claimSelect')) {
+        document.getElementById('claimSelect').value = selectedClaimId;
+      }
+      currentClaimId = selectedClaimId;
+      console.log('Selected claim ID:', currentClaimId);
+      await loadStages();
+    } else {
+      console.log('No claims found for user');
+      document.getElementById('stages').innerHTML = `
+        <div class="empty-state">
+          <h3>No Claims Found</h3>
+          <p style="font-size: 1.1rem; margin-bottom: 1rem;">You don't have any claims yet. Create a claim to start tracking its stages.</p>
+          <p style="opacity: 0.8; margin-bottom: 1.5rem;">Once you create a claim, you'll be able to track its progress through all stages with detailed guidance and next steps.</p>
+          <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
+            <a href="/app/claims.html" style="display: inline-block; padding: 0.75rem 1.5rem; background: #3b82f6; color: white; border: none; border-radius: 0.5rem; cursor: pointer; text-decoration: none; font-weight: 600;">Create New Claim</a>
+            <a href="/app/claims.html" style="display: inline-block; padding: 0.75rem 1.5rem; background: rgba(255, 255, 255, 0.1); color: #ffffff !important; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 0.5rem; text-decoration: none;">View All Claims</a>
+            <a href="/app/resource-center.html" style="display: inline-block; padding: 0.75rem 1.5rem; background: rgba(255, 255, 255, 0.1); color: #ffffff !important; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 0.5rem; text-decoration: none;">Back to Resource Center</a>
+          </div>
+        </div>
+      `;
+    }
+  } catch (error) {
+    console.error('Error loading claims:', error);
+    console.error('Full error object:', error);
+    
+    const errorMsg = error.message || 'Unknown error occurred';
+    const errorDetails = error.details || {};
+    const errorStatus = error.status || 'Unknown';
+    
+    showToast(`Error loading claims: ${errorMsg}`, 'error');
+    
+    // Build detailed error info
+    const errorInfo = {
+      message: error.message,
+      status: errorStatus,
+      name: error.name,
+      details: errorDetails,
+      stack: error.stack
+    };
+    
+    document.getElementById('stages').innerHTML = `
+      <div class="empty-state">
+        <h3>Error Loading Claims</h3>
+        <p style="color: #ef4444 !important; font-weight: 600; font-size: 1.1rem;">${escapeHtml(errorMsg)}</p>
+        ${errorStatus !== 'Unknown' ? `<p style="color: #dbeafe !important; margin-top: 0.5rem;">Status Code: ${errorStatus}</p>` : ''}
+        ${errorDetails.details ? `<p style="color: #fbbf24 !important; margin-top: 0.5rem;">Details: ${escapeHtml(errorDetails.details)}</p>` : ''}
+        ${errorDetails.code ? `<p style="color: #dbeafe !important; margin-top: 0.5rem;">Error Code: ${escapeHtml(errorDetails.code)}</p>` : ''}
+        ${errorDetails.hint ? `<p style="color: #dbeafe !important; margin-top: 0.5rem;">Hint: ${escapeHtml(errorDetails.hint)}</p>` : ''}
+        <details style="margin-top: 1rem; text-align: left; max-width: 600px;">
+          <summary style="cursor: pointer; color: #dbeafe !important; margin-bottom: 0.5rem; font-weight: 600;">Full Error Details (Click to expand)</summary>
+          <pre style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 0.5rem; overflow-x: auto; font-size: 0.85rem; color: #dbeafe !important; white-space: pre-wrap; word-wrap: break-word;">${escapeHtml(JSON.stringify(errorInfo, null, 2))}</pre>
+        </details>
+        <div style="margin-top: 1.5rem;">
+          <button onclick="location.reload()" style="padding: 0.75rem 1.5rem; background: #3b82f6; color: white; border: none; border-radius: 0.5rem; cursor: pointer; margin-right: 0.5rem;">Retry</button>
+          <button onclick="window.location.href='/app/login.html'" style="padding: 0.75rem 1.5rem; background: #6b7280; color: white; border: none; border-radius: 0.5rem; cursor: pointer;">Go to Login</button>
+        </div>
+      </div>
+    `;
+  }
+}
+
+function populateClaimSelector() {
+  const select = document.getElementById('claimSelect');
+  const selector = document.getElementById('claimSelector');
+  
+  if (claims.length > 1) {
+    selector.style.display = 'block';
+    select.innerHTML = '<option value="">Select a claim...</option>';
+    claims.forEach(claim => {
+      const option = document.createElement('option');
+      option.value = claim.id;
+      const claimLabel = claim.policy_number 
+        ? `${claim.policy_number} - ${claim.type_of_loss || 'Claim'}`
+        : `Claim ${claim.id.substring(0, 8)}`;
+      option.textContent = claimLabel;
+      select.appendChild(option);
+    });
+    
+    select.addEventListener('change', async (e) => {
+      currentClaimId = e.target.value;
+      if (currentClaimId) {
+        localStorage.setItem('claim_id', currentClaimId);
+        await loadStages();
+      }
+    });
+  } else if (claims.length === 1) {
+    currentClaimId = claims[0].id;
+    localStorage.setItem('claim_id', currentClaimId);
+  }
+}
+
+// Load claim stages
+async function loadStages() {
+  if (!currentClaimId) {
+    document.getElementById('stages').innerHTML = '<div class="loading">Please select a claim</div>';
+    return;
+  }
+
+  const client = await initializeSupabase();
+  if (!client) {
+    document.getElementById('stages').innerHTML = '<div class="loading" style="color: #ef4444 !important;">Database connection error</div>';
+    return;
+  }
+
+  try {
+    const { data: { session } } = await client.auth.getSession();
+    if (!session) {
+      showToast('Session expired. Please log in again.', 'error');
+      return;
+    }
+
+    const headers = {
+      'Authorization': `Bearer ${session.access_token}`,
+      'Content-Type': 'application/json'
+    };
+
+    console.log('Loading stages for claim:', currentClaimId);
+    const res = await fetch(`/.netlify/functions/get-claim-stages?claim_id=${currentClaimId}`, { headers });
+    
+    if (!res.ok) {
+      const errorText = await res.text();
+      throw new Error(`HTTP error! status: ${res.status}, message: ${errorText}`);
+    }
+
+    const data = await res.json();
+
+    if (data.status === 'error') {
+      throw new Error(data.error);
+    }
+
+    const stages = data.stages || [];
+    const div = document.getElementById('stages');
+    div.innerHTML = '';
+
+    if (stages.length === 0) {
+      div.innerHTML = `
+        <div class="empty-state">
+          <h3>No Stages Found</h3>
+          <p>Stages will be created automatically when you start tracking your claim.</p>
+          <p style="margin-top: 1rem; opacity: 0.8;">If you just created a claim, stages should appear shortly. Try refreshing the page.</p>
+          <button onclick="location.reload()" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: #3b82f6; color: white; border: none; border-radius: 0.5rem; cursor: pointer;">Refresh Page</button>
+        </div>
+      `;
+      return;
+    }
+
+    // Calculate progress
+    const completed = stages.filter(s => s.status === 'complete').length;
+    const total = stages.length;
+    const progress = Math.round((completed / total) * 100);
+
+    // Show progress bar
+    const progressSection = document.getElementById('progressSection');
+    const progressFill = document.getElementById('progressFill');
+    const progressText = document.getElementById('progressText');
+    
+    progressSection.style.display = 'block';
+    progressFill.style.width = `${progress}%`;
+    progressText.textContent = `${completed} of ${total} stages completed (${progress}%)`;
+
+    // Render timeline view
+    renderTimelineView(stages);
+
+    // Store related data for use
+    window.relatedDeadlines = data.related_deadlines || [];
+    window.relatedJournalEntries = data.related_journal_entries || [];
+
+    // Render detailed stages
+    stages.forEach((stage, index) => {
+      const stageDiv = document.createElement('div');
+      stageDiv.className = `stage ${stage.status}`;
+      
+      const statusLabel = stage.status === 'complete' ? 'Complete' : 
+                          stage.status === 'active' ? 'Active' : 'Pending';
+      
+      const guidance = stage.guidance || {};
+      const nextSteps = guidance.next_steps || [];
+      const resources = guidance.resources || [];
+      
+      stageDiv.innerHTML = `
+        <span class="stage-status-badge">${statusLabel}</span>
+        <h3>${stage.stage_name}</h3>
+        <p>${stage.description || 'No description available'}</p>
+        
+        ${guidance.tips ? `<div class="stage-tip" style="background: rgba(59, 130, 246, 0.2); padding: 0.75rem; border-radius: 0.5rem; margin: 1rem 0; border-left: 3px solid #3b82f6;">
+          <strong style="color: #93c5fd !important;">💡 Tip:</strong> <span style="color: #dbeafe !important;">${escapeHtml(guidance.tips)}</span>
+        </div>` : ''}
+        
+        ${guidance.typical_duration ? `<div style="margin: 0.5rem 0; color: #dbeafe !important; font-size: 0.9rem;">
+          <strong>⏱ Typical Duration:</strong> ${escapeHtml(guidance.typical_duration)}
+        </div>` : ''}
+        
+        ${nextSteps.length > 0 ? `
+          <div class="stage-next-steps" style="margin: 1rem 0;">
+            <h4 style="color: #ffffff !important; font-size: 1.1rem; margin-bottom: 0.75rem;">Next Steps:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+              ${nextSteps.map((step, i) => `
+                <li style="padding: 0.5rem 0; color: #dbeafe !important; display: flex; align-items: start; gap: 0.5rem;">
+                  <span style="color: #3b82f6 !important; font-weight: bold;">${i + 1}.</span>
+                  <span>${escapeHtml(step)}</span>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+        ` : ''}
+        
+        ${resources.length > 0 ? `
+          <div class="stage-resources" style="margin: 1rem 0;">
+            <h4 style="color: #ffffff !important; font-size: 1.1rem; margin-bottom: 0.75rem;">Helpful Resources:</h4>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+              ${resources.map(resource => `
+                <a href="${resource.url}" style="display: inline-block; padding: 0.5rem 1rem; background: rgba(59, 130, 246, 0.2); color: #93c5fd !important; border: 1px solid rgba(59, 130, 246, 0.4); border-radius: 0.5rem; text-decoration: none; font-size: 0.9rem; transition: all 0.2s;">
+                  ${escapeHtml(resource.name)} →
+                </a>
+              `).join('')}
+            </div>
+          </div>
+        ` : ''}
+        
+        <div class="stage-buttons">
+          ${stage.status !== 'active' ? `<button class="btn-stage btn-active" onclick="window.updateStage('${stage.stage_name}', 'active')">Mark Active</button>` : ''}
+          ${stage.status !== 'complete' ? `<button class="btn-stage btn-complete" onclick="window.updateStage('${stage.stage_name}', 'complete')">Mark Complete</button>` : ''}
+          ${stage.status === 'complete' ? `<button class="btn-stage btn-active" onclick="window.updateStage('${stage.stage_name}', 'pending')" style="background: #6b7280;">Reset</button>` : ''}
+        </div>
+        ${stage.updated_at ? `<small style="display: block; margin-top: 0.5rem; opacity: 0.7; font-size: 0.85rem;">Last updated: ${new Date(stage.updated_at).toLocaleString()}</small>` : ''}
+        <div class="stage-notes">
+          <textarea id="notes-${index}" placeholder="Add notes about this stage (max 300 chars)..." maxlength="300">${escapeHtml(stage.notes || '')}</textarea>
+          <button onclick="window.saveNotes('${stage.stage_name}', ${index})">Save Notes</button>
+          ${stage.notes ? `<div class="notes-display">${escapeHtml(stage.notes)}</div>` : ''}
+        </div>
+      `;
+      
+      div.appendChild(stageDiv);
+    });
+    
+    // Show related deadlines and journal entries if available
+    if (window.relatedDeadlines.length > 0 || window.relatedJournalEntries.length > 0) {
+      const relatedDiv = document.createElement('div');
+      relatedDiv.className = 'related-info';
+      relatedDiv.style.cssText = 'margin-top: 2rem; padding: 1.5rem; background: rgba(255, 255, 255, 0.1); border-radius: 1rem; backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.2);';
+      
+      let relatedContent = '<h3 style="color: #ffffff !important; margin-bottom: 1rem;">Related Information</h3>';
+      
+      if (window.relatedDeadlines.length > 0) {
+        relatedContent += `
+          <div style="margin-bottom: 1.5rem;">
+            <h4 style="color: #dbeafe !important; font-size: 1rem; margin-bottom: 0.5rem;">Upcoming Deadlines:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+              ${window.relatedDeadlines.slice(0, 5).map(deadline => {
+                const date = new Date(deadline.date_value || deadline.date);
+                const isOverdue = date < new Date();
+                return `
+                  <li style="padding: 0.5rem 0; color: ${isOverdue ? '#ef4444' : '#dbeafe'} !important; display: flex; align-items: center; gap: 0.5rem;">
+                    <span style="color: ${isOverdue ? '#ef4444' : '#f59e0b'} !important;">⚠</span>
+                    <span><strong>${escapeHtml(deadline.deadline_name || deadline.date_type || 'Deadline')}:</strong> ${date.toLocaleDateString()}</span>
+                  </li>
+                `;
+              }).join('')}
+            </ul>
+            <a href="/app/deadlines.html?claim_id=${currentClaimId}" style="display: inline-block; margin-top: 0.5rem; color: #93c5fd !important; text-decoration: underline;">View all deadlines →</a>
+          </div>
+        `;
+      }
+      
+      if (window.relatedJournalEntries.length > 0) {
+        relatedContent += `
+          <div>
+            <h4 style="color: #dbeafe !important; font-size: 1rem; margin-bottom: 0.5rem;">Recent Journal Entries:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+              ${window.relatedJournalEntries.slice(0, 3).map(entry => {
+                const date = new Date(entry.created_at);
+                return `
+                  <li style="padding: 0.5rem 0; color: #dbeafe !important;">
+                    <strong>${escapeHtml(entry.entry_title || 'Entry')}:</strong> ${date.toLocaleDateString()} - ${escapeHtml((entry.entry_body || '').substring(0, 100))}${entry.entry_body && entry.entry_body.length > 100 ? '...' : ''}
+                  </li>
+                `;
+              }).join('')}
+            </ul>
+            <a href="/app/claim-journal.html?claim_id=${currentClaimId}" style="display: inline-block; margin-top: 0.5rem; color: #93c5fd !important; text-decoration: underline;">View journal →</a>
+          </div>
+        `;
+      }
+      
+      relatedDiv.innerHTML = relatedContent;
+      div.appendChild(relatedDiv);
+    }
+
+  } catch (error) {
+    console.error('Error loading stages:', error);
+    document.getElementById('stages').innerHTML = `
+      <div class="loading" style="color: #ef4444 !important;">
+        Error loading stages: ${error.message}
+      </div>
+    `;
+    showToast('Error loading stages. Please try again.', 'error');
+  }
+}
+
+// Render timeline view
+function renderTimelineView(stages) {
+  const timelineDiv = document.getElementById('timelineView');
+  timelineDiv.innerHTML = '';
+  timelineDiv.style.display = 'flex';
+
+  stages.forEach((stage, index) => {
+    const stageEl = document.createElement('div');
+    stageEl.className = `timeline-stage ${stage.status}`;
+    
+    const statusIcon = stage.status === 'complete' ? '✓' : 
+                      stage.status === 'active' ? '→' : 
+                      (index + 1).toString();
+    
+    stageEl.innerHTML = `
+      <div class="timeline-dot">${statusIcon}</div>
+      <div class="timeline-stage-name">${stage.stage_name}</div>
+    `;
+    
+    timelineDiv.appendChild(stageEl);
+  });
+}
+
+// Update stage status
+window.updateStage = async function(stageName, newStatus) {
+  if (!currentClaimId) {
+    showToast('Please select a claim first', 'error');
+    return;
+  }
+
+  const client = await initializeSupabase();
+  if (!client) {
+    showToast('Database connection error', 'error');
+    return;
+  }
+
+  try {
+    const { data: { session } } = await client.auth.getSession();
+    if (!session) {
+      showToast('Session expired. Please log in again.', 'error');
+      return;
+    }
+
+    const headers = {
+      'Authorization': `Bearer ${session.access_token}`,
+      'Content-Type': 'application/json'
+    };
+
+    console.log('Updating stage:', stageName, 'to', newStatus);
+    const res = await fetch('/.netlify/functions/update-claim-stage', {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        claim_id: currentClaimId,
+        stage_name: stageName,
+        new_status: newStatus
+      })
+    });
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      throw new Error(`HTTP error! status: ${res.status}, message: ${errorText}`);
+    }
+
+    const data = await res.json();
+
+    if (data.status === 'success') {
+      showToast(`Stage "${stageName}" updated to ${newStatus}`, 'success');
+      await loadStages();
+    } else {
+      throw new Error(data.error || 'Failed to update stage');
+    }
+  } catch (error) {
+    console.error('Error updating stage:', error);
+    showToast(`Error updating stage: ${error.message}`, 'error');
+  }
+};
+
+// Save notes for a stage
+window.saveNotes = async function(stageName, index) {
+  if (!currentClaimId) {
+    showToast('Please select a claim first', 'error');
+    return;
+  }
+
+  const client = await initializeSupabase();
+  if (!client) {
+    showToast('Database connection error', 'error');
+    return;
+  }
+
+  const notesTextarea = document.getElementById(`notes-${index}`);
+  const notes = notesTextarea.value.trim();
+
+  try {
+    const { data: { session } } = await client.auth.getSession();
+    if (!session) {
+      showToast('Session expired. Please log in again.', 'error');
+      return;
+    }
+
+    const headers = {
+      'Authorization': `Bearer ${session.access_token}`,
+      'Content-Type': 'application/json'
+    };
+
+    // Get current stage status first
+    const stagesRes = await fetch(`/.netlify/functions/get-claim-stages?claim_id=${currentClaimId}`, { headers });
+    if (!stagesRes.ok) {
+      throw new Error(`Failed to fetch current stage: ${stagesRes.status}`);
+    }
+    const stagesData = await stagesRes.json();
+    const currentStage = stagesData.stages?.find(s => s.stage_name === stageName);
+    const currentStatus = currentStage?.status || 'pending';
+
+    // Update notes via the update-claim-stage endpoint
+    const res = await fetch('/.netlify/functions/update-claim-stage', {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        claim_id: currentClaimId,
+        stage_name: stageName,
+        new_status: currentStatus, // Keep current status
+        notes: notes
+      })
+    });
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      throw new Error(`HTTP error! status: ${res.status}, message: ${errorText}`);
+    }
+
+    const data = await res.json();
+
+    if (data.status === 'success') {
+      // Update the display
+      const stageDiv = notesTextarea.closest('.stage');
+      let notesDisplay = stageDiv.querySelector('.notes-display');
+      if (notes && !notesDisplay) {
+        notesDisplay = document.createElement('div');
+        notesDisplay.className = 'notes-display';
+        stageDiv.querySelector('.stage-notes').appendChild(notesDisplay);
+      }
+      if (notesDisplay) {
+        notesDisplay.textContent = notes;
+        notesDisplay.style.display = notes ? 'block' : 'none';
+      }
+      
+      showToast('Notes saved successfully', 'success');
+    } else {
+      throw new Error(data.error || 'Failed to save notes');
+    }
+  } catch (error) {
+    console.error('Error saving notes:', error);
+    showToast(`Error saving notes: ${error.message}`, 'error');
+  }
+};
+
+function showEmptyState(message) {
+  const div = document.getElementById('stages');
+  div.innerHTML = `
+    <div class="empty-state">
+      <h3>No Claims Found</h3>
+      <p style="font-size: 1.1rem; margin-bottom: 1rem;">${message}</p>
+      <p style="opacity: 0.8; margin-bottom: 1.5rem;">Create a claim to start tracking its progress through all stages.</p>
+      <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
+        <a href="/app/claims.html" style="display: inline-block; padding: 0.75rem 1.5rem; background: #3b82f6; color: white; border: none; border-radius: 0.5rem; cursor: pointer; text-decoration: none; font-weight: 600;">Create New Claim</a>
+        <a href="/app/claims.html" style="display: inline-block; padding: 0.75rem 1.5rem; background: rgba(255, 255, 255, 0.1); color: #ffffff !important; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 0.5rem; text-decoration: none;">View All Claims</a>
+        <a href="/app/resource-center.html" style="display: inline-block; padding: 0.75rem 1.5rem; background: rgba(255, 255, 255, 0.1); color: #ffffff !important; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 0.5rem; text-decoration: none;">Back to Resource Center</a>
+      </div>
+    </div>
+  `;
+}
+
+// Initialize app
+async function init() {
+  console.log('Initializing claim stage tracker...');
+  
+  // Ensure stages div exists and shows loading state
+  const stagesDiv = document.getElementById('stages');
+  if (stagesDiv) {
+    stagesDiv.innerHTML = '<div class="loading">Initializing...</div>';
+  }
+  
+  try {
+    const isAuthenticated = await checkAuth();
+    if (!isAuthenticated) {
+      console.log('User not authenticated');
+      if (stagesDiv) {
+        stagesDiv.innerHTML = `
+          <div class="empty-state">
+            <h3>Authentication Required</h3>
+            <p>Please log in to access the claim stage tracker.</p>
+            <a href="/app/login.html" style="display: inline-block; margin-top: 1rem; padding: 0.75rem 1.5rem; background: #3b82f6; color: white; border: none; border-radius: 0.5rem; cursor: pointer; text-decoration: none;">Go to Login</a>
+          </div>
+        `;
+      }
+      return;
+    }
+
+    console.log('User authenticated, loading claims...');
+    await loadClaims();
+  } catch (error) {
+    console.error('Initialization error:', error);
+    console.error('Error stack:', error.stack);
+    showToast(`Initialization error: ${error.message}`, 'error');
+    
+    if (stagesDiv) {
+      stagesDiv.innerHTML = `
+        <div class="empty-state">
+          <h3>Initialization Error</h3>
+          <p style="color: #ef4444 !important; font-weight: 600;">${escapeHtml(error.message)}</p>
+          <p style="font-size: 0.9rem; margin-top: 1rem; opacity: 0.7; color: #dbeafe !important;">Check the browser console (F12) for more details.</p>
+          <details style="margin-top: 1rem; text-align: left; max-width: 600px;">
+            <summary style="cursor: pointer; color: #dbeafe !important; margin-bottom: 0.5rem;">Error Details</summary>
+            <pre style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 0.5rem; overflow-x: auto; font-size: 0.85rem; color: #dbeafe !important;">${escapeHtml(JSON.stringify({
+              message: error.message,
+              name: error.name,
+              stack: error.stack
+            }, null, 2))}</pre>
+          </details>
+          <div style="margin-top: 1.5rem;">
+            <button onclick="location.reload()" style="padding: 0.75rem 1.5rem; background: #3b82f6; color: white; border: none; border-radius: 0.5rem; cursor: pointer; margin-right: 0.5rem;">Reload Page</button>
+            <a href="/app/resource-center.html" style="display: inline-block; padding: 0.75rem 1.5rem; background: rgba(255, 255, 255, 0.1); color: #ffffff !important; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 0.5rem; text-decoration: none;">Back to Resource Center</a>
+          </div>
+        </div>
+      `;
+    }
+  }
+}
+
+// Start the app when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  // DOM already loaded, run immediately
+  init();
+}
+</script>
+    <script type="module" src="/app/assets/js/tools/claim-stage-tracker.js"></script>
+</body>
+</html>
+

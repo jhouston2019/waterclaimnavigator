@@ -1,0 +1,19 @@
+ADDITIONAL LIVING EXPENSES (ALE) REIMBURSEMENT REQUEST
+
+Insured: {{Insured Name}}
+Policy Number: {{Policy Number}}
+Claim Number: {{Claim Number}}
+Date of Loss: {{Date of Loss}}
+
+Below is an itemized summary of temporary living expenses incurred due to the covered loss:
+
+| Date | Vendor | Description | Amount |
+|------|---------|--------------|--------|
+{{Expense Table}}
+
+Total Claimed: ${{Total ALE Amount}}
+
+Receipts and proof of payment are attached.  
+I certify that the above expenses were necessary and reasonable as a direct result of the covered loss.
+
+Signature of Insured: ___________________________   Date: ____________

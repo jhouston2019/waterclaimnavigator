@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Theft Claims Guide</title>
+    <link rel="stylesheet" href="/app/css/design-system.css" />
+    <script src="/assets/js/navigation-template.js"></script>
+</head>
+
+<body>
+    <script>createNavigationBar();</script>
+
+
+<section class="hero-section hero-navy">
+    <div class="hero-content">
+        <h1>Theft Claims Guide</h1>
+        <p class="subtitle">Report quickly, prove ownership and value, and navigate limits or exclusions for stolen property.</p>
+    </div>
+</section>
+
+<div class="authority-layout">
+    <?php include($_SERVER['DOCUMENT_ROOT'] . '/app/partials/authority-sidebar.html'); ?>
+
+    <div class="authority-content">
+        <div class="breadcrumbs">
+            <a href="/app/authority-guides.html">Authority Guides</a> ›
+            <span>Theft Claims Guide</span>
+        </div>
+        <div class="toc-container">
+            <h3>On This Page</h3>
+            <ul id="toc-list"></ul>
+        </div>
+        <div class="container standard-page">
+            <div class="frosted-card">
+                <h2>Overview</h2>
+                <p>Theft claims depend on prompt police reporting, evidence of forced entry or theft, and proof of ownership/value for stolen items. Sublimits may apply to jewelry, firearms, cash, and business property.</p>
+
+                <h2>Key Rules & Requirements</h2>
+                <ul>
+                    <li><strong>Police report:</strong> Usually required; provide the incident number to the carrier.</li>
+                    <li><strong>Proof of ownership:</strong> Receipts, photos, serial numbers, or appraisals help confirm items and value.</li>
+                    <li><strong>Sublimits:</strong> Categories like jewelry, watches, firearms, cash, and securities often have lower caps unless scheduled.</li>
+                    <li><strong>Vacancy/unoccupancy:</strong> Extended vacancy can limit theft coverage in some policies.</li>
+                    <li><strong>Sworn proof of loss:</strong> Carriers may request detailed inventories under oath; accuracy is critical.</li>
+                </ul>
+
+                <h2>Step-by-Step Guidance</h2>
+                <ol>
+                    <li>Contact police immediately and obtain the report number.</li>
+                    <li>Secure the property and photograph forced entry or damage.</li>
+                    <li>Create a <strong>stolen items inventory</strong> with descriptions, age, source, and replacement cost.</li>
+                    <li>Provide <strong>proof of ownership</strong> (receipts, photos, serial numbers, appraisals, bank statements).</li>
+                    <li>Submit the claim with the police report and inventory; ask about any applicable sublimits.</li>
+                    <li>If requested, complete a <strong>sworn proof of loss</strong> and provide supporting documents.</li>
+                    <li>Request payment of undisputed amounts and discuss scheduling or endorsements for future coverage.</li>
+                </ol>
+
+                <h2>Required Documentation</h2>
+                <ul>
+                    <li>Police report, incident number, and officer contact if available.</li>
+                    <li>Photos/video of entry points and damaged areas.</li>
+                    <li>Inventory spreadsheet with replacement pricing sources.</li>
+                    <li>Receipts, appraisals, or serial numbers for high-value items.</li>
+                    <li>Proof of occupancy to counter vacancy exclusions.</li>
+                    <li>Any alarm or camera footage and monitoring logs.</li>
+                </ul>
+
+                <h2>Common Insurer Tactics</h2>
+                <ul>
+                    <li>Applying low sublimits broadly to unrelated items.</li>
+                    <li>Questioning ownership for items lacking receipts despite other proof.</li>
+                    <li>Demanding excessive documentation for everyday items to slow payment.</li>
+                    <li>Suggesting non-forced entry to reduce coverage.</li>
+                </ul>
+
+                <h2>Red Flags to Watch For</h2>
+                <ul>
+                    <li>Denials that ignore provided proof of ownership.</li>
+                    <li>Requests for repeated sworn statements without new issues.</li>
+                    <li>Sublimits applied where items were scheduled or endorsed.</li>
+                    <li>Delays tied to unrelated investigations after police cleared the scene.</li>
+                </ul>
+
+                <h2>Best Practices for Policyholders</h2>
+                <ul>
+                    <li>Keep digital copies of receipts and serial numbers for future claims.</li>
+                    <li>Schedule high-value items to avoid sublimits and valuation disputes.</li>
+                    <li>Provide multiple proofs (photos + bank statements) when receipts are missing.</li>
+                    <li>Ask the adjuster to confirm coverage categories and limits in writing.</li>
+                    <li>Request partial payments for clearly proven items while others are reviewed.</li>
+                </ul>
+
+                <a href="/app/authority-guides.html" class="back-link">← Back to Authority Guides</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const search = document.getElementById("authority-search");
+    const links = document.querySelectorAll(".authority-nav ul li");
+
+    if (!search) return;
+
+    search.addEventListener("input", () => {
+        const query = search.value.toLowerCase();
+
+        links.forEach(li => {
+            const text = li.textContent.toLowerCase();
+            li.style.display = text.includes(query) ? "" : "none";
+        });
+    });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const content = document.querySelector('.frosted-card');
+    const headings = content.querySelectorAll('h2, h3');
+
+    const tocList = document.getElementById('toc-list');
+
+    headings.forEach((heading, index) => {
+        const id = heading.innerText.replace(/\s+/g, '-').toLowerCase() + '-' + index;
+        heading.id = id;
+
+        const li = document.createElement('li');
+        li.classList.add(heading.tagName.toLowerCase());
+
+        const link = document.createElement('a');
+        link.href = '#' + id;
+        link.innerText = heading.innerText;
+
+        li.appendChild(link);
+        tocList.appendChild(li);
+    });
+
+    // ScrollSpy
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            const link = tocList.querySelector(`a[href="#${entry.target.id}"]`);
+            if (entry.isIntersecting) {
+                tocList.querySelectorAll('a').forEach(a => a.classList.remove('active'));
+                if (link) link.classList.add('active');
+            }
+        });
+    }, { threshold: 0.4 });
+
+    headings.forEach(heading => observer.observe(heading));
+});
+</script>
+
+</body>
+</html>

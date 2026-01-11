@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bad Faith Evidence Tracker - Claim Navigator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/app/assets/css/style.css">
+    <link rel="stylesheet" href="/app/assets/css/design-system.css">
+    <link rel="stylesheet" href="/app/assets/css/claim-analysis.css">
+    <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+    <link rel="stylesheet" href="/app/assets/css/advanced-tools-layout.css">
+    
+</head>
+<body class="bad-faith-tracker-page">
+    <!-- Header -->
+    <header class="header">
+        <div class="bar container">
+            <div class="brand">
+                <div class="logo"></div>
+                <div>Claim Navigation AI</div>
+            </div>
+            <nav class="nav">
+                <a href="/app/index.html">Home</a>
+                <span>></span>
+                <a href="/app/resource-center.html">Resource Center</a>
+                <span>></span>
+                <a href="/app/resource-center/advanced-tools/advanced-tools.html">Advanced Tools Suite</a>
+                <span>></span>
+                <span>Bad Faith Evidence Tracker</span>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Header -->
+    <section class="tool-hero">
+        <div class="tool-hero-container">
+            <p class="tool-hero-eyebrow">Advanced Tools</p>
+            <h1 class="tool-hero-title">Bad Faith Evidence Tracker</h1>
+            <p class="tool-hero-subtitle">Systematically document and organize evidence of bad faith practices. Track delays, denials, lowball offers, and policy violations.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="tool-container" style="padding-top: 80px;">
+        <div class="card">
+            <h2 style="margin-top: 0;">Add Bad Faith Event</h2>
+            
+            <form id="bad-faith-form">
+                <div class="form-group">
+                    <label for="event-date">Event Date</label>
+                    <input type="date" id="event-date" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="event-description">Event Description (max 500 chars)</label>
+                    <textarea id="event-description" rows="4" maxlength="500" placeholder="Describe the bad faith event..." required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="carrier-action">Carrier Action Category</label>
+                    <select id="carrier-action" required>
+                        <option value="">Select category...</option>
+                        <option value="delay">Unreasonable Delay</option>
+                        <option value="misstatement">Misstatement of Facts</option>
+                        <option value="request-abuse">Request Abuse / Excessive Documentation</option>
+                        <option value="underpayment">Underpayment / Lowball Offer</option>
+                        <option value="denial">Improper Denial</option>
+                        <option value="policy-misinterpretation">Policy Misinterpretation</option>
+                        <option value="failure-to-respond">Failure to Respond</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Supporting Evidence</label>
+                    <div class="upload-area" id="upload-area">
+                        <p>📄 Upload supporting documents</p>
+                        <input type="file" id="file-input" accept=".pdf,.jpg,.jpeg,.png" multiple style="display: none;">
+                    </div>
+                    <div id="file-list" style="margin-top: 0.5rem; font-size: 0.875rem;"></div>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Add Event & Analyze</button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="card" id="analysis-panel" style="display: none;">
+            <h2>AI Analysis</h2>
+            
+            <div style="text-align: center; margin: 2rem 0;">
+                <p style="margin-bottom: 0.5rem;">Bad-Faith Risk Score</p>
+                <div class="risk-score" id="risk-score">0</div>
+                <p style="color: rgba(255, 255, 255, 0.7);">out of 100</p>
+            </div>
+            
+            <div id="severity-display" style="margin-top: 1rem;"></div>
+            
+            <div id="ai-notes" style="margin-top: 1.5rem;"></div>
+        </div>
+        
+        <div class="card" id="timeline-panel" style="display: none;" data-export-target="#timeline-panel">
+            <h2>Bad Faith Timeline</h2>
+            <div id="timeline" style="margin-top: 1rem;"></div>
+            
+            <div style="margin-top: 2rem; text-align: center;">
+                <p style="margin-bottom: 0.5rem;">Running Bad-Faith Risk Score</p>
+                <div class="risk-score" id="running-risk-score">0</div>
+            </div>
+            
+            <div style="margin-top: 2rem;">
+                <button class="btn btn-primary export-pdf-btn" id="export-report" data-export-target="#timeline-panel" data-export-filename="bad-faith-evidence-report.pdf">Export Full Report</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 Claim Navigator • Bad Faith Evidence Tracker</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="/app/assets/js/utils/pdf-export.js"></script>
+    <script src="/app/assets/js/advanced-tools/bad-faith-evidence-tracker.js"></script>
+</body>
+</html>
+

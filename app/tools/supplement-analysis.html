@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supplement & Underpayment Analysis - Claim Navigator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/tool-visual-alignment.css">
+  <script src="../../storage/claimStorage.js"></script>
+  <script src="../assets/js/tool-registry.js"></script>
+</head>
+<body class="tool-page">
+  
+  <!-- Tool Header -->
+  <div class="tool-page-header">
+    <h1 class="tool-page-title">Supplement & Underpayment Analysis</h1>
+    <p class="tool-page-subtitle">Analyze underpayments and supplements</p>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="tool-content-area">
+    
+    <!-- Tool Content -->
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <h2 class="tool-card-title">Step 13 Tool</h2>
+      </div>
+      <div class="tool-card-body">
+        <p>This tool is part of Step 13 of the Step-by-Step Claim Guide.</p>
+        
+        
+
+        
+        <!-- Input Form -->
+        <form data-tool-form class="tool-form">
+          <div class="tool-form-group">
+            <label for="claimNumber" class="tool-label">Claim Number</label>
+            <input 
+              type="text" 
+              id="claimNumber" 
+              name="claimNumber" 
+              class="tool-input" 
+              placeholder="e.g., SF-2023-12345"
+              required
+            />
+          </div>
+
+          <div class="tool-form-group">
+            <label for="insurerName" class="tool-label">Insurance Company Name</label>
+            <input 
+              type="text" 
+              id="insurerName" 
+              name="insurerName" 
+              class="tool-input" 
+              placeholder="e.g., State Farm"
+              required
+            />
+          </div>
+
+          <div class="tool-form-group">
+            <label for="originalEstimate" class="tool-label">Original Estimate Amount ($)</label>
+            <input 
+              type="number" 
+              id="originalEstimate" 
+              name="originalEstimate" 
+              class="tool-input" 
+              step="0.01"
+              placeholder="e.g., 50000.00"
+              required
+            />
+          </div>
+
+          <div class="tool-form-group">
+            <label for="supplementAmount" class="tool-label">Supplement Amount ($)</label>
+            <input 
+              type="number" 
+              id="supplementAmount" 
+              name="supplementAmount" 
+              class="tool-input" 
+              step="0.01"
+              placeholder="e.g., 15000.00"
+              required
+            />
+          </div>
+
+          <div class="tool-form-group">
+            <label for="supplementReason" class="tool-label">Reason for Supplement</label>
+            <select id="supplementReason" name="supplementReason" class="tool-input" required>
+              <option value="">Select reason...</option>
+              <option value="additional-damage">Additional Damage Discovered</option>
+              <option value="scope-omission">Scope Omission</option>
+              <option value="pricing-error">Pricing Error</option>
+              <option value="code-upgrade">Code Upgrade Required</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="tool-form-group">
+            <label for="jurisdiction" class="tool-label">Jurisdiction (State)</label>
+            <input 
+              type="text" 
+              id="jurisdiction" 
+              name="jurisdiction" 
+              class="tool-input" 
+              placeholder="e.g., California"
+            />
+          </div>
+
+          <div class="tool-form-actions">
+            <button type="submit" data-analyze-btn class="tool-btn tool-btn-primary">
+              Analyze Supplement
+            </button>
+          </div>
+        </form>
+
+        <!-- Output Area -->
+        <div data-tool-output id="output" class="tool-output" style="display: none;">
+          <h3 class="tool-section-title">Analysis Results</h3>
+          <div class="tool-output-content"></div>
+          
+          <div class="tool-form-actions" style="margin-top: 1.5rem;">
+            <button data-export-pdf class="tool-btn tool-btn-secondary">
+              Export as PDF
+            </button>
+            <button data-copy-clipboard class="tool-btn tool-btn-secondary">
+              Copy to Clipboard
+            </button>
+          </div>
+        </div>
+
+
+        <div class="tool-section">
+          <h3 class="tool-section-title">What This Tool Does</h3>
+          <p>Analyze underpayments and supplements</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="tool-section">
+      <button class="tool-btn tool-btn-secondary" onclick="goBack()">
+        ← Back to Claim Guide
+      </button>
+      
+    </div>
+
+  </div>
+
+  <script>
+    function goBack() {
+      window.location.href = '../../step-by-step-claim-guide.html?step=13';
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Tool loaded: supplement-analysis');
+    });
+  </script>
+
+
+  <script type="module">
+    import { AIToolController } from '../assets/js/controllers/index.js';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await AIToolController.initTool({
+        toolId: 'supplement-analysis',
+        toolName: 'Supplement Analysis',
+        backendFunction: '/.netlify/functions/ai-estimate-comparison',
+        outputFormat: 'structured'
+      });
+    });
+  </script>
+
+</body>
+</html>

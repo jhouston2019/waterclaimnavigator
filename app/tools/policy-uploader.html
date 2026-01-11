@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Policy Document Uploader - Claim Navigator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/tool-visual-alignment.css">
+  <script src="../../storage/claimStorage.js"></script>
+  <script src="../assets/js/tool-registry.js"></script>
+</head>
+<body class="tool-page">
+  
+  <!-- Tool Header -->
+  <div class="tool-page-header">
+    <h1 class="tool-page-title">Policy Document Uploader</h1>
+    <p class="tool-page-subtitle">Upload your insurance policy documents for AI analysis</p>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="tool-content-area">
+    
+    <!-- Tool Content -->
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <h2 class="tool-card-title">Step 1 Tool</h2>
+      </div>
+      <div class="tool-card-body">
+        <p>This tool is part of Step 1 of the Step-by-Step Claim Guide.</p>
+        
+        <!-- L1 Structured Form -->
+        <form data-tool-form class="tool-form">
+          <div class="tool-form-group">
+            <label for="uploadDate" class="tool-label">Upload Date</label>
+            <input type="date" id="uploadDate" name="uploadDate" class="tool-input" required />
+          </div>
+
+          <div class="tool-form-group">
+            <label for="policyType" class="tool-label">Policy Type</label>
+            <select id="policyType" name="policyType" class="tool-input" required>
+              <option value="">Select type...</option>
+              <option value="homeowners">Homeowners</option>
+              <option value="condo">Condo</option>
+              <option value="renters">Renters</option>
+              <option value="commercial">Commercial</option>
+            </select>
+          </div>
+
+          <div class="tool-form-group">
+            <label for="policyNumber" class="tool-label">Policy Number</label>
+            <input type="text" id="policyNumber" name="policyNumber" class="tool-input" placeholder="Enter policy number" required />
+          </div>
+
+          <div class="tool-form-group">
+            <label for="policyUpload" class="tool-label">Policy Document</label>
+            <input type="file" id="policyUpload" name="policyUpload" class="tool-input" accept=".pdf,.doc,.docx" required />
+          </div>
+
+          <div class="tool-form-group">
+            <label for="notes" class="tool-label">Notes (Optional)</label>
+            <textarea id="notes" name="notes" class="tool-input" rows="2" maxlength="300" placeholder="Brief notes (max 300 characters)..."></textarea>
+          </div>
+
+          <div class="tool-form-actions">
+            <button type="submit" data-save-btn class="tool-btn tool-btn-primary">Upload Policy</button>
+          </div>
+        </form>
+
+        <div class="tool-section">
+          <h3 class="tool-section-title">What This Tool Does</h3>
+          <p>Upload your insurance policy documents for AI analysis</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="tool-section">
+      <button class="tool-btn tool-btn-secondary" onclick="goBack()">
+        ← Back to Claim Guide
+      </button>
+      <button class="tool-btn tool-btn-primary" onclick="markComplete()">
+        Mark as Complete →
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+    function goBack() {
+      window.location.href = '../../step-by-step-claim-guide.html?step=1';
+    }
+
+    function markComplete() {
+      saveClaimData('tool_policy-uploader_complete', true);
+      alert('✓ Tool marked as complete!\n\nReturning to Claim Guide...');
+      goBack();
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Tool loaded: policy-uploader');
+    });
+  </script>
+
+
+<script type="module">
+  import { WorkflowViewController } from '/app/assets/js/controllers/index.js';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    WorkflowViewController.initTool({
+      "toolId": "policy-uploader",
+      "toolName": "Policy Uploader",
+      "supabaseTable": "evidence_items",
+      "viewType": "cards"
+});
+  });
+</script>
+
+</body>
+</html>

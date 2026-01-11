@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎯 Situational Advisory - Claim Navigator</title>
+  <link rel="stylesheet" href="/assets/css/advisory.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body class="bg-gray-50 text-gray-900 font-inter">
+  <header class="bg-[#0f172a] text-white p-4 flex justify-between items-center">
+    <h1 class="text-xl font-semibold">🎯 Situational Advisory</h1>
+    <a href="/app/resource-center.html" class="text-sm underline">← Resource Center</a>
+  </header>
+
+  <main class="p-6 max-w-7xl mx-auto">
+    <!-- AI Input Hero Card -->
+    <div class="ai-hero-card">
+      <div class="ai-hero-content">
+        <h2 class="ai-hero-title">Get Personalized AI Advice</h2>
+        <p class="ai-hero-subtitle">Describe your claim situation and receive expert guidance tailored to your specific circumstances.</p>
+        
+        <div class="ai-input-container">
+          <textarea 
+            id="situationInput" 
+            placeholder="Describe your situation (e.g., 'My insurer said my roof leak isn't covered due to wear and tear')"
+            class="ai-input"
+            rows="2"
+          ></textarea>
+          <button id="analyzeBtn" class="ai-analyze-btn">
+            <span id="analyzeText">Analyze & Advise</span>
+            <span id="analyzeSpinner" class="hidden">Analyzing...</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Result Display -->
+    <div id="aiResult" class="ai-result hidden">
+      <h3 class="text-lg font-semibold mb-4">AI Analysis & Recommendations</h3>
+      <div id="aiResultContent"></div>
+    </div>
+
+    <!-- Search and Filter Section -->
+    <div class="search-container">
+      <div class="search-bar">
+        <input 
+          type="text" 
+          id="searchInput" 
+          placeholder="Search scenarios..." 
+          class="search-input"
+        />
+        <button id="searchBtn" class="search-btn">🔍</button>
+      </div>
+      
+      <div class="category-tabs">
+        <button class="category-tab active" data-category="all">All Scenarios</button>
+        <button class="category-tab" data-category="Property">Property Claims</button>
+        <button class="category-tab" data-category="Commercial & Business Interruption">Commercial/Business</button>
+        <button class="category-tab" data-category="Catastrophe / Disaster">Catastrophe/Disaster</button>
+      </div>
+    </div>
+
+    <!-- Scenarios Grid -->
+    <div id="scenariosGrid" class="scenarios-grid">
+      <!-- Scenarios will be loaded dynamically -->
+    </div>
+  </main>
+
+  <!-- Letter Generation Modal (will be created by JavaScript) -->
+  
+  <!-- Scripts -->
+  <script src="/assets/js/advisory.js"></script>
+  <script>
+    // Load scenarios data and initialize page
+    let scenariosData = [];
+    let filteredScenarios = [];
+
+    // Load scenarios from JSON
+    async function loadScenarios() {
+      try {
+        const response = await fetch('/assets/data/advisory.json');
+        scenariosData = await response.json();
+        filteredScenarios = scenariosData;
+        renderScenarios();
+      } catch (error) {
+        console.error('Error loading scenarios:', error);
+        document.getElementById('scenariosGrid').innerHTML = '<p class="text-center text-gray-500">Error loading scenarios. Please refresh the page.</p>';
+      }
+    }
+
+    // Render scenarios in grid
+    function renderScenarios() {
+      const grid = document.getElementById('scenariosGrid');
+      const currentCategory = document.querySelector('.category-tab.active').dataset.category;
+      
+      let scenariosToShow = filteredScenarios;
+      if (currentCategory !== 'all') {
+        scenariosToShow = filteredScenarios.filter(cat => cat.category === currentCategory);
+      }
+
+      if (scenariosToShow.length === 0) {
+        grid.innerHTML = '<p class="text-center text-gray-500 col-span-full">No scenarios found matching your criteria.</p>';
+        return;
+      }
+
+      let html = '';
+      scenariosToShow.forEach(category => {
+        if (category.category === currentCategory || currentCategory === 'all') {
+          category.situations.forEach(situation => {
+            html += `
+              <div class="scenario-card">
+                <div class="scenario-header">
+                  <h3 class="scenario-title">${situation.title}</h3>
+                  <p class="scenario-summary">${situation.summary}</p>
+                </div>
+                <div class="scenario-actions">
+                  <button class="view-advice-btn" onclick="viewAdvice('${situation.title}', '${situation.summary}')">
+                    View Advice
+                  </button>
+                  <button class="generate-letter-btn" onclick="openLetterModal('${situation.title}', '${situation.document}')">
+                    Generate Letter
+                  </button>
+                </div>
+              </div>
+            `;
+          });
+        }
+      });
+
+      grid.innerHTML = html;
+    }
+
+    // View advice functionality
+    function viewAdvice(title, summary) {
+      alert(`Advice for "${title}":\n\n${summary}\n\nFor detailed guidance, use the AI input above or generate a customized letter.`);
+    }
+
+    // Search functionality
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      const searchTerm = e.target.value.toLowerCase();
+      filteredScenarios = scenariosData.map(category => ({
+        ...category,
+        situations: category.situations.filter(situation => 
+          situation.title.toLowerCase().includes(searchTerm) ||
+          situation.summary.toLowerCase().includes(searchTerm)
+        )
+      }));
+      renderScenarios();
+    });
+
+    // Category filter functionality
+    document.querySelectorAll('.category-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        renderScenarios();
+      });
+    });
+
+    // AI Analysis functionality
+    document.getElementById('analyzeBtn').addEventListener('click', async () => {
+      const situation = document.getElementById('situationInput').value.trim();
+      if (!situation) {
+        alert('Please describe your situation first.');
+        return;
+      }
+
+      const analyzeBtn = document.getElementById('analyzeBtn');
+      const analyzeText = document.getElementById('analyzeText');
+      const analyzeSpinner = document.getElementById('analyzeSpinner');
+
+      analyzeBtn.disabled = true;
+      analyzeText.classList.add('hidden');
+      analyzeSpinner.classList.remove('hidden');
+
+      try {
+        const response = await fetch('/netlify/functions/ai-advisory.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ situation: situation })
+        });
+
+        const data = await response.json();
+        
+        if (response.ok) {
+          displayAIResult(data);
+        } else {
+          throw new Error(data.error || 'Failed to analyze situation');
+        }
+      } catch (error) {
+        console.error('Error analyzing situation:', error);
+        alert('Failed to analyze your situation. Please try again.');
+      } finally {
+        analyzeBtn.disabled = false;
+        analyzeText.classList.remove('hidden');
+        analyzeSpinner.classList.add('hidden');
+      }
+    });
+
+    // Display AI analysis result
+    function displayAIResult(data) {
+      const resultDiv = document.getElementById('aiResult');
+      const contentDiv = document.getElementById('aiResultContent');
+      
+      let resultHTML = '';
+      
+      if (data.explanation) {
+        resultHTML += `<div class="mb-4"><strong>Explanation:</strong><br>${data.explanation}</div>`;
+      }
+      if (data.nextSteps) {
+        resultHTML += `<div class="mb-4"><strong>Next Steps:</strong><br>${data.nextSteps}</div>`;
+      }
+      if (data.recommendedDocument) {
+        resultHTML += `<div class="mb-4"><strong>Recommended Document:</strong><br>${data.recommendedDocument}</div>`;
+      }
+      if (data.exampleText) {
+        resultHTML += `<div class="mb-4"><strong>Example Response:</strong><br>${data.exampleText}</div>`;
+      }
+      
+      contentDiv.innerHTML = resultHTML;
+      resultDiv.classList.remove('hidden');
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', () => {
+      loadScenarios();
+    });
+  </script>
+</body>
+</html>

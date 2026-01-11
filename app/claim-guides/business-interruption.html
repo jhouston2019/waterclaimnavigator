@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Business Interruption Guide</title>
+    <link rel="stylesheet" href="/app/css/design-system.css" />
+    <script src="/assets/js/navigation-template.js"></script>
+</head>
+
+<body>
+    <script>createNavigationBar();</script>
+
+
+<section class="hero-section hero-navy">
+    <div class="hero-content">
+        <h1>Business Interruption Guide</h1>
+        <p class="subtitle">Calculate lost revenue, continuing expenses, and extra costs to restore operations after a covered loss.</p>
+    </div>
+</section>
+
+<div class="authority-layout">
+    <?php include($_SERVER['DOCUMENT_ROOT'] . '/app/partials/authority-sidebar.html'); ?>
+
+    <div class="authority-content">
+        <div class="breadcrumbs">
+            <a href="/app/authority-guides.html">Authority Guides</a> ›
+            <span>Business Interruption Guide</span>
+        </div>
+        <div class="toc-container">
+            <h3>On This Page</h3>
+            <ul id="toc-list"></ul>
+        </div>
+        <div class="container standard-page">
+            <div class="frosted-card">
+                <h2>Overview</h2>
+                <p>Business interruption (BI) coverage replaces lost income and pays ongoing expenses when a covered physical loss suspends operations. Extra expense coverage funds measures to reduce downtime. Accurately defining the period of restoration and normal operations is critical.</p>
+
+                <h2>Key Rules & Requirements</h2>
+                <ul>
+                    <li><strong>Physical loss trigger:</strong> BI generally requires direct physical damage to covered property causing suspension of operations.</li>
+                    <li><strong>Period of restoration:</strong> Runs from date of loss to when repairs should reasonably be completed, not when they actually finish if delayed.</li>
+                    <li><strong>Ordinary payroll:</strong> Policies may limit payroll coverage for non-key employees to a short timeframe.</li>
+                    <li><strong>Extended business income:</strong> Some policies cover reduced revenue after reopening for a specified period.</li>
+                    <li><strong>Extra expense:</strong> Covers costs to continue operations (renting space, leasing equipment, overtime) that reduce overall loss.</li>
+                    <li><strong>Coinsurance/limits:</strong> Ensure BI values are adequate; underinsurance can reduce payouts.</li>
+                </ul>
+
+                <h2>Step-by-Step Guidance</h2>
+                <ol>
+                    <li>Confirm the <strong>covered physical loss</strong> and document how it caused operational suspension.</li>
+                    <li>Define the <strong>period of restoration</strong> with contractors’ repair timelines and lead times for materials/equipment.</li>
+                    <li>Compile <strong>pre-loss financials</strong>: 12–24 months of P&L, sales reports, payroll, and tax returns.</li>
+                    <li>Project lost revenue using historical trends, seasonality, and booked contracts; identify saved vs. continuing expenses.</li>
+                    <li>Track <strong>extra expenses</strong> (temporary locations, rentals, expedited shipping) and justify how they reduce total loss.</li>
+                    <li>Provide interim calculations to request <strong>advance payments</strong>; update monthly as actuals develop.</li>
+                    <li>At reopening, calculate any <strong>extended business income</strong> period to cover the ramp-up.</li>
+                </ol>
+
+                <h2>Required Documentation</h2>
+                <ul>
+                    <li>Financial statements (P&L, balance sheets) and tax returns for at least the prior year.</li>
+                    <li>Sales and production reports, bookings, and canceled contracts.</li>
+                    <li>Payroll records by employee category; note key personnel vs. ordinary payroll.</li>
+                    <li>Repair timelines, contractor schedules, and lead time communications.</li>
+                    <li>Invoices for extra expenses (temporary space, rentals, overtime, advertising to regain customers).</li>
+                    <li>Calculation worksheets showing lost revenue, saved expenses, and continuing expenses.</li>
+                </ul>
+
+                <h2>Common Insurer Tactics</h2>
+                <ul>
+                    <li>Narrowing the period of restoration by assuming unrealistic repair timelines.</li>
+                    <li>Applying aggressive saved-expense offsets to reduce loss calculations.</li>
+                    <li>Disallowing extra expenses that clearly reduced downtime.</li>
+                    <li>Using prior-year dips to depress projected revenues without considering current trends.</li>
+                    <li>Delaying advances pending complete final numbers.</li>
+                </ul>
+
+                <h2>Red Flags to Watch For</h2>
+                <ul>
+                    <li>Adjuster ignores documented lead times for materials or equipment.</li>
+                    <li>No recognition of seasonality or growth trends in projections.</li>
+                    <li>Denial of ordinary payroll coverage without citing policy language.</li>
+                    <li>Failure to apply extended business income when included in the policy.</li>
+                </ul>
+
+                <h2>Best Practices for Policyholders</h2>
+                <ul>
+                    <li>Engage an accountant or forensic expert early for credible calculations.</li>
+                    <li>Provide monthly updates and request incremental payments to maintain cash flow.</li>
+                    <li>Tie every extra expense to the goal of reducing or avoiding further business income loss.</li>
+                    <li>Keep detailed notes on customer impacts, cancellations, and recovery efforts.</li>
+                    <li>Review coinsurance provisions annually to avoid underinsurance penalties.</li>
+                </ul>
+
+                <a href="/app/authority-guides.html" class="back-link">← Back to Authority Guides</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const search = document.getElementById("authority-search");
+    const links = document.querySelectorAll(".authority-nav ul li");
+
+    if (!search) return;
+
+    search.addEventListener("input", () => {
+        const query = search.value.toLowerCase();
+
+        links.forEach(li => {
+            const text = li.textContent.toLowerCase();
+            li.style.display = text.includes(query) ? "" : "none";
+        });
+    });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const content = document.querySelector('.frosted-card');
+    const headings = content.querySelectorAll('h2, h3');
+
+    const tocList = document.getElementById('toc-list');
+
+    headings.forEach((heading, index) => {
+        const id = heading.innerText.replace(/\s+/g, '-').toLowerCase() + '-' + index;
+        heading.id = id;
+
+        const li = document.createElement('li');
+        li.classList.add(heading.tagName.toLowerCase());
+
+        const link = document.createElement('a');
+        link.href = '#' + id;
+        link.innerText = heading.innerText;
+
+        li.appendChild(link);
+        tocList.appendChild(li);
+    });
+
+    // ScrollSpy
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            const link = tocList.querySelector(`a[href="#${entry.target.id}"]`);
+            if (entry.isIntersecting) {
+                tocList.querySelectorAll('a').forEach(a => a.classList.remove('active'));
+                if (link) link.classList.add('active');
+            }
+        });
+    }, { threshold: 0.4 });
+
+    headings.forEach(heading => observer.observe(heading));
+});
+</script>
+
+</body>
+</html>

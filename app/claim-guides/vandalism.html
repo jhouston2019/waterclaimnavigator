@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vandalism Claims Guide</title>
+    <link rel="stylesheet" href="/app/css/design-system.css" />
+    <script src="/assets/js/navigation-template.js"></script>
+</head>
+
+<body>
+    <script>createNavigationBar();</script>
+
+
+<section class="hero-section hero-navy">
+    <div class="hero-content">
+        <h1>Vandalism Claims Guide</h1>
+        <p class="subtitle">Secure evidence, involve law enforcement, and recover for deliberate damage to buildings and contents.</p>
+    </div>
+</section>
+
+<div class="authority-layout">
+    <?php include($_SERVER['DOCUMENT_ROOT'] . '/app/partials/authority-sidebar.html'); ?>
+
+    <div class="authority-content">
+        <div class="breadcrumbs">
+            <a href="/app/authority-guides.html">Authority Guides</a> ›
+            <span>Vandalism Claims Guide</span>
+        </div>
+        <div class="toc-container">
+            <h3>On This Page</h3>
+            <ul id="toc-list"></ul>
+        </div>
+        <div class="container standard-page">
+            <div class="frosted-card">
+                <h2>Overview</h2>
+                <p>Vandalism claims require proof of intentional damage by others, prompt police reporting, and careful documentation of both structural and personal property losses. Vacancy exclusions and security conditions can affect coverage.</p>
+
+                <h2>Key Rules & Requirements</h2>
+                <ul>
+                    <li><strong>Police report:</strong> Most policies require notifying law enforcement for vandalism or malicious mischief.</li>
+                    <li><strong>Vacancy clauses:</strong> Some policies limit or exclude vandalism coverage if a building is vacant beyond a stated period.</li>
+                    <li><strong>Forced entry evidence:</strong> Showing break-in points supports coverage and combats fraud concerns.</li>
+                    <li><strong>Duties after loss:</strong> Secure the premises, prevent further damage, and provide a sworn proof of loss if requested.</li>
+                    <li><strong>Contents valuation:</strong> Typically ACV first, RCV after replacement with receipts.</li>
+                </ul>
+
+                <h2>Step-by-Step Guidance</h2>
+                <ol>
+                    <li>Call police, obtain a report number, and photograph all entry points and damage.</li>
+                    <li>Secure openings (locks, boards) to prevent further loss and save invoices.</li>
+                    <li>List all damaged items and structural components; note graffiti, broken fixtures, and stolen property.</li>
+                    <li>Submit the claim with the police report and request prompt inspection.</li>
+                    <li>Provide an <strong>itemized estimate</strong> for repairs and cleaning (odor removal, painting, replacements).</li>
+                    <li>If requested, submit a <strong>proof of loss</strong> with supporting receipts/quotes.</li>
+                    <li>Request payment of undisputed amounts, including emergency board-up and cleaning costs.</li>
+                </ol>
+
+                <h2>Required Documentation</h2>
+                <ul>
+                    <li>Police report and incident number.</li>
+                    <li>Photos/videos of damage, entry points, and missing property areas.</li>
+                    <li>Repair and cleaning estimates (graffiti removal, glass replacement, fixtures).</li>
+                    <li>Contents inventory with values and proof of ownership when available.</li>
+                    <li>Invoices for emergency services (board-up, locks, debris removal).</li>
+                    <li>Proof of occupancy to counter vacancy exclusions.</li>
+                </ul>
+
+                <h2>Common Insurer Tactics</h2>
+                <ul>
+                    <li>Invoking vacancy exclusions without clear evidence of actual vacancy period.</li>
+                    <li>Questioning ownership of contents to reduce payouts.</li>
+                    <li>Classifying damage as wear-and-tear instead of deliberate destruction.</li>
+                    <li>Delaying payments pending law-enforcement outcomes even when coverage is clear.</li>
+                </ul>
+
+                <h2>Red Flags to Watch For</h2>
+                <ul>
+                    <li>Requests for repeated sworn statements without new questions.</li>
+                    <li>Denials citing “no forced entry” when other evidence shows tampering.</li>
+                    <li>Failure to acknowledge emergency repair invoices.</li>
+                    <li>Overbroad depreciation on recently purchased items.</li>
+                </ul>
+
+                <h2>Best Practices for Policyholders</h2>
+                <ul>
+                    <li>Keep all security camera footage and alarm records, if available.</li>
+                    <li>Provide proof of occupancy (utilities, mail, photos) to defeat vacancy arguments.</li>
+                    <li>Use side-by-side estimates to show full cleaning and repainting needs.</li>
+                    <li>Preserve damaged items until the carrier confirms they can be discarded.</li>
+                    <li>Escalate if undisputed emergency costs are not paid quickly.</li>
+                </ul>
+
+                <a href="/app/authority-guides.html" class="back-link">← Back to Authority Guides</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const search = document.getElementById("authority-search");
+    const links = document.querySelectorAll(".authority-nav ul li");
+
+    if (!search) return;
+
+    search.addEventListener("input", () => {
+        const query = search.value.toLowerCase();
+
+        links.forEach(li => {
+            const text = li.textContent.toLowerCase();
+            li.style.display = text.includes(query) ? "" : "none";
+        });
+    });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const content = document.querySelector('.frosted-card');
+    const headings = content.querySelectorAll('h2, h3');
+
+    const tocList = document.getElementById('toc-list');
+
+    headings.forEach((heading, index) => {
+        const id = heading.innerText.replace(/\s+/g, '-').toLowerCase() + '-' + index;
+        heading.id = id;
+
+        const li = document.createElement('li');
+        li.classList.add(heading.tagName.toLowerCase());
+
+        const link = document.createElement('a');
+        link.href = '#' + id;
+        link.innerText = heading.innerText;
+
+        li.appendChild(link);
+        tocList.appendChild(li);
+    });
+
+    // ScrollSpy
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            const link = tocList.querySelector(`a[href="#${entry.target.id}"]`);
+            if (entry.isIntersecting) {
+                tocList.querySelectorAll('a').forEach(a => a.classList.remove('active'));
+                if (link) link.classList.add('active');
+            }
+        });
+    }, { threshold: 0.4 });
+
+    headings.forEach(heading => observer.observe(heading));
+});
+</script>
+
+</body>
+</html>

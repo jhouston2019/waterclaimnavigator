@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Response Timelines</title>
+    <link rel="stylesheet" href="/app/css/design-system.css" />
+    <script src="/assets/js/navigation-template.js"></script>
+</head>
+
+<body>
+    <script>createNavigationBar();</script>
+
+
+<section class="hero-section hero-navy">
+    <div class="hero-content">
+        <h1>Response Timelines</h1>
+        <p class="subtitle">Deadlines for coverage determinations and status updates once the carrier has what it needs to decide.</p>
+    </div>
+</section>
+
+<div class="authority-layout">
+    <?php include($_SERVER['DOCUMENT_ROOT'] . '/app/partials/authority-sidebar.html'); ?>
+
+    <div class="authority-content">
+        <div class="breadcrumbs">
+            <a href="/app/authority-guides.html">Authority Guides</a> ›
+            <span>Response Timelines</span>
+        </div>
+        <div class="toc-container">
+            <h3>On This Page</h3>
+            <ul id="toc-list"></ul>
+        </div>
+        <div class="container standard-page">
+            <div class="frosted-card">
+                <h2>Overview</h2>
+                <p>After receiving necessary proofs, carriers must issue coverage decisions within statutory windows or explain why more time is needed. Written responses must cite policy provisions and facts.</p>
+
+                <h2>Key Rules & Requirements</h2>
+                <ul>
+                    <li><strong>Decision deadlines:</strong> Often 30–45 days from receipt of proofs or completion of investigation.</li>
+                    <li><strong>Ongoing updates:</strong> If more time is needed, carriers must provide periodic status letters (commonly every 30 days) explaining the reason.</li>
+                    <li><strong>Specificity:</strong> Denials must state the policy provisions and facts supporting the decision.</li>
+                    <li><strong>Partial decisions:</strong> Undisputed parts must be paid even if other portions remain under review.</li>
+                    <li><strong>Extensions:</strong> Generic delays are insufficient; the carrier must identify what is outstanding.</li>
+                </ul>
+
+                <h2>Step-by-Step Guidance</h2>
+                <ol>
+                    <li>Confirm in writing when the carrier has <strong>all requested documents</strong> to start the response clock.</li>
+                    <li>If no decision by the deadline, send a <strong>time-limit demand</strong> citing the statute and requesting payment/decision.</li>
+                    <li>Request <strong>written explanations</strong> for any extension and a target decision date.</li>
+                    <li>Separate and request payment for <strong>undisputed items</strong> immediately.</li>
+                    <li>Escalate to supervisors or regulators if status letters are vague or absent.</li>
+                </ol>
+
+                <h2>Required Documentation</h2>
+                <ul>
+                    <li>Proof-of-loss submission and delivery receipt (if applicable).</li>
+                    <li>Timeline of when each requested document was delivered.</li>
+                    <li>Carrier status letters and any extension notices.</li>
+                    <li>Correspondence requesting decisions and citing statutes.</li>
+                </ul>
+
+                <h2>Common Insurer Tactics</h2>
+                <ul>
+                    <li>Claiming the investigation is ongoing without specifying what is missing.</li>
+                    <li>Issuing oral decisions to avoid written obligations.</li>
+                    <li>Delaying decisions while waiting on third-party reports without providing timelines.</li>
+                    <li>Bundling undisputed and disputed items to delay all payment.</li>
+                </ul>
+
+                <h2>Red Flags to Watch For</h2>
+                <ul>
+                    <li>No status letter after the initial deadline passes.</li>
+                    <li>Extensions that repeat the same generic reason.</li>
+                    <li>Denials with no policy citation or reference to submitted evidence.</li>
+                    <li>Refusal to confirm what remains outstanding.</li>
+                </ul>
+
+                <h2>Best Practices for Policyholders</h2>
+                <ul>
+                    <li>Track when the carrier received all documents and restate that date in follow-ups.</li>
+                    <li>Use concise, statute-citing emails for time-limit demands.</li>
+                    <li>Request partial decisions to unlock undisputed funds.</li>
+                    <li>Escalate promptly when updates lapse; include complaint options if needed.</li>
+                </ul>
+
+                <a href="/app/authority-guides.html" class="back-link">← Back to Authority Guides</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const search = document.getElementById("authority-search");
+    const links = document.querySelectorAll(".authority-nav ul li");
+
+    if (!search) return;
+
+    search.addEventListener("input", () => {
+        const query = search.value.toLowerCase();
+
+        links.forEach(li => {
+            const text = li.textContent.toLowerCase();
+            li.style.display = text.includes(query) ? "" : "none";
+        });
+    });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const content = document.querySelector('.frosted-card');
+    const headings = content.querySelectorAll('h2, h3');
+
+    const tocList = document.getElementById('toc-list');
+
+    headings.forEach((heading, index) => {
+        const id = heading.innerText.replace(/\s+/g, '-').toLowerCase() + '-' + index;
+        heading.id = id;
+
+        const li = document.createElement('li');
+        li.classList.add(heading.tagName.toLowerCase());
+
+        const link = document.createElement('a');
+        link.href = '#' + id;
+        link.innerText = heading.innerText;
+
+        li.appendChild(link);
+        tocList.appendChild(li);
+    });
+
+    // ScrollSpy
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            const link = tocList.querySelector(`a[href="#${entry.target.id}"]`);
+            if (entry.isIntersecting) {
+                tocList.querySelectorAll('a').forEach(a => a.classList.remove('active'));
+                if (link) link.classList.add('active');
+            }
+        });
+    }, { threshold: 0.4 });
+
+    headings.forEach(heading => observer.observe(heading));
+});
+</script>
+
+</body>
+</html>

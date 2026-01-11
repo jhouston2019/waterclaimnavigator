@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Undisputed Payment Requirements</title>
+    <link rel="stylesheet" href="/app/css/design-system.css" />
+    <script src="/assets/js/navigation-template.js"></script>
+</head>
+
+<body>
+    <script>createNavigationBar();</script>
+
+
+<section class="hero-section hero-navy">
+    <div class="hero-content">
+        <h1>Undisputed Payment Requirements</h1>
+        <p class="subtitle">When carriers must release funds for agreed damages while disputes continue.</p>
+    </div>
+</section>
+
+<div class="authority-layout">
+    <?php include($_SERVER['DOCUMENT_ROOT'] . '/app/partials/authority-sidebar.html'); ?>
+
+    <div class="authority-content">
+        <div class="breadcrumbs">
+            <a href="/app/authority-guides.html">Authority Guides</a> ›
+            <span>Undisputed Payment Requirements</span>
+        </div>
+        <div class="toc-container">
+            <h3>On This Page</h3>
+            <ul id="toc-list"></ul>
+        </div>
+        <div class="container standard-page">
+            <div class="frosted-card">
+                <h2>Overview</h2>
+                <p>Most states and policies require insurers to pay undisputed amounts promptly once liability and amount are clear—even if other items remain under investigation. Partial payments keep repairs moving and reduce damages.</p>
+
+                <h2>Key Rules & Requirements</h2>
+                <ul>
+                    <li><strong>Prompt payment statutes:</strong> Many states set 5–20 day windows for issuing funds after agreement.</li>
+                    <li><strong>Separation of disputes:</strong> Carriers must isolate agreed scope/amounts and pay them without waiting for contested items.</li>
+                    <li><strong>Interest penalties:</strong> Late payment can accrue statutory interest or penalties.</li>
+                    <li><strong>Recoverable depreciation:</strong> ACV should be paid once scope/pricing is set; depreciation is released after proof of repairs.</li>
+                    <li><strong>Advance payments:</strong> Allowed to cover emergency mitigation, ALE, or initial repairs even before full scope is set.</li>
+                </ul>
+
+                <h2>Step-by-Step Guidance</h2>
+                <ol>
+                    <li>Identify line items where <strong>both parties agree</strong> on scope and price.</li>
+                    <li>Request an <strong>undisputed payment summary</strong> and timeline for issuance citing the state prompt-payment rule.</li>
+                    <li>Ask for <strong>ALE or mitigation advances</strong> when needed to prevent further loss.</li>
+                    <li>When a supplement is pending, request a <strong>partial payment</strong> for all approved items to date.</li>
+                    <li>If payment is late, send a <strong>written demand</strong> referencing statutory interest/penalties.</li>
+                </ol>
+
+                <h2>Required Documentation</h2>
+                <ul>
+                    <li>Carrier estimate showing agreed line items.</li>
+                    <li>Invoices for completed mitigation or emergency work.</li>
+                    <li>Correspondence confirming accepted scope and pricing.</li>
+                    <li>Policy and state statute citations for prompt payment/interest.</li>
+                    <li>Proof of repairs to release depreciation.</li>
+                </ul>
+
+                <h2>Common Insurer Tactics</h2>
+                <ul>
+                    <li>Holding all funds until every disputed item is resolved.</li>
+                    <li>Calling payments “goodwill” to avoid acknowledging undisputed liability.</li>
+                    <li>Delaying depreciation release with repetitive document requests.</li>
+                    <li>Applying large withholdings for supposed betterments or overhead/profit exclusions.</li>
+                </ul>
+
+                <h2>Red Flags to Watch For</h2>
+                <ul>
+                    <li>Payment timelines slipping past statutory limits with no explanation.</li>
+                    <li>Estimates that show agreement but no corresponding payment.</li>
+                    <li>Advances denied despite clear emergency needs.</li>
+                    <li>Carrier refuses to specify what amount is undisputed.</li>
+                </ul>
+
+                <h2>Best Practices for Policyholders</h2>
+                <ul>
+                    <li>Request a written breakdown of <strong>undisputed vs. disputed</strong> items.</li>
+                    <li>Ask for ACH or overnight payment when deadlines are tight.</li>
+                    <li>Provide repair receipts promptly to release depreciation.</li>
+                    <li>Escalate with statutory citations and regulator copy if payments are withheld.</li>
+                    <li>Continue supplementing new evidence while insisting on payment of what is already owed.</li>
+                </ul>
+
+                <a href="/app/authority-guides.html" class="back-link">← Back to Authority Guides</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const search = document.getElementById("authority-search");
+    const links = document.querySelectorAll(".authority-nav ul li");
+
+    if (!search) return;
+
+    search.addEventListener("input", () => {
+        const query = search.value.toLowerCase();
+
+        links.forEach(li => {
+            const text = li.textContent.toLowerCase();
+            li.style.display = text.includes(query) ? "" : "none";
+        });
+    });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const content = document.querySelector('.frosted-card');
+    const headings = content.querySelectorAll('h2, h3');
+
+    const tocList = document.getElementById('toc-list');
+
+    headings.forEach((heading, index) => {
+        const id = heading.innerText.replace(/\s+/g, '-').toLowerCase() + '-' + index;
+        heading.id = id;
+
+        const li = document.createElement('li');
+        li.classList.add(heading.tagName.toLowerCase());
+
+        const link = document.createElement('a');
+        link.href = '#' + id;
+        link.innerText = heading.innerText;
+
+        li.appendChild(link);
+        tocList.appendChild(li);
+    });
+
+    // ScrollSpy
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            const link = tocList.querySelector(`a[href="#${entry.target.id}"]`);
+            if (entry.isIntersecting) {
+                tocList.querySelectorAll('a').forEach(a => a.classList.remove('active'));
+                if (link) link.classList.add('active');
+            }
+        });
+    }, { threshold: 0.4 });
+
+    headings.forEach(heading => observer.observe(heading));
+});
+</script>
+
+</body>
+</html>

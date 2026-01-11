@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense Upload Tool - Claim Navigator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/tool-visual-alignment.css">
+  <script src="../../storage/claimStorage.js"></script>
+  <script src="../assets/js/tool-registry.js"></script>
+</head>
+<body class="tool-page">
+  
+  <!-- Tool Header -->
+  <div class="tool-page-header">
+    <h1 class="tool-page-title">Expense Upload Tool</h1>
+    <p class="tool-page-subtitle">Upload receipts and expense documentation</p>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="tool-content-area">
+    
+    <!-- Tool Content -->
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <h2 class="tool-card-title">Step 6 Tool</h2>
+      </div>
+      <div class="tool-card-body">
+        <p>This tool is part of Step 6 of the Step-by-Step Claim Guide.</p>
+        
+        <!-- L1 Structured Form -->
+        <form data-tool-form class="tool-form">
+          <div class="tool-form-group">
+            <label for="expenseDate" class="tool-label">Expense Date</label>
+            <input type="date" id="expenseDate" name="expenseDate" class="tool-input" required />
+          </div>
+
+          <div class="tool-form-group">
+            <label for="expenseType" class="tool-label">Expense Type</label>
+            <select id="expenseType" name="expenseType" class="tool-input" required>
+              <option value="">Select type...</option>
+              <option value="lodging">Lodging</option>
+              <option value="meals">Meals</option>
+              <option value="transportation">Transportation</option>
+              <option value="storage">Storage</option>
+              <option value="repairs">Repairs</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="tool-form-group">
+            <label for="amount" class="tool-label">Amount</label>
+            <input type="number" id="amount" name="amount" class="tool-input" step="0.01" min="0" required />
+          </div>
+
+          <div class="tool-form-group">
+            <label for="receiptUpload" class="tool-label">Receipt Upload</label>
+            <input type="file" id="receiptUpload" name="receiptUpload" class="tool-input" accept="image/*,.pdf" />
+          </div>
+
+          <div class="tool-form-group">
+            <label for="notes" class="tool-label">Notes (Optional)</label>
+            <textarea id="notes" name="notes" class="tool-input" rows="2" maxlength="300" placeholder="Brief notes (max 300 characters)..."></textarea>
+          </div>
+
+          <div class="tool-form-actions">
+            <button type="submit" data-save-btn class="tool-btn tool-btn-primary">Upload Expense</button>
+          </div>
+        </form>
+
+        <div class="tool-section">
+          <h3 class="tool-section-title">What This Tool Does</h3>
+          <p>Upload receipts and expense documentation</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="tool-section">
+      <button class="tool-btn tool-btn-secondary" onclick="goBack()">
+        ← Back to Claim Guide
+      </button>
+      <button class="tool-btn tool-btn-primary" onclick="markComplete()">
+        Mark as Complete →
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+    function goBack() {
+      window.location.href = '../../step-by-step-claim-guide.html?step=6';
+    }
+
+    function markComplete() {
+      saveClaimData('tool_expense-upload-tool_complete', true);
+      alert('✓ Tool marked as complete!\n\nReturning to Claim Guide...');
+      goBack();
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Tool loaded: expense-upload-tool');
+    });
+  </script>
+
+
+<script type="module">
+  import { WorkflowViewController } from '/app/assets/js/controllers/index.js';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    WorkflowViewController.initTool({
+      "toolId": "expense-upload-tool",
+      "toolName": "Expense Upload Tool",
+      "supabaseTable": "expense_tracking",
+      "viewType": "cards"
+});
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+[HEADER]
+Claimant: {{name}} • Policy: {{policy}} • Claim: {{claim}} • Property: {{address}} • Date: {{date}}
+
+Subject: Sworn Proof of Loss
+
+I submit this Proof of Loss for the covered loss at {{address}}. Summary: {{situation_summary}}.
+
+Statement:
+- Date and cause of loss: [insert]
+- Damaged property and scope: [insert]
+- Claimed amount (ACV/RCV): ${{amount}}
+- Documentation: estimates, photographs, inventories
+
+I certify that the above information is true and correct to the best of my knowledge.
+
+Signed,
+{{name}}
+[Attachments: {{attachments}}]

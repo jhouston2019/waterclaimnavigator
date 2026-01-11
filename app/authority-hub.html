@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Claim Authority Hub • Claim Navigator</title>
+  <meta name="description" content="ClaimNavigator's comprehensive national and state insurance claim guides, deadlines, and regulatory information.">
+  <link rel="stylesheet" href="/app/assets/css/style.css">
+  <link rel="stylesheet" href="/app/assets/css/design-system.css">
+  <link rel="stylesheet" href="/app/assets/css/resource-center.css">
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+  
+</head>
+<body class="resource-center authority-page">
+  <header class="header">
+    <div class="bar container">
+      <div class="brand"><div>Claim Navigation AI</div></div>
+      <nav class="nav">
+        <a href="/app/index.html">Home</a>
+        <span class="nav-separator">></span>
+        <span class="nav-current">Authority Hub</span>
+        <span class="nav-separator">></span>
+        <a href="/app/resource-center.html">Resource Center</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="authority-container">
+      <div class="authority-header">
+        <h1>Claim Authority Hub</h1>
+        <p>Explore claim rules, deadlines, and best practices by state or claim type. Get authoritative information on insurance regulations, filing deadlines, and state-specific requirements.</p>
+      </div>
+
+      <div class="info-box">
+        <h3>What You'll Find Here</h3>
+        <ul>
+          <li><strong>State Guides:</strong> Fire claim deadlines, proof of loss requirements, and state insurance department contacts for all 50 states</li>
+          <li><strong>Pillar Guides:</strong> Comprehensive guides for different claim types (Fire, Water, Wind, Hail, Flood, Hurricane, and more)</li>
+          <li><strong>Integration:</strong> All guides link to ClaimNavigator tools like Deadline Tracker and Statement of Loss</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>State Fire Claim Guides</h2>
+        <p style="color: #dbeafe !important; margin-bottom: 1.5rem;">Click on any state to view specific deadlines, contact information, and regulatory requirements for fire insurance claims.</p>
+        <div id="states" class="grid"></div>
+      </div>
+
+      <div class="section">
+        <h2>National Claim Type Guides</h2>
+        <p style="color: #dbeafe !important; margin-bottom: 1.5rem;">Comprehensive guides covering specific types of insurance claims with best practices and documentation requirements.</p>
+        <div id="pillars" class="grid"></div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    async function loadData() {
+      try {
+        // Load states
+        const statesRes = await fetch('/data/states.json');
+        const states = await statesRes.json();
+
+        const statesDiv = document.getElementById('states');
+        states.forEach(state => {
+          const card = document.createElement('a');
+          card.href = `/app/resource-center/state/${state.abbr}.html`;
+          card.className = 'card';
+          card.innerHTML = `
+            <h3>${state.state}</h3>
+            <p>${state.abbr} • ${state.deadline} deadline</p>
+          `;
+          statesDiv.appendChild(card);
+        });
+
+        // Load pillars
+        const pillarsRes = await fetch('/data/pillars.json');
+        const pillars = await pillarsRes.json();
+
+        const pillarsDiv = document.getElementById('pillars');
+        pillars.forEach(pillar => {
+          const card = document.createElement('a');
+          card.href = `/app/pillar-guides/${pillar.slug}.html`;
+          card.className = 'card pillar-card';
+          card.innerHTML = `
+            <h3>${pillar.title}</h3>
+            <p>${pillar.desc.substring(0, 100)}...</p>
+          `;
+          pillarsDiv.appendChild(card);
+        });
+
+      } catch (error) {
+        console.error('Error loading data:', error);
+        document.getElementById('states').innerHTML = '<p style="color: #ef4444 !important;">Error loading state guides. Please refresh the page.</p>';
+        document.getElementById('pillars').innerHTML = '<p style="color: #ef4444 !important;">Error loading pillar guides. Please refresh the page.</p>';
+      }
+    }
+
+    loadData();
+  </script>
+</body>
+</html>
+
+

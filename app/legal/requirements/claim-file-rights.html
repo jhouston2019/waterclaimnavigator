@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Claim File Access Rights</title>
+    <link rel="stylesheet" href="/app/css/design-system.css" />
+    <script src="/assets/js/navigation-template.js"></script>
+</head>
+
+<body>
+    <script>createNavigationBar();</script>
+
+
+<section class="hero-section hero-navy">
+    <div class="hero-content">
+        <h1>Claim File Access Rights</h1>
+        <p class="subtitle">When and how you can obtain adjuster notes, reports, recordings, and correspondence from your claim file.</p>
+    </div>
+</section>
+
+<div class="authority-layout">
+    <?php include($_SERVER['DOCUMENT_ROOT'] . '/app/partials/authority-sidebar.html'); ?>
+
+    <div class="authority-content">
+        <div class="breadcrumbs">
+            <a href="/app/authority-guides.html">Authority Guides</a> ›
+            <span>Claim File Access Rights</span>
+        </div>
+        <div class="toc-container">
+            <h3>On This Page</h3>
+            <ul id="toc-list"></ul>
+        </div>
+        <div class="container standard-page">
+            <div class="frosted-card">
+                <h2>Overview</h2>
+                <p>Access to the claim file helps verify the basis for decisions and identify delays. Some states require carriers to provide portions of the file upon request, while others allow access after litigation begins. Consult local rules before demanding privileged materials.</p>
+
+                <h2>Key Rules & Requirements</h2>
+                <ul>
+                    <li><strong>Regulatory right of access:</strong> Certain states let policyholders obtain non-privileged portions of the claim file upon written request.</li>
+                    <li><strong>Privilege limits:</strong> Communications with counsel and work-product may be withheld; factual reports often are not privileged.</li>
+                    <li><strong>Recorded statements:</strong> You are typically entitled to a copy of your own recorded statement.</li>
+                    <li><strong>Reports relied upon:</strong> When carriers rely on engineer or expert reports to deny or limit coverage, many states require those be shared.</li>
+                    <li><strong>Timing:</strong> Requests should not unreasonably delay the claim; some states set specific response deadlines.</li>
+                </ul>
+
+                <h2>Step-by-Step Guidance</h2>
+                <ol>
+                    <li>Make a <strong>written request</strong> for the claim file citing your state’s regulation, if applicable.</li>
+                    <li>Specify categories: <strong>photos, estimates, reports, adjuster notes, communications, recordings</strong>.</li>
+                    <li>If denied, ask for the <strong>specific basis</strong> (privilege, proprietary) and a log of withheld items.</li>
+                    <li>Request copies of any <strong>reports or estimates relied upon</strong> to deny or reduce the claim.</li>
+                    <li>Keep a timeline of requests and responses to show compliance or delay.</li>
+                </ol>
+
+                <h2>Required Documentation</h2>
+                <ul>
+                    <li>Written request citing applicable statute/regulation.</li>
+                    <li>Proof of identity and authority (for representatives).</li>
+                    <li>Follow-up correspondence and any privilege logs provided.</li>
+                    <li>Notes of phone calls summarizing what was promised or refused.</li>
+                </ul>
+
+                <h2>Common Insurer Tactics</h2>
+                <ul>
+                    <li>Refusing broad access by citing privilege without a log.</li>
+                    <li>Withholding engineer reports even when relied upon for denial.</li>
+                    <li>Delaying responses or requiring unnecessary notarized authorizations.</li>
+                    <li>Providing incomplete photo sets or redacted notes without explanation.</li>
+                </ul>
+
+                <h2>Red Flags to Watch For</h2>
+                <ul>
+                    <li>Denials that reference reports you have not seen.</li>
+                    <li>Privilege asserted over purely factual field notes.</li>
+                    <li>Missing recorded statement copies or inaccurate transcripts.</li>
+                    <li>Repeated refusals to share estimates that were the basis for payment.</li>
+                </ul>
+
+                <h2>Best Practices for Policyholders</h2>
+                <ul>
+                    <li>Be specific in requests to narrow privilege claims and speed responses.</li>
+                    <li>Ask for a <strong>privilege log</strong> listing withheld items and reasons.</li>
+                    <li>Compare provided materials to decision letters to check consistency.</li>
+                    <li>If access is denied contrary to state rules, escalate to the regulator.</li>
+                    <li>Keep copies organized; they become critical if disputes escalate or litigation ensues.</li>
+                </ul>
+
+                <a href="/app/authority-guides.html" class="back-link">← Back to Authority Guides</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const search = document.getElementById("authority-search");
+    const links = document.querySelectorAll(".authority-nav ul li");
+
+    if (!search) return;
+
+    search.addEventListener("input", () => {
+        const query = search.value.toLowerCase();
+
+        links.forEach(li => {
+            const text = li.textContent.toLowerCase();
+            li.style.display = text.includes(query) ? "" : "none";
+        });
+    });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const content = document.querySelector('.frosted-card');
+    const headings = content.querySelectorAll('h2, h3');
+
+    const tocList = document.getElementById('toc-list');
+
+    headings.forEach((heading, index) => {
+        const id = heading.innerText.replace(/\s+/g, '-').toLowerCase() + '-' + index;
+        heading.id = id;
+
+        const li = document.createElement('li');
+        li.classList.add(heading.tagName.toLowerCase());
+
+        const link = document.createElement('a');
+        link.href = '#' + id;
+        link.innerText = heading.innerText;
+
+        li.appendChild(link);
+        tocList.appendChild(li);
+    });
+
+    // ScrollSpy
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            const link = tocList.querySelector(`a[href="#${entry.target.id}"]`);
+            if (entry.isIntersecting) {
+                tocList.querySelectorAll('a').forEach(a => a.classList.remove('active'));
+                if (link) link.classList.add('active');
+            }
+        });
+    }, { threshold: 0.4 });
+
+    headings.forEach(heading => observer.observe(heading));
+});
+</script>
+
+</body>
+</html>

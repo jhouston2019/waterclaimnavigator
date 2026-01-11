@@ -1,0 +1,14 @@
+REQUEST FOR ADVANCE PAYMENT
+
+To: {{Insurer Name}}
+From: {{Insured Name}}
+Policy Number: {{Policy Number}}
+Claim Number: {{Claim Number}}
+Date of Loss: {{Date of Loss}}
+
+Pursuant to the policy and applicable state law, I request an advance payment of ${{Requested Amount}} to assist with immediate expenses related to the covered loss.  
+Attached are estimates, invoices, and photographs supporting the necessity of these funds.
+
+This request is made without prejudice to my right to pursue the full amount of covered benefits.
+
+Signature of Insured: ___________________________   Date: ____________

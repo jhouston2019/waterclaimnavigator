@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Keys - Claim Navigator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/app/assets/css/style.css">
+    <link rel="stylesheet" href="/app/assets/css/design-system.css">
+    
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+</head>
+<body>
+    <header class="header">
+        <div class="bar container">
+            <div class="brand">
+                <div class="logo"></div>
+                <div>Claim Navigation AI</div>
+            </div>
+            <nav class="nav">
+                <a href="/app/index.html">Home</a>
+                <span>></span>
+                <a href="/app/settings.html">Settings</a>
+                <span>></span>
+                <span>API Keys</span>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="card">
+            <h1 style="margin-top: 0; color: #ffffff;">API Keys</h1>
+            <p style="color: rgba(255, 255, 255, 0.8);">Manage your API keys for programmatic access to Claim Navigator services.</p>
+            
+            <button class="btn btn-primary" onclick="showCreateModal()" style="margin-top: 1rem;">Create New API Key</button>
+        </div>
+
+        <div class="card">
+            <h2 style="color: #ffffff;">Your API Keys</h2>
+            <div id="api-keys-list">
+                <p style="color: rgba(255, 255, 255, 0.7);">Loading...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Create API Key Modal -->
+    <div id="create-modal" class="modal">
+        <div class="modal-content">
+            <h2 style="margin-top: 0; color: #ffffff;">Create API Key</h2>
+            <form id="create-key-form">
+                <div class="form-group">
+                    <label for="key-name">Key Name</label>
+                    <input type="text" id="key-name" required placeholder="e.g., Production API Key">
+                </div>
+                <div class="form-group">
+                    <label for="rate-limit">Rate Limit (requests per minute)</label>
+                    <input type="number" id="rate-limit" value="100" min="10" max="1000">
+                </div>
+                <div class="form-group">
+                    <label for="expires-at">Expires At (optional)</label>
+                    <input type="date" id="expires-at">
+                </div>
+                <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">Create Key</button>
+                    <button type="button" class="btn btn-secondary" onclick="hideCreateModal()" style="flex: 1;">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="/app/assets/js/settings/api-keys.js"></script>
+</body>
+</html>
+
+

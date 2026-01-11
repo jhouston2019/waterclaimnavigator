@@ -1,0 +1,44 @@
+body.claim-analysis-page {
+  /* Font and text settings */
+  font-family: 'Source Sans Pro', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #ffffff !important;
+  background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('/app/assets/images/backgrounds/paperwork6.jpeg') no-repeat center center fixed !important;
+  background-size: cover !important;
+}
+
+body.claim-analysis-page h1, 
+body.claim-analysis-page h2, 
+body.claim-analysis-page h3 {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+body.claim-analysis-page p, 
+body.claim-analysis-page label, 
+body.claim-analysis-page textarea, 
+body.claim-analysis-page input, 
+body.claim-analysis-page button, 
+body.claim-analysis-page a {
+  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-weight: 400;
+}
+
+/* Force black text on card content except titles and textareas */
+body.claim-analysis-page .card p,
+body.claim-analysis-page .card label,
+body.claim-analysis-page .card span,
+body.claim-analysis-page .card div {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  font-weight: 500 !important;
+}
+
+/* Textarea text in cards should be medium gray */
+body.claim-analysis-page .card textarea {
+  color: #6b7280 !important;
+  -webkit-text-fill-color: #6b7280 !important;
+  background-color: #ffffff !important;
+}

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrier Request Logger - Claim Navigator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/tool-visual-alignment.css">
+  <script src="../../storage/claimStorage.js"></script>
+  <script src="../assets/js/tool-registry.js"></script>
+</head>
+<body class="tool-page">
+  
+  <!-- Tool Header -->
+  <div class="tool-page-header">
+    <h1 class="tool-page-title">Carrier Request Logger</h1>
+    <p class="tool-page-subtitle">Log carrier requests and deadlines</p>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="tool-content-area">
+    
+    <!-- Tool Content -->
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <h2 class="tool-card-title">Step 12 Tool</h2>
+      </div>
+      <div class="tool-card-body">
+        <p>This tool is part of Step 12 of the Step-by-Step Claim Guide.</p>
+        
+        <!-- L1 Structured Form -->
+        <form data-tool-form class="tool-form">
+          <div class="tool-form-group">
+            <label for="requestDate" class="tool-label">Request Date</label>
+            <input type="date" id="requestDate" name="requestDate" class="tool-input" required />
+          </div>
+
+          <div class="tool-form-group">
+            <label for="requestType" class="tool-label">Request Type</label>
+            <select id="requestType" name="requestType" class="tool-input" required>
+              <option value="">Select request type...</option>
+              <option value="information-request">Information Request</option>
+              <option value="document-request">Document Request</option>
+              <option value="inspection-request">Inspection Request</option>
+              <option value="euo-request">EUO Request</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="tool-form-group">
+            <label for="responseDeadline" class="tool-label">Response Deadline</label>
+            <input type="date" id="responseDeadline" name="responseDeadline" class="tool-input" required />
+          </div>
+
+          <div class="tool-form-group">
+            <label for="requestStatus" class="tool-label">Status</label>
+            <select id="requestStatus" name="requestStatus" class="tool-input" required>
+              <option value="">Select status...</option>
+              <option value="pending">Pending</option>
+              <option value="in-progress">In Progress</option>
+              <option value="completed">Completed</option>
+              <option value="overdue">Overdue</option>
+            </select>
+          </div>
+
+          <div class="tool-form-group">
+            <label for="notes" class="tool-label">Notes (Optional)</label>
+            <textarea id="notes" name="notes" class="tool-input" rows="2" maxlength="300" placeholder="Brief notes (max 300 characters)..."></textarea>
+          </div>
+
+          <div class="tool-form-actions">
+            <button type="submit" data-save-btn class="tool-btn tool-btn-primary">Log Request</button>
+          </div>
+        </form>
+
+        <div class="tool-section">
+          <h3 class="tool-section-title">What This Tool Does</h3>
+          <p>Log carrier requests and deadlines</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="tool-section">
+      <button class="tool-btn tool-btn-secondary" onclick="goBack()">
+        ← Back to Claim Guide
+      </button>
+      <button class="tool-btn tool-btn-primary" onclick="markComplete()">
+        Mark as Complete →
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+    function goBack() {
+      window.location.href = '../../step-by-step-claim-guide.html?step=12';
+    }
+
+    function markComplete() {
+      saveClaimData('tool_carrier-request-logger_complete', true);
+      alert('✓ Tool marked as complete!\n\nReturning to Claim Guide...');
+      goBack();
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Tool loaded: carrier-request-logger');
+    });
+  </script>
+
+
+<script type="module">
+  import { WorkflowViewController } from '/app/assets/js/controllers/index.js';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    WorkflowViewController.initTool({
+      "toolId": "carrier-request-logger",
+      "toolName": "Carrier Request Logger",
+      "supabaseTable": "journal_entries",
+      "viewType": "timeline"
+});
+  });
+</script>
+
+</body>
+</html>

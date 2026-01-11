@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supplement Calculation Tool - Claim Navigator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/tool-visual-alignment.css">
+  <script src="../../storage/claimStorage.js"></script>
+  <script src="../assets/js/tool-registry.js"></script>
+</head>
+<body class="tool-page">
+  
+  <!-- Tool Header -->
+  <div class="tool-page-header">
+    <h1 class="tool-page-title">Supplement Calculation Tool</h1>
+    <p class="tool-page-subtitle">Calculate supplement amounts</p>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="tool-content-area">
+    
+    <!-- Tool Content -->
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <h2 class="tool-card-title">Step 13 Tool</h2>
+      </div>
+      <div class="tool-card-body">
+        <p>This tool is part of Step 13 of the Step-by-Step Claim Guide.</p>
+        
+        
+
+        
+        <!-- L2 Calculation Form -->
+        <form data-tool-form class="tool-form">
+          <div class="tool-form-group">
+            <label for="originalEstimate" class="tool-label">Original Estimate Amount ($)</label>
+            <input 
+              type="number" 
+              id="originalEstimate" 
+              name="originalEstimate" 
+              class="tool-input" 
+              step="0.01"
+              min="0"
+              placeholder="0.00"
+              required
+            />
+          </div>
+
+          <div class="tool-form-group">
+            <label for="additionalWork" class="tool-label">Additional Work Cost ($)</label>
+            <input 
+              type="number" 
+              id="additionalWork" 
+              name="additionalWork" 
+              class="tool-input" 
+              step="0.01"
+              min="0"
+              placeholder="0.00"
+              required
+            />
+          </div>
+
+          <div class="tool-form-group">
+            <label for="pricingAdjustments" class="tool-label">Pricing Adjustments ($)</label>
+            <input 
+              type="number" 
+              id="pricingAdjustments" 
+              name="pricingAdjustments" 
+              class="tool-input" 
+              step="0.01"
+              placeholder="0.00"
+            />
+          </div>
+
+          <div class="tool-form-group">
+            <label for="codeUpgrades" class="tool-label">Code Upgrades ($)</label>
+            <input 
+              type="number" 
+              id="codeUpgrades" 
+              name="codeUpgrades" 
+              class="tool-input" 
+              step="0.01"
+              min="0"
+              placeholder="0.00"
+            />
+          </div>
+
+          <div class="tool-form-actions">
+            <button type="submit" data-analyze-btn class="tool-btn tool-btn-primary">
+              Calculate Supplement
+            </button>
+          </div>
+        </form>
+
+        <!-- Output Area -->
+        <div data-tool-output id="output" class="tool-output" style="display: none;">
+          <h3 class="tool-section-title">Analysis Results</h3>
+          <div class="tool-output-content"></div>
+          
+          <div class="tool-form-actions" style="margin-top: 1.5rem;">
+            <button data-export-pdf class="tool-btn tool-btn-secondary">
+              Export as PDF
+            </button>
+            <button data-copy-clipboard class="tool-btn tool-btn-secondary">
+              Copy to Clipboard
+            </button>
+          </div>
+        </div>
+
+
+        <div class="tool-section">
+          <h3 class="tool-section-title">What This Tool Does</h3>
+          <p>Calculate supplement amounts</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="tool-section">
+      <button class="tool-btn tool-btn-secondary" onclick="goBack()">
+        ← Back to Claim Guide
+      </button>
+      
+    </div>
+
+  </div>
+
+  <script>
+    function goBack() {
+      window.location.href = '../../step-by-step-claim-guide.html?step=13';
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Tool loaded: supplement-calculation-tool');
+    });
+  </script>
+
+
+  <script type="module">
+    import { AIToolController } from '../assets/js/controllers/index.js';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await AIToolController.initTool({
+        toolId: 'supplement-calculation-tool',
+        toolName: 'Supplement Calculation Tool',
+        backendFunction: '/.netlify/functions/ai-rom-estimator',
+        outputFormat: 'calculation'
+      });
+    });
+  </script>
+
+</body>
+</html>

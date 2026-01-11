@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expert Witness Database - Claim Navigator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/app/assets/css/style.css">
+    <link rel="stylesheet" href="/app/assets/css/design-system.css">
+    <link rel="stylesheet" href="/app/assets/css/claim-analysis.css">
+    <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+    
+</head>
+<body class="expert-witness-page">
+    <!-- Header -->
+    <header class="header">
+        <div class="bar container">
+            <div class="brand">
+                <div class="logo"></div>
+                <div>Claim Navigation AI</div>
+            </div>
+            <nav class="nav">
+                <a href="/app/index.html">Home</a>
+                <span>></span>
+                <a href="/app/resource-center.html">Resource Center</a>
+                <span>></span>
+                <a href="/app/resource-center/advanced-tools/advanced-tools.html">Advanced Tools Suite</a>
+                <span>></span>
+                <span>Expert Witness Database</span>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Header -->
+    <div class="tool-header" style="max-width: 1000px; margin: 2rem auto;">
+        <h1>Expert Witness Database</h1>
+        <p>Access a comprehensive database of expert witnesses across multiple disciplines. Find qualified professionals for your claim type.</p>
+    </div>
+
+    <!-- Main Content -->
+    <main class="tool-container">
+        <div class="card">
+            <h2 style="margin-top: 0;">Search Expert Witnesses</h2>
+            
+            <form id="expert-search-form">
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="Search by name or specialty...">
+                    <select id="specialty-filter">
+                        <option value="">All Specialties</option>
+                        <option value="construction">Construction</option>
+                        <option value="engineering">Engineering</option>
+                        <option value="roofing">Roofing</option>
+                        <option value="plumbing">Plumbing</option>
+                        <option value="electrical">Electrical</option>
+                        <option value="hvac">HVAC</option>
+                        <option value="mold">Mold Remediation</option>
+                        <option value="forensic-accounting">Forensic Accounting</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <select id="state-filter">
+                        <option value="">All States</option>
+                        <option value="AL">Alabama</option>
+                        <option value="AK">Alaska</option>
+                        <option value="AZ">Arizona</option>
+                        <option value="AR">Arkansas</option>
+                        <option value="CA">California</option>
+                        <option value="CO">Colorado</option>
+                        <option value="CT">Connecticut</option>
+                        <option value="DE">Delaware</option>
+                        <option value="FL">Florida</option>
+                        <option value="GA">Georgia</option>
+                        <option value="HI">Hawaii</option>
+                        <option value="ID">Idaho</option>
+                        <option value="IL">Illinois</option>
+                        <option value="IN">Indiana</option>
+                        <option value="IA">Iowa</option>
+                        <option value="KS">Kansas</option>
+                        <option value="KY">Kentucky</option>
+                        <option value="LA">Louisiana</option>
+                        <option value="ME">Maine</option>
+                        <option value="MD">Maryland</option>
+                        <option value="MA">Massachusetts</option>
+                        <option value="MI">Michigan</option>
+                        <option value="MN">Minnesota</option>
+                        <option value="MS">Mississippi</option>
+                        <option value="MO">Missouri</option>
+                        <option value="MT">Montana</option>
+                        <option value="NE">Nebraska</option>
+                        <option value="NV">Nevada</option>
+                        <option value="NH">New Hampshire</option>
+                        <option value="NJ">New Jersey</option>
+                        <option value="NM">New Mexico</option>
+                        <option value="NY">New York</option>
+                        <option value="NC">North Carolina</option>
+                        <option value="ND">North Dakota</option>
+                        <option value="OH">Ohio</option>
+                        <option value="OK">Oklahoma</option>
+                        <option value="OR">Oregon</option>
+                        <option value="PA">Pennsylvania</option>
+                        <option value="RI">Rhode Island</option>
+                        <option value="SC">South Carolina</option>
+                        <option value="SD">South Dakota</option>
+                        <option value="TN">Tennessee</option>
+                        <option value="TX">Texas</option>
+                        <option value="UT">Utah</option>
+                        <option value="VT">Vermont</option>
+                        <option value="VA">Virginia</option>
+                        <option value="WA">Washington</option>
+                        <option value="WV">West Virginia</option>
+                        <option value="WI">Wisconsin</option>
+                        <option value="WY">Wyoming</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="card" id="results-container" style="display: none;">
+            <h2>Search Results</h2>
+            <div id="results-table-container"></div>
+            
+            <div style="margin-top: 2rem;">
+                <button class="btn btn-secondary export-pdf-btn" id="export-pdf" data-export-target="#results-container" data-export-filename="expert-witness-database-results.pdf">Export to PDF</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Expert Profile Modal -->
+    <div class="modal" id="expert-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-expert-name">Expert Profile</h2>
+                <button class="close-btn" id="close-modal">&times;</button>
+            </div>
+            <div id="modal-expert-content">
+                <!-- Profile content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 Claim Navigator • Expert Witness Database</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="/app/assets/js/utils/pdf-export.js"></script>
+    <script src="/app/assets/js/advanced-tools/expert-witness-database.js"></script>
+</body>
+</html>
+
+

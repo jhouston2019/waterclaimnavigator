@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claim Package Assembly Engine - Claim Navigator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/tool-visual-alignment.css">
+  <script src="../../storage/claimStorage.js"></script>
+  <script src="../assets/js/tool-registry.js"></script>
+</head>
+<body class="tool-page">
+  
+  <!-- Tool Header -->
+  <div class="tool-page-header">
+    <h1 class="tool-page-title">Claim Package Assembly Engine</h1>
+    <p class="tool-page-subtitle">Compile complete claim package</p>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="tool-content-area">
+    
+    <!-- Tool Content -->
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <h2 class="tool-card-title">Step 10 Tool</h2>
+      </div>
+      <div class="tool-card-body">
+        <p>This tool is part of Step 10 of the Step-by-Step Claim Guide.</p>
+        
+        <!-- L1 Structured Form -->
+        <form data-tool-form class="tool-form">
+          <div class="tool-form-group">
+            <label for="assemblyDate" class="tool-label">Assembly Date</label>
+            <input type="date" id="assemblyDate" name="assemblyDate" class="tool-input" required />
+          </div>
+
+          <div class="tool-form-group">
+            <label for="packageType" class="tool-label">Package Type</label>
+            <select id="packageType" name="packageType" class="tool-input" required>
+              <option value="">Select type...</option>
+              <option value="initial-claim">Initial Claim</option>
+              <option value="supplement">Supplement</option>
+              <option value="additional-evidence">Additional Evidence</option>
+              <option value="response">Response Package</option>
+            </select>
+          </div>
+
+          <div class="tool-form-group">
+            <label for="assemblyStatus" class="tool-label">Assembly Status</label>
+            <select id="assemblyStatus" name="assemblyStatus" class="tool-input" required>
+              <option value="">Select status...</option>
+              <option value="in-progress">In Progress</option>
+              <option value="ready">Ready for Review</option>
+              <option value="approved">Approved</option>
+              <option value="submitted">Submitted</option>
+            </select>
+          </div>
+
+          <div class="tool-form-group">
+            <label for="notes" class="tool-label">Notes (Optional)</label>
+            <textarea id="notes" name="notes" class="tool-input" rows="2" maxlength="300" placeholder="Brief notes (max 300 characters)..."></textarea>
+          </div>
+
+          <div class="tool-form-actions">
+            <button type="submit" data-save-btn class="tool-btn tool-btn-primary">Save Package</button>
+          </div>
+        </form>
+
+        <div class="tool-section">
+          <h3 class="tool-section-title">What This Tool Does</h3>
+          <p>Compile complete claim package</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="tool-section">
+      <button class="tool-btn tool-btn-secondary" onclick="goBack()">
+        ← Back to Claim Guide
+      </button>
+      <button class="tool-btn tool-btn-primary" onclick="markComplete()">
+        Mark as Complete →
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+    function goBack() {
+      window.location.href = '../../step-by-step-claim-guide.html?step=10';
+    }
+
+    function markComplete() {
+      saveClaimData('tool_claim-package-assembly_complete', true);
+      alert('✓ Tool marked as complete!\n\nReturning to Claim Guide...');
+      goBack();
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Tool loaded: claim-package-assembly');
+    });
+  </script>
+
+
+<script type="module">
+  import { WorkflowViewController } from '/app/assets/js/controllers/index.js';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    WorkflowViewController.initTool({
+      "toolId": "claim-package-assembly",
+      "toolName": "Claim Package Assembly",
+      "supabaseTable": "evidence_items",
+      "viewType": "cards"
+});
+  });
+</script>
+
+</body>
+</html>

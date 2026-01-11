@@ -1,0 +1,14 @@
+# Claim dashboard routing
+/app/claim/:claim_id    /app/claim.html?id=:claim_id    200
+
+# Timeline routing
+/app/timeline/:claim_id    /app/timeline.html?id=:claim_id    200
+
+# Advisory routing
+/app/response-center/situational-advisory/*    /app/response-center/situational-advisory/index.html    200
+
+# Quick Start Guide routing
+/pages/resource-center/quick-start.html    /pages/resource-center/quick-start.html    200
+
+# Fallback for root and non-app routes only
+/    /index.html    200

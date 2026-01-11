@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Letter Generator - Claim Navigator</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link rel="stylesheet" href="/app/assets/css/style.css">
+  
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+</head>
+<body class="letter-generator-page font-inter">
+  <header class="header">
+    <div class="container">
+      <div class="brand">Claim Navigation AI</div>
+      <nav class="nav">
+        <a href="/app/index.html">Home</a>
+        <span>></span>
+        <span>Letter Generator</span>
+        <span>></span>
+        <a href="/app/resource-center.html">Resource Center</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Hero Header -->
+    <div class="hero-header">
+      <h1 class="hero-title">Letter Generator</h1>
+      <p class="hero-subtitle">Generate professional insurance claim letters with AI-powered customization</p>
+    </div>
+
+    <!-- Letter Preview Section -->
+    <div class="card letter-preview-card">
+      <div class="letter-header">
+        <h2 style="color: #ffffff !important;">Generated Letter</h2>
+        <div class="letter-actions">
+          <button id="downloadPDF" class="btn btn-danger">
+            📄 Download PDF
+          </button>
+          <button id="copyText" class="btn btn-secondary">
+            📋 Copy Text
+          </button>
+        </div>
+      </div>
+      <div id="letterContent" class="letter-content" style="color: #000000 !important;">
+        <!-- Generated letter content will appear here -->
+      </div>
+    </div>
+
+    <!-- Generation Options -->
+    <div class="options-grid">
+      <!-- Standard Letter Option -->
+      <div class="card option-card">
+        <h3 style="color: #ffffff !important;">Generate Standard Letter</h3>
+        <p style="color: #ffffff !important;">Use our professional template with your claim information</p>
+        <button id="generateStandard" class="btn btn-primary">
+          Generate Standard Letter
+        </button>
+      </div>
+
+      <!-- AI Custom Letter Option -->
+      <div class="card option-card">
+        <h3 style="color: #ffffff !important;">Generate Custom AI Letter</h3>
+        <p style="color: #ffffff !important;">AI-powered customization based on your specific situation</p>
+        <button id="generateAI" class="btn btn-primary">
+          Generate AI Letter
+        </button>
+      </div>
+    </div>
+
+    <!-- AI Custom Input Section (Hidden by default) -->
+    <div id="aiInputSection" class="card ai-input-card hidden">
+      <h3>Customize Your Letter</h3>
+      <div id="customInputFields"></div>
+      <div style="margin-top: 1.5rem;">
+        <button id="generateCustom" class="btn btn-success" style="width: 100%;">
+          Generate Custom Letter
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Get URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const documentType = urlParams.get('type') || 'Appeal Letter';
+    const situation = urlParams.get('situation') || 'No specific situation provided';
+
+    // Claim data from localStorage
+    let claimData = {
+      name: localStorage.getItem('claimantName') || '',
+      policy: localStorage.getItem('policyNumber') || '',
+      claim: localStorage.getItem('claimNumber') || '',
+      address: localStorage.getItem('propertyAddress') || '',
+      email: localStorage.getItem('claimantEmail') || ''
+    };
+
+    // Update page title
+    document.title = `${documentType} - Claim Navigator`;
+
+    // Show AI input section
+    function showAIInputSection() {
+      document.getElementById('aiInputSection').classList.remove('hidden');
+      createCustomInputFields();
+    }
+
+    // Create custom input fields based on document type
+    function createCustomInputFields() {
+      const fieldsContainer = document.getElementById('customInputFields');
+      
+      let inputHTML = '';
+      
+      switch (documentType) {
+        case 'Appeal Letter':
+          inputHTML = `
+            <div class="form-group">
+              <label>Reason for Disagreement (max 500 chars)</label>
+              <textarea id="customInput" rows="4" maxlength="500"
+                placeholder="Explain why you disagree with the denial and provide supporting evidence..."></textarea>
+            </div>
+          `;
+          break;
+        case 'Demand Letter':
+          inputHTML = `
+            <div class="form-group">
+              <label>Amount Owed and Insurer's Offer (max 500 chars)</label>
+              <textarea id="customInput" rows="4" maxlength="500"
+                placeholder="Describe the amount you believe you're owed, the insurer's offer, and why it's inadequate..."></textarea>
+            </div>
+          `;
+          break;
+        case 'Proof of Loss':
+          inputHTML = `
+            <div class="form-group">
+              <label>Damage Items Description (max 500 chars)</label>
+              <textarea id="customInput" rows="4" maxlength="500"
+                placeholder="List specific damaged items, their condition, and estimated values..."></textarea>
+            </div>
+          `;
+          break;
+        case 'Notice of Delay Complaint':
+          inputHTML = `
+            <div class="form-group">
+              <label>Delay Duration and Impact (max 500 chars)</label>
+              <textarea id="customInput" rows="4" maxlength="500"
+                placeholder="Describe how long the insurer has delayed, what you've done to follow up, and the impact of the delay..."></textarea>
+            </div>
+          `;
+          break;
+        case 'Coverage Clarification Request':
+          inputHTML = `
+            <div class="form-group">
+              <label>Coverage Question (max 500 chars)</label>
+              <textarea id="customInput" rows="4" maxlength="500"
+                placeholder="Describe the specific coverage question or policy term in dispute..."></textarea>
+            </div>
+          `;
+          break;
+        default:
+          inputHTML = `
+            <div class="form-group">
+              <label>Additional Details (max 500 chars)</label>
+              <textarea id="customInput" rows="4" maxlength="500"
+                placeholder="Provide any additional details to customize your letter..."></textarea>
+            </div>
+          `;
+      }
+      
+      fieldsContainer.innerHTML = inputHTML;
+    }
+
+    // Generate letter function
+    async function generateLetter(mode) {
+      const userInput = mode === 'ai' ? document.getElementById('customInput').value : '';
+      
+      try {
+        const response = await fetch('/.netlify/functions/generate-letter', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            mode: mode,
+            situation: situation,
+            documentType: documentType,
+            claimData: claimData,
+            userInput: userInput
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const responseText = await response.text();
+        if (!responseText) {
+          throw new Error('Empty response from server');
+        }
+
+        let data;
+        try {
+          data = JSON.parse(responseText);
+        } catch (parseError) {
+          console.error('JSON parse error:', parseError);
+          console.error('Response text:', responseText);
+          throw new Error('Invalid response format from server');
+        }
+        
+        if (data.text) {
+          displayLetter(data.text);
+        } else {
+          throw new Error(data.error || 'No letter text generated');
+        }
+      } catch (error) {
+        console.error('Error generating letter:', error);
+        alert(`Failed to generate letter: ${error.message}. Please try again.`);
+      }
+    }
+
+    // Display generated letter
+    function displayLetter(letterText) {
+      // Format the letter text with proper line breaks and spacing
+      const formattedText = letterText
+        .replace(/\n\n/g, '\n\n') // Preserve double line breaks
+        .replace(/\n/g, '<br>') // Convert single line breaks to HTML
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold formatting
+        .replace(/\*(.*?)\*/g, '<em>$1</em>'); // Italic formatting
+      
+      document.getElementById('letterContent').innerHTML = formattedText;
+      document.getElementById('aiInputSection').classList.add('hidden');
+    }
+
+    // Download PDF function
+    function downloadPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ unit: "mm", format: "letter" });
+      
+      // Header block
+      doc.setFontSize(10);
+      doc.text(`Claimant: ${claimData.name || '[Your Name]'}   Policy: ${claimData.policy || '[Policy Number]'}   Claim: ${claimData.claim || '[Claim Number]'}`, 10, 12);
+      doc.text(`Property: ${claimData.address || '[Your Address]'}   Date: ${new Date().toLocaleDateString()}`, 10, 18);
+      
+      // Add separator line
+      doc.line(10, 22, 200, 22);
+      
+      // Add letter content
+      const letterText = document.getElementById('letterContent').textContent;
+      const marginX = 10;
+      const startY = 28;
+      const lines = doc.splitTextToSize(letterText, 190);
+      doc.text(lines, marginX, startY);
+      
+      // Footer watermark
+      const footerY = 285;
+      doc.setFontSize(9);
+      doc.setTextColor(128, 128, 128);
+      doc.text("Claim Navigator • Professional Claim Assistance", 105, footerY, { align: "center" });
+      
+      // Save PDF
+      const fileName = `${documentType.replace(/\s+/g, '_')}_${claimData.claim || 'claim'}.pdf`;
+      doc.save(fileName);
+    }
+
+    // Copy text function
+    function copyText() {
+      const letterElement = document.getElementById('letterContent');
+      const letterText = letterElement.textContent || letterElement.innerText;
+      navigator.clipboard.writeText(letterText).then(() => {
+        // Show success feedback
+        const btn = document.getElementById('copyText');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '✓ Copied!';
+        btn.style.background = '#10b981';
+        btn.style.borderColor = '#10b981';
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.style.background = '';
+          btn.style.borderColor = '';
+        }, 2000);
+      }).catch(error => {
+        console.error('Error copying text:', error);
+        alert('Failed to copy text. Please try again.');
+      });
+    }
+
+    // Event listeners
+    document.getElementById('generateStandard').addEventListener('click', () => generateLetter('standard'));
+    document.getElementById('generateAI').addEventListener('click', showAIInputSection);
+    document.getElementById('generateCustom').addEventListener('click', () => generateLetter('ai'));
+    document.getElementById('downloadPDF').addEventListener('click', downloadPDF);
+    document.getElementById('copyText').addEventListener('click', copyText);
+
+    // Auto-generate standard letter on page load
+    window.addEventListener('load', () => {
+      generateLetter('standard');
+    });
+  </script>
+</body>
+</html>

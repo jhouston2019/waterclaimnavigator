@@ -1,0 +1,998 @@
+[
+  {
+    "id": "appeal-letter",
+    "title": "Appeal Letter",
+    "category": "Letter",
+    "format": "narrative",
+    "tone": "professional",
+    "sections": ["Introduction", "Background", "Reason for Appeal", "Requested Action"]
+  },
+  {
+    "id": "proof-of-loss",
+    "title": "Sworn Statement in Proof of Loss",
+    "category": "Form",
+    "format": "template",
+    "template": "proof-of-loss-template.txt",
+    "templateBased": true,
+    "tone": "legal",
+    "fields": [
+      "Insured Name",
+      "Mailing Address",
+      "Policy Number",
+      "Claim Number",
+      "Date of Loss",
+      "Cause of Loss",
+      "Description of Damages",
+      "Total Claimed Amount",
+      "Adjuster Name",
+      "Insurer Name"
+    ],
+    "legal_requirements": [
+      "Must include sworn statement of truth under penalty of perjury.",
+      "Must include signature and date line for insured.",
+      "Must include notary or witness block."
+    ],
+    "instructions": "Use the fixed legal template from /assets/templates/proof-of-loss-template.txt. Only merge field values and do not rewrite the core legal language."
+  },
+  {
+    "id": "claim-summary-report",
+    "title": "Claim Summary Report",
+    "category": "Report",
+    "format": "sectioned",
+    "sections": [
+      "Claim Overview",
+      "Damage Assessment",
+      "Payments to Date",
+      "Outstanding Issues",
+      "Next Steps"
+    ]
+  },
+  {
+    "id": "claim-timeline",
+    "title": "Claim Timeline / Diary",
+    "category": "Log",
+    "format": "table",
+    "columns": ["Date", "Event", "Notes"]
+  },
+  {
+    "id": "claim-checklist",
+    "title": "Claim Submission Checklist",
+    "category": "Checklist",
+    "format": "checklist",
+    "items": [
+      "Proof of Loss completed",
+      "Damage Inventory attached",
+      "Photographs uploaded",
+      "Repair estimates submitted"
+    ],
+    "sections": ["Required Documents", "Evidence Collection", "Submission Requirements", "Follow-up Items"]
+  },
+  {
+    "id": "demand-letter",
+    "title": "Demand Letter",
+    "category": "Letter",
+    "format": "narrative",
+    "tone": "formal",
+    "sections": ["Introduction", "Demand Details", "Legal Basis", "Requested Action", "Deadline"]
+  },
+  {
+    "id": "damage-inventory",
+    "title": "Damage Inventory",
+    "category": "Form",
+    "format": "fields",
+    "fields": [
+      "Item Description",
+      "Pre-Loss Condition",
+      "Post-Loss Condition",
+      "Replacement Cost",
+      "Actual Cash Value",
+      "Depreciation"
+    ]
+  },
+  {
+    "id": "repair-vs-replace",
+    "title": "Repair vs Replace",
+    "category": "Worksheet",
+    "format": "sectioned",
+    "sections": [
+      "Item Analysis",
+      "Repair Cost",
+      "Replacement Cost",
+      "Recommendation",
+      "Justification"
+    ]
+  },
+  {
+    "id": "out-of-pocket-log",
+    "title": "Out-of-Pocket Log",
+    "category": "Log",
+    "format": "table",
+    "columns": ["Date", "Expense Type", "Amount", "Receipt Number", "Notes"]
+  },
+  {
+    "id": "notice-of-claim",
+    "title": "Notice of Claim",
+    "category": "Letter",
+    "format": "narrative",
+    "tone": "formal",
+    "sections": ["Loss Details", "Policy Information", "Request for Coverage", "Contact Information"]
+  },
+  {
+    "id": "rom-estimate-report",
+    "title": "ROM Estimate Report",
+    "category": "Report",
+    "format": "sectioned",
+    "sections": [
+      "Scope of Work",
+      "Cost Breakdown",
+      "Timeline Estimate",
+      "Assumptions",
+      "Recommendations"
+    ]
+  },
+  {
+    "id": "photograph-log",
+    "title": "Photograph Log",
+    "category": "Log",
+    "format": "table",
+    "columns": ["Photo Number", "Date Taken", "Location", "Description", "Damage Type"]
+  },
+  {
+    "id": "document-index",
+    "title": "Document Index",
+    "category": "Index",
+    "format": "fields",
+    "fields": [
+      "Document Name",
+      "Date Created",
+      "Document Type",
+      "File Location",
+      "Status"
+    ]
+  },
+  {
+    "id": "comparative-estimates",
+    "title": "Comparative Estimates",
+    "category": "Report",
+    "format": "sectioned",
+    "sections": [
+      "Estimate Comparison",
+      "Cost Analysis",
+      "Vendor Qualifications",
+      "Recommendation"
+    ]
+  },
+  {
+    "id": "settlement-sheet",
+    "title": "Settlement Sheet",
+    "category": "Worksheet",
+    "format": "fields",
+    "fields": [
+      "Insurance Offer",
+      "Actual Damages",
+      "Difference",
+      "Negotiation Points",
+      "Final Recommendation"
+    ]
+  },
+  {
+    "id": "appraisal-demand",
+    "title": "Appraisal Demand Letter",
+    "category": "Letter",
+    "format": "narrative",
+    "tone": "formal",
+    "sections": ["Dispute Details", "Appraisal Request", "Legal Basis", "Timeline"]
+  },
+  {
+    "id": "notice-of-delay",
+    "title": "Notice of Delay",
+    "category": "Letter",
+    "format": "narrative",
+    "tone": "professional",
+    "sections": ["Delay Details", "Impact Assessment", "Request for Action", "Timeline"]
+  },
+  {
+    "id": "coverage-clarification",
+    "title": "Coverage Clarification",
+    "category": "Letter",
+    "format": "narrative",
+    "tone": "professional",
+    "sections": ["Policy Question", "Specific Language", "Request for Interpretation", "Response Needed"]
+  },
+  {
+    "id": "sworn-statement-proof-of-loss",
+    "title": "Sworn Statement in Proof of Loss",
+    "category": "Form",
+    "format": "template",
+    "template": "sworn-statement-proof-of-loss.txt",
+    "templateBased": true,
+    "fields": [
+      "Insured Name",
+      "Policy Number",
+      "Claim Number",
+      "Date of Loss",
+      "Sworn Statement",
+      "Signature",
+      "Notarization"
+    ]
+  },
+  {
+    "id": "final-demand-payment",
+    "title": "Final Demand for Payment",
+    "category": "Letter",
+    "format": "narrative",
+    "tone": "formal",
+    "sections": ["Demand Summary", "Legal Basis", "Payment Request", "Consequences", "Deadline"]
+  },
+  {
+    "id": "authorization-release-info",
+    "title": "Authorization for Release of Info",
+    "category": "Form",
+    "format": "template",
+    "template": "authorization-release-template.txt",
+    "templateBased": true,
+    "tone": "legal",
+    "fields": [
+      "Insured Name",
+      "Mailing Address",
+      "Phone Number",
+      "Email Address",
+      "Insurer Name",
+      "Policy Number",
+      "Claim Number",
+      "Authorized Parties",
+      "Other Information",
+      "Authorization Duration",
+      "Signature Date",
+      "Witness Name",
+      "Witness Date"
+    ]
+  },
+  {
+    "id": "authorization-endorse-proceeds",
+    "title": "Authorization to Endorse Proceeds",
+    "category": "Form",
+    "format": "template",
+    "template": "authorization-endorse-template.txt",
+    "templateBased": true,
+    "tone": "legal",
+    "fields": [
+      "Insured Name",
+      "Mailing Address",
+      "Phone Number",
+      "Email Address",
+      "Insurer Name",
+      "Policy Number",
+      "Claim Number",
+      "Date of Loss",
+      "Other Parties",
+      "Bank Name",
+      "Account Number",
+      "Routing Number",
+      "Signature Date",
+      "Witness Name",
+      "Witness Date"
+    ]
+  },
+  {
+    "id": "residential-construction-contract",
+    "title": "Residential Construction Contract",
+    "category": "Contract",
+    "format": "template",
+    "template": "residential-construction-contract.txt",
+    "templateBased": true,
+    "fields": [
+      "Contractor Name",
+      "Contractor License",
+      "Scope of Work",
+      "Contract Amount",
+      "Start Date",
+      "Completion Date",
+      "Signature"
+    ]
+  },
+  {
+    "id": "temporary-housing-lease",
+    "title": "Temporary Housing Lease",
+    "category": "Contract",
+    "format": "template",
+    "template": "temporary-housing-lease.txt",
+    "templateBased": true,
+    "fields": [
+      "Landlord Name",
+      "Rental Property Address",
+      "Monthly Rent",
+      "Lease Start Date",
+      "Lease End Date",
+      "Security Deposit",
+      "Signature"
+    ]
+  },
+  {
+    "id": "appraisal-demand",
+    "title": "Appraisal Demand Letter",
+    "category": "Letter",
+    "format": "template",
+    "template": "appraisal-demand-template.txt",
+    "templateBased": true,
+    "tone": "legal",
+    "fields": [
+      "Insured Name",
+      "Mailing Address",
+      "Phone Number",
+      "Email Address",
+      "Insurer Name",
+      "Policy Number",
+      "Claim Number",
+      "Date of Loss",
+      "Insurer Estimate",
+      "Insured Estimate",
+      "Dispute Amount",
+      "Insured Appraiser",
+      "Signature Date"
+    ]
+  },
+  {
+    "id": "notice-intent-litigate",
+    "title": "Notice of Intent to Litigate",
+    "category": "Letter",
+    "format": "template",
+    "template": "intent-to-litigate-template.txt",
+    "templateBased": true,
+    "tone": "legal",
+    "fields": [
+      "Insured Name",
+      "Mailing Address",
+      "Phone Number",
+      "Email Address",
+      "Insurer Name",
+      "Policy Number",
+      "Claim Number",
+      "Date of Loss",
+      "Date Claim Filed",
+      "Current Status",
+      "Disputed Issue 1",
+      "Disputed Issue 2",
+      "Disputed Issue 3",
+      "Claim Amount",
+      "ALE Amount",
+      "Response Deadline",
+      "Signature Date"
+    ]
+  },
+  {
+    "id": "doi-complaint",
+    "title": "Department of Insurance Complaint",
+    "category": "Form",
+    "format": "template",
+    "template": "doi-complaint-template.txt",
+    "templateBased": true,
+    "tone": "legal",
+    "fields": [
+      "Insured Name",
+      "Mailing Address",
+      "Phone Number",
+      "Email Address",
+      "DOI Name",
+      "Complaint Date",
+      "Insurer Name",
+      "Policy Number",
+      "Claim Number",
+      "Date of Loss",
+      "Date Claim Filed",
+      "Claim Amount",
+      "Amount Paid",
+      "Current Status",
+      "Violation 1",
+      "Violation 2",
+      "Violation 3",
+      "Violation 4",
+      "Other Documentation",
+      "Signature Date"
+    ]
+  },
+  {
+    "id": "bad-faith-complaint",
+    "title": "Bad Faith Complaint",
+    "category": "Form",
+    "format": "template",
+    "template": "bad-faith-complaint-template.txt",
+    "templateBased": true,
+    "tone": "legal",
+    "fields": [
+      "Insured Name",
+      "Mailing Address",
+      "Phone Number",
+      "Email Address",
+      "Insurer Name",
+      "Policy Number",
+      "Claim Number",
+      "Date of Loss",
+      "Court Name",
+      "Case Number",
+      "Jurisdiction Basis",
+      "Venue Basis",
+      "State",
+      "Unpaid Benefits",
+      "ALE Amount",
+      "Total Damages",
+      "Code Section",
+      "Attorney Name",
+      "Attorney Address",
+      "Attorney Phone",
+      "Attorney Email",
+      "Filing Date"
+    ]
+  },
+  {
+    "id": "mortgagee-notification",
+    "title": "Mortgagee Notification",
+    "category": "Letter",
+    "format": "template",
+    "template": "mortgagee-notification-template.txt",
+    "templateBased": true,
+    "tone": "legal",
+    "fields": [
+      "Insured Name",
+      "Mailing Address",
+      "Phone Number",
+      "Email Address",
+      "Mortgagee Name",
+      "Mortgagee Contact",
+      "Notification Date",
+      "Property Address",
+      "Date of Loss",
+      "Cause of Loss",
+      "Insurer Name",
+      "Policy Number",
+      "Claim Number",
+      "Damage Areas",
+      "Repair Estimate",
+      "Insurance Proceeds",
+      "Repair Plans",
+      "Signature Date"
+    ]
+  },
+  {
+    "id": "business-interruption-claim",
+    "title": "Business Interruption Claim",
+    "category": "Form",
+    "format": "template",
+    "template": "business-interruption-template.txt",
+    "templateBased": true,
+    "tone": "legal",
+    "fields": [
+      "Insured Name",
+      "Mailing Address",
+      "Phone Number",
+      "Email Address",
+      "Insurer Name",
+      "Policy Number",
+      "Claim Number",
+      "Date of Loss",
+      "Business Name",
+      "Business Address",
+      "Business Type",
+      "Business Start Date",
+      "Cause of Loss",
+      "Interruption Period",
+      "Resumption Date",
+      "Pre-Loss Revenue",
+      "Post-Loss Revenue",
+      "Monthly Loss",
+      "Total Business Loss",
+      "Temp Location Rent",
+      "Additional Utilities",
+      "Equipment Rental",
+      "Other Extra Expenses",
+      "Total Extra Expenses",
+      "Other Documentation",
+      "Calculation Method",
+      "Business Title",
+      "Signature Date"
+    ]
+  },
+  {
+    "id": "first-notice-loss",
+    "title": "Notice of Claim",
+    "category": "Letter",
+    "format": "template",
+    "template": "notice-of-claim-template.txt",
+    "templateBased": true,
+    "tone": "legal",
+    "fields": [
+      "Insured Name",
+      "Mailing Address",
+      "Phone Number",
+      "Email Address",
+      "Insurer Name",
+      "Policy Number",
+      "Claim Number",
+      "Date of Loss",
+      "Notice Date",
+      "Time of Loss",
+      "Location of Loss",
+      "Cause of Loss",
+      "Loss Description",
+      "Damage Areas",
+      "Estimated Loss",
+      "Action 1",
+      "Action 2",
+      "Action 3",
+      "Signature Date"
+    ]
+  },
+  {
+    "id": "advance-payment-request",
+    "title": "Advance Payment Request",
+    "category": "Form",
+    "format": "template",
+    "template": "advance-payment-template.txt",
+    "templateBased": true,
+    "tone": "legal",
+    "fields": [
+      "Insured Name",
+      "Mailing Address",
+      "Phone Number",
+      "Email Address",
+      "Insurer Name",
+      "Policy Number",
+      "Claim Number",
+      "Date of Loss",
+      "Total Estimated Loss",
+      "Advance Amount",
+      "Financial Hardship Description",
+      "Immediate Need 1",
+      "Immediate Need 2",
+      "Immediate Need 3",
+      "Other Documentation",
+      "Justification",
+      "Signature Date"
+    ]
+  },
+  {
+    "id": "ale-reimbursement-request",
+    "title": "ALE Reimbursement Request",
+    "category": "Form",
+    "format": "template",
+    "template": "ale-reimbursement-template.txt",
+    "templateBased": true,
+    "tone": "legal",
+    "fields": [
+      "Insured Name",
+      "Mailing Address",
+      "Phone Number",
+      "Email Address",
+      "Insurer Name",
+      "Policy Number",
+      "Claim Number",
+      "Date of Loss",
+      "Date of Displacement",
+      "Displacement Reason",
+      "Current Living Arrangements",
+      "Temporary Housing Costs",
+      "Housing Duration",
+      "Housing Location",
+      "Meal Expenses",
+      "Restaurant Meals",
+      "Grocery Expenses",
+      "Transportation Costs",
+      "Gas Expenses",
+      "Public Transportation",
+      "Laundry Expenses",
+      "Dry Cleaning Expenses",
+      "Storage Costs",
+      "Storage Duration",
+      "Other Expenses Description",
+      "Other Expenses Amount",
+      "Total ALE",
+      "Other Documentation",
+      "Justification",
+      "Signature Date"
+    ]
+  },
+  {
+    "id": "withheld-depreciation-release",
+    "title": "Withheld Depreciation Release",
+    "category": "Form",
+    "format": "template",
+    "template": "withheld-depreciation-template.txt",
+    "templateBased": true,
+    "tone": "legal",
+    "fields": [
+      "Insured Name",
+      "Mailing Address",
+      "Phone Number",
+      "Email Address",
+      "Insurer Name",
+      "Policy Number",
+      "Claim Number",
+      "Date of Loss",
+      "Original Claim Amount",
+      "Amount Paid",
+      "Depreciation Withheld",
+      "Repair Start Date",
+      "Repair Completion Date",
+      "Total Repair Cost",
+      "Other Documentation",
+      "Replacement Cost",
+      "Depreciation Rate",
+      "Depreciation Amount",
+      "Actual Cash Value",
+      "Repair Cost Breakdown",
+      "Signature Date"
+    ]
+  },
+  {
+    "id": "arbitration-demand",
+    "title": "Arbitration Demand Letter",
+    "category": "Letter",
+    "format": "narrative",
+    "tone": "legal",
+    "sections": ["Introduction", "Dispute Summary", "Arbitration Request", "Procedures", "Deadline"]
+  },
+  {
+    "id": "attorney-referral",
+    "title": "Attorney Referral Letter",
+    "category": "Letter",
+    "format": "narrative",
+    "tone": "professional",
+    "sections": ["Introduction", "Case Summary", "Referral Request", "Contact Information"]
+  },
+  {
+    "id": "carrier-contact-log",
+    "title": "Insurance Carrier Contact Log",
+    "category": "Log",
+    "format": "table",
+    "columns": ["Date", "Time", "Contact Person", "Method", "Subject", "Outcome", "Follow-up"]
+  },
+  {
+    "id": "check-endorsement-instructions",
+    "title": "Check Endorsement Instructions",
+    "category": "Form",
+    "format": "template",
+    "template": "check-endorsement-instructions-template.txt",
+    "templateBased": true,
+    "tone": "legal",
+    "fields": [
+      "Insured Name",
+      "Policy Number",
+      "Claim Number",
+      "Check Amount",
+      "Check Number",
+      "Bank Name",
+      "Account Number",
+      "Routing Number",
+      "Account Type",
+      "Account Holder"
+    ]
+  },
+  {
+    "id": "claim-evidence-checklist",
+    "title": "Claim Evidence Checklist",
+    "category": "Checklist",
+    "format": "template",
+    "template": "claim-evidence-checklist-template.txt",
+    "templateBased": true,
+    "tone": "professional",
+    "fields": [
+      "Insured Name",
+      "Policy Number",
+      "Claim Number",
+      "Date of Loss",
+      "Property Address"
+    ]
+  },
+  {
+    "id": "claim-expense-tracking",
+    "title": "Claim Expense Tracking Log",
+    "category": "Log",
+    "format": "template",
+    "template": "claim-expense-tracking-log-template.txt",
+    "templateBased": true,
+    "tone": "professional",
+    "fields": [
+      "Insured Name",
+      "Policy Number",
+      "Claim Number",
+      "Date of Loss",
+      "Property Address"
+    ]
+  },
+  {
+    "id": "claim-submission-checklist",
+    "title": "Property Claim Submission Checklist",
+    "category": "Checklist",
+    "format": "template",
+    "template": "property-claim-submission-checklist-template.txt",
+    "templateBased": true,
+    "tone": "professional",
+    "fields": [
+      "Insured Name",
+      "Policy Number",
+      "Claim Number",
+      "Date of Loss",
+      "Property Address"
+    ]
+  },
+  {
+    "id": "commercial-lease-interruption",
+    "title": "Commercial Lease Interruption",
+    "category": "Letter",
+    "format": "narrative",
+    "tone": "legal",
+    "sections": ["Introduction", "Lease Details", "Interruption Notice", "Terms", "Effective Date"]
+  },
+  {
+    "id": "commercial-tenant-damage",
+    "title": "Commercial Tenant Damage Claim",
+    "category": "Letter",
+    "format": "narrative",
+    "tone": "professional",
+    "sections": ["Introduction", "Damage Description", "Claim Details", "Documentation", "Request"]
+  },
+  {
+    "id": "communication-tracking",
+    "title": "Communication Tracking",
+    "category": "Log",
+    "format": "template",
+    "template": "communication-tracking-template.txt",
+    "templateBased": true,
+    "tone": "professional",
+    "fields": [
+      "Insured Name",
+      "Policy Number",
+      "Claim Number",
+      "Date of Loss",
+      "Property Address"
+    ]
+  },
+  {
+    "id": "damage-valuation-report",
+    "title": "Damage Valuation Report",
+    "category": "Report",
+    "format": "template",
+    "template": "damage-valuation-report-template.txt",
+    "templateBased": true,
+    "tone": "professional",
+    "fields": [
+      "Insured Name",
+      "Policy Number",
+      "Claim Number",
+      "Date of Loss",
+      "Property Address"
+    ]
+  },
+  {
+    "id": "expert-engineer-engagement",
+    "title": "Expert Engineer Engagement",
+    "category": "Letter",
+    "format": "narrative",
+    "tone": "professional",
+    "sections": ["Introduction", "Project Scope", "Engagement Terms", "Timeline", "Compensation"]
+  },
+  {
+    "id": "final-settlement-acceptance",
+    "title": "Final Settlement Acceptance",
+    "category": "Letter",
+    "format": "narrative",
+    "tone": "professional",
+    "sections": ["Introduction", "Settlement Terms", "Acceptance", "Conditions", "Signature"]
+  },
+  {
+    "id": "fire-damage-claim",
+    "title": "Fire Damage Claim",
+    "category": "Letter",
+    "format": "narrative",
+    "tone": "professional",
+    "sections": ["Introduction", "Fire Details", "Damage Assessment", "Documentation", "Request"]
+  },
+  {
+    "id": "flood-damage-claim",
+    "title": "Flood Damage Claim",
+    "category": "Letter",
+    "format": "narrative",
+    "tone": "professional",
+    "sections": ["Introduction", "Flood Details", "Damage Assessment", "Documentation", "Request"]
+  },
+  {
+    "id": "follow-up-letter",
+    "title": "Follow-up Letter",
+    "category": "Letter",
+    "format": "narrative",
+    "tone": "professional",
+    "sections": ["Introduction", "Previous Communication", "Status Inquiry", "Request", "Deadline"]
+  },
+  {
+    "id": "hurricane-windstorm-claim",
+    "title": "Hurricane/Windstorm Claim",
+    "category": "Letter",
+    "format": "narrative",
+    "tone": "professional",
+    "sections": ["Introduction", "Storm Details", "Damage Assessment", "Documentation", "Request"]
+  },
+  {
+    "id": "industrial-loss-claim",
+    "title": "Industrial Loss Claim",
+    "category": "Report",
+    "format": "template",
+    "template": "industrial-loss-summary-template.txt",
+    "templateBased": true,
+    "tone": "professional",
+    "fields": [
+      "Company Name",
+      "Policy Number",
+      "Claim Number",
+      "Date of Loss",
+      "Facility Address"
+    ]
+  },
+  {
+    "id": "line-item-estimate",
+    "title": "Line Item Estimate Template",
+    "category": "Form",
+    "format": "table",
+    "columns": ["Item", "Description", "Quantity", "Unit Cost", "Total Cost", "Notes"]
+  },
+  {
+    "id": "mediation-request",
+    "title": "Mediation Request Letter",
+    "category": "Letter",
+    "format": "narrative",
+    "tone": "professional",
+    "sections": ["Introduction", "Dispute Summary", "Mediation Request", "Procedures", "Timeline"]
+  },
+  {
+    "id": "mold-claim",
+    "title": "Mold Claim",
+    "category": "Letter",
+    "format": "narrative",
+    "tone": "professional",
+    "sections": ["Introduction", "Mold Discovery", "Damage Assessment", "Health Concerns", "Request"]
+  },
+  {
+    "id": "personal-property-inventory",
+    "title": "Personal Property Inventory",
+    "category": "Form",
+    "format": "table",
+    "columns": ["Item", "Description", "Age", "Condition", "Replacement Cost", "Depreciation", "ACV"]
+  },
+  {
+    "id": "photo-documentation-log",
+    "title": "Photo Documentation Log",
+    "category": "Log",
+    "format": "table",
+    "columns": ["Photo #", "Date", "Location", "Description", "Damage Type", "Notes"]
+  },
+  {
+    "id": "professional-estimate",
+    "title": "Professional Restoration Estimate",
+    "category": "Form",
+    "format": "sectioned",
+    "sections": ["Project Overview", "Scope of Work", "Materials", "Labor", "Timeline", "Total Cost"]
+  },
+  {
+    "id": "property-damage-verification",
+    "title": "Property Damage Verification",
+    "category": "Form",
+    "format": "fields",
+    "fields": ["Property Address", "Damage Date", "Damage Type", "Extent of Damage", "Verification Method", "Verifier"]
+  },
+  {
+    "id": "property-inspection-request",
+    "title": "Property Inspection Request",
+    "category": "Letter",
+    "format": "narrative",
+    "tone": "professional",
+    "sections": ["Introduction", "Inspection Request", "Property Details", "Scheduling", "Contact Information"]
+  },
+  {
+    "id": "rebuttal-partial-denial",
+    "title": "Rebuttal to Partial Denial",
+    "category": "Letter",
+    "format": "narrative",
+    "tone": "legal",
+    "sections": ["Introduction", "Denial Analysis", "Policy Review", "Rebuttal Points", "Request"]
+  },
+  {
+    "id": "rebuttal-wrongful-denial",
+    "title": "Rebuttal to Wrongful Denial",
+    "category": "Letter",
+    "format": "narrative",
+    "tone": "legal",
+    "sections": ["Introduction", "Denial Analysis", "Policy Review", "Legal Basis", "Request"]
+  },
+  {
+    "id": "reserve-information-request",
+    "title": "Reserve Information Request",
+    "category": "Letter",
+    "format": "narrative",
+    "tone": "professional",
+    "sections": ["Introduction", "Reserve Request", "Legal Basis", "Timeline", "Response Required"]
+  },
+  {
+    "id": "response-reservation-rights",
+    "title": "Response to Reservation of Rights",
+    "category": "Letter",
+    "format": "narrative",
+    "tone": "legal",
+    "sections": ["Introduction", "Reservation Analysis", "Policy Review", "Response", "Request"]
+  },
+  {
+    "id": "restaurant-loss-claim",
+    "title": "Restaurant Loss Claim",
+    "category": "Letter",
+    "format": "narrative",
+    "tone": "professional",
+    "sections": ["Introduction", "Business Details", "Loss Description", "Financial Impact", "Request"]
+  },
+  {
+    "id": "rom-worksheet",
+    "title": "ROM (Rough Order of Magnitude) Worksheet",
+    "category": "Worksheet",
+    "format": "table",
+    "columns": ["Category", "Low Estimate", "High Estimate", "Most Likely", "Notes"]
+  },
+  {
+    "id": "roof-damage-claim",
+    "title": "Roof Damage Claim",
+    "category": "Letter",
+    "format": "narrative",
+    "tone": "professional",
+    "sections": ["Introduction", "Roof Damage Details", "Assessment", "Documentation", "Request"]
+  },
+  {
+    "id": "scope-loss-summary",
+    "title": "Scope of Loss Summary",
+    "category": "Report",
+    "format": "sectioned",
+    "sections": ["Loss Overview", "Damage Areas", "Cost Estimates", "Timeline", "Recommendations"]
+  },
+  {
+    "id": "settlement-negotiation",
+    "title": "Settlement Negotiation Letter",
+    "category": "Letter",
+    "format": "narrative",
+    "tone": "professional",
+    "sections": ["Introduction", "Current Offer", "Negotiation Points", "Counteroffer", "Timeline"]
+  },
+  {
+    "id": "settlement-rejection-counteroffer",
+    "title": "Settlement Rejection & Counteroffer",
+    "category": "Letter",
+    "format": "narrative",
+    "tone": "professional",
+    "sections": ["Introduction", "Rejection Rationale", "Counteroffer", "Justification", "Timeline"]
+  },
+  {
+    "id": "supplemental-claim-documentation",
+    "title": "Supplemental Claim Documentation",
+    "category": "Form",
+    "format": "sectioned",
+    "sections": ["Additional Information", "New Evidence", "Updated Estimates", "Timeline", "Request"]
+  },
+  {
+    "id": "unfair-claims-complaint",
+    "title": "Unfair Claims Practices Complaint",
+    "category": "Letter",
+    "format": "narrative",
+    "tone": "legal",
+    "sections": ["Introduction", "Violations", "Evidence", "Legal Basis", "Request"]
+  },
+  {
+    "id": "vandalism-theft-claim",
+    "title": "Vandalism & Theft Claim",
+    "category": "Letter",
+    "format": "narrative",
+    "tone": "professional",
+    "sections": ["Introduction", "Incident Details", "Damage Assessment", "Documentation", "Request"]
+  },
+  {
+    "id": "water-damage-claim",
+    "title": "Water Damage Claim",
+    "category": "Letter",
+    "format": "narrative",
+    "tone": "professional",
+    "sections": ["Introduction", "Water Damage Details", "Assessment", "Documentation", "Request"]
+  }
+]

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Required Documentation per Claim Type</title>
+    <link rel="stylesheet" href="/app/css/design-system.css" />
+    <script src="/assets/js/navigation-template.js"></script>
+</head>
+
+<body>
+    <script>createNavigationBar();</script>
+
+
+<section class="hero-section hero-navy">
+    <div class="hero-content">
+        <h1>Required Documentation per Claim Type</h1>
+        <p class="subtitle">Evidence checklists for property, water, fire, theft, vandalism, business interruption, and liability-driven claim types.</p>
+    </div>
+</section>
+
+<div class="authority-layout">
+    <?php include($_SERVER['DOCUMENT_ROOT'] . '/app/partials/authority-sidebar.html'); ?>
+
+    <div class="authority-content">
+        <div class="breadcrumbs">
+            <a href="/app/authority-guides.html">Authority Guides</a> ›
+            <span>Required Documentation per Claim Type</span>
+        </div>
+        <div class="toc-container">
+            <h3>On This Page</h3>
+            <ul id="toc-list"></ul>
+        </div>
+        <div class="container standard-page">
+            <div class="frosted-card">
+                <h2>Overview</h2>
+                <p>Insurers must request only reasonable, relevant documentation. Providing organized, targeted evidence speeds payment and limits repeated requests. Tailor proofs to the type of loss and keep delivery receipts for every submission.</p>
+
+                <h2>Key Rules & Requirements</h2>
+                <ul>
+                    <li><strong>Relevance:</strong> States bar carriers from demanding unnecessary documents unrelated to coverage or valuation.</li>
+                    <li><strong>Proof of loss:</strong> When requested, it must be completed truthfully and on time; extensions should be confirmed in writing.</li>
+                    <li><strong>Inspection access:</strong> You must show damaged property but can have representatives present.</li>
+                    <li><strong>Separate undisputed items:</strong> Provide evidence to isolate amounts that can be paid immediately.</li>
+                    <li><strong>Privacy:</strong> Only provide personal/financial records if reasonably related (e.g., BI revenue proof, theft ownership).</li>
+                </ul>
+
+                <h2>Step-by-Step Guidance</h2>
+                <ol>
+                    <li>Create a <strong>documentation folder</strong> by category: photos, estimates, invoices, correspondence.</li>
+                    <li>Respond in writing with a <strong>cover note</strong> listing each item provided and pending.</li>
+                    <li>For missing items, give an expected date or alternative proof to avoid delays.</li>
+                    <li>Keep a <strong>delivery record</strong> (email, portal confirmation) for every submission.</li>
+                    <li>Update the carrier when new damage is uncovered and supply supplemental evidence promptly.</li>
+                </ol>
+
+                <h2>Required Documentation</h2>
+                <ul>
+                    <li><strong>Property/Fire:</strong> Photos before/after mitigation, contractor estimates, depreciation schedules, code upgrade notices.</li>
+                    <li><strong>Water:</strong> Moisture maps, plumber reports, mitigation invoices, mold assessments.</li>
+                    <li><strong>Wind/Hurricane:</strong> Roof photos, engineering/roofer reports, weather data, code requirements.</li>
+                    <li><strong>Theft/Vandalism:</strong> Police report, inventories with values, proof of ownership, entry-point photos.</li>
+                    <li><strong>Business Interruption:</strong> P&L statements, sales history, payroll, repair timelines, extra expense invoices.</li>
+                    <li><strong>General:</strong> Proof of loss (if requested), communication log, receipts for temporary repairs/ALE.</li>
+                </ul>
+
+                <h2>Common Insurer Tactics</h2>
+                <ul>
+                    <li>Requesting duplicate documents to stall decision timelines.</li>
+                    <li>Broad document demands (tax returns, bank statements) without explaining relevance.</li>
+                    <li>Rejecting photos or invoices without stating what would satisfy the requirement.</li>
+                    <li>Delaying payment of undisputed items until all documents are received.</li>
+                </ul>
+
+                <h2>Red Flags to Watch For</h2>
+                <ul>
+                    <li>Unclear or changing document requests.</li>
+                    <li>Denials claiming “lack of documentation” after you delivered the requested items.</li>
+                    <li>Requests for sensitive personal data unrelated to the loss.</li>
+                    <li>No acknowledgment of received proofs.</li>
+                </ul>
+
+                <h2>Best Practices for Policyholders</h2>
+                <ul>
+                    <li>Ask adjusters to <strong>identify the specific policy provision</strong> requiring any unusual document.</li>
+                    <li>Provide organized PDFs with labels and indexes to reduce follow-ups.</li>
+                    <li>Send periodic summaries of what has been provided and what remains outstanding.</li>
+                    <li>Protect privacy: redact unrelated personal data while keeping documents legible.</li>
+                    <li>Escalate when requests become unreasonable or repetitive—cite state regulations that bar unnecessary demands.</li>
+                </ul>
+
+                <a href="/app/authority-guides.html" class="back-link">← Back to Authority Guides</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const search = document.getElementById("authority-search");
+    const links = document.querySelectorAll(".authority-nav ul li");
+
+    if (!search) return;
+
+    search.addEventListener("input", () => {
+        const query = search.value.toLowerCase();
+
+        links.forEach(li => {
+            const text = li.textContent.toLowerCase();
+            li.style.display = text.includes(query) ? "" : "none";
+        });
+    });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const content = document.querySelector('.frosted-card');
+    const headings = content.querySelectorAll('h2, h3');
+
+    const tocList = document.getElementById('toc-list');
+
+    headings.forEach((heading, index) => {
+        const id = heading.innerText.replace(/\s+/g, '-').toLowerCase() + '-' + index;
+        heading.id = id;
+
+        const li = document.createElement('li');
+        li.classList.add(heading.tagName.toLowerCase());
+
+        const link = document.createElement('a');
+        link.href = '#' + id;
+        link.innerText = heading.innerText;
+
+        li.appendChild(link);
+        tocList.appendChild(li);
+    });
+
+    // ScrollSpy
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            const link = tocList.querySelector(`a[href="#${entry.target.id}"]`);
+            if (entry.isIntersecting) {
+                tocList.querySelectorAll('a').forEach(a => a.classList.remove('active'));
+                if (link) link.classList.add('active');
+            }
+        });
+    }, { threshold: 0.4 });
+
+    headings.forEach(heading => observer.observe(heading));
+});
+</script>
+
+</body>
+</html>

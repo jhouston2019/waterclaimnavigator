@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tier Switcher - Claim Navigator</title>
+  
+  <script src="/app/assets/js/user-tier.js"></script>
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+</head>
+<body>
+  <h1>Tier Switcher (Local Only)</h1>
+  <p>Select which tier to simulate on this device. This is for development and demo purposes only.</p>
+  
+  <div class="tier-switcher-buttons">
+    <button data-tier="free">Free</button>
+    <button data-tier="pro">Pro</button>
+    <button data-tier="enterprise">Enterprise</button>
+  </div>
+  
+  <p>Current tier: <span id="tier-current"></span></p>
+  
+  <div class="info-box">
+    <h3>What This Does</h3>
+    <ul>
+      <li>Sets your tier in localStorage (this browser only)</li>
+      <li>Updates the tier badge in navigation</li>
+      <li>Enables/disables Pro and Enterprise features</li>
+      <li>Reload any page to see tier changes take effect</li>
+    </ul>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const current = document.getElementById("tier-current");
+      
+      const updateDisplay = () => {
+        if (window.CNUserTier) {
+          current.textContent = CNUserTier.getUserTier();
+        } else {
+          current.textContent = "Loading...";
+        }
+      };
+      
+      updateDisplay();
+      
+      document.querySelectorAll(".tier-switcher-buttons button").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const tier = btn.getAttribute("data-tier");
+          if (window.CNUserTier) {
+            CNUserTier.setUserTier(tier);
+            updateDisplay();
+            alert("Tier set to " + tier + ". Reload any page to see changes.");
+          } else {
+            alert("Tier system not loaded. Please refresh the page.");
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+

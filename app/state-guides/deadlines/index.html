@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>State-Specific Deadlines</title>
+    <link rel="stylesheet" href="/app/css/design-system.css" />
+    <script src="/assets/js/navigation-template.js"></script>
+</head>
+
+<body>
+    <script>createNavigationBar();</script>
+
+
+<section class="hero-section hero-navy">
+    <div class="hero-content">
+        <h1>State-Specific Deadlines</h1>
+        <p class="subtitle">Proof-of-loss clocks, suit limitation windows, and carrier response deadlines by jurisdiction—know what must happen and when.</p>
+    </div>
+</section>
+
+<div class="authority-layout">
+    <?php include($_SERVER['DOCUMENT_ROOT'] . '/app/partials/authority-sidebar.html'); ?>
+
+    <div class="authority-content">
+        <div class="breadcrumbs">
+            <a href="/app/authority-guides.html">Authority Guides</a> ›
+            <span>State-Specific Deadlines</span>
+        </div>
+        <div class="toc-container">
+            <h3>On This Page</h3>
+            <ul id="toc-list"></ul>
+        </div>
+        <div class="container standard-page">
+            <div class="frosted-card">
+                <h2>Overview</h2>
+                <p>Each state sets its own clocks for acknowledging claims, investigating, paying undisputed amounts, and when a policyholder must sue. Knowing the outside dates lets you push for timely handling and avoid forfeiting rights.</p>
+
+                <h2>Key Rules & Requirements</h2>
+                <ul>
+                    <li><strong>Notice of loss:</strong> Most policies require prompt notice; some states allow denial only if the carrier is prejudiced by delay.</li>
+                    <li><strong>Proof of loss (POL):</strong> Common deadlines are 30–60 days from request; extensions must be confirmed in writing.</li>
+                    <li><strong>Suit limitation:</strong> Contractual periods are often 1–2 years from date of loss or denial; some states toll during adjustment.</li>
+                    <li><strong>Claim acknowledgment:</strong> States typically mandate acknowledgment within 7–15 calendar days of notice.</li>
+                    <li><strong>Coverage decision:</strong> Many jurisdictions require a written decision within 30–45 days after proof of loss or completion of investigation.</li>
+                    <li><strong>Undisputed payment:</strong> Statutes often require payment within 5–20 days after liability and amount are determined.</li>
+                </ul>
+
+                <h2>Step-by-Step Guidance</h2>
+                <ol>
+                    <li>Capture the <strong>date of loss</strong> and the <strong>date notice was given</strong>—these anchor every other deadline.</li>
+                    <li>Request deadlines in writing: ask the adjuster to confirm <strong>P.O.L. due date</strong>, <strong>inspection date</strong>, and <strong>decision timeline</strong>.</li>
+                    <li>Calendar <strong>state response clocks</strong> (acknowledgment, decision, payment) and add 5 days before each to follow up.</li>
+                    <li>If more time is needed for POL, <strong>request an extension in writing</strong> before the due date and keep the approval email/letter.</li>
+                    <li>When deadlines are missed, send a <strong>time-limit demand citing the state statute</strong> and request immediate compliance.</li>
+                    <li>Track the <strong>contractual suit limitation</strong> and pause settlement talks at least 60–90 days before to evaluate filing.</li>
+                </ol>
+
+                <h2>Required Documentation</h2>
+                <ul>
+                    <li>Copy of the policy showing <strong>suit limitation</strong> and <strong>proof-of-loss clause</strong>.</li>
+                    <li>State statute or regulation citation for <strong>acknowledgment</strong>, <strong>decision</strong>, and <strong>payment</strong> deadlines.</li>
+                    <li>Timeline log: notice date, inspection dates, information requests, and responses.</li>
+                    <li>Written POL submission (if required) with delivery receipt.</li>
+                    <li>Any <strong>extension agreements</strong> granted by the carrier.</li>
+                </ul>
+
+                <h2>Common Insurer Tactics</h2>
+                <ul>
+                    <li>Requesting rolling documents to argue the claim is still “under investigation” and avoid decision clocks.</li>
+                    <li>Imposing ultra-short POL deadlines without acknowledging extension requests.</li>
+                    <li>Relying on policy suit limitation even when their delays consumed the timeline.</li>
+                    <li>Back-dating denial letters or sending decisions without mailing proof to shorten appeal time.</li>
+                </ul>
+
+                <h2>Red Flags to Watch For</h2>
+                <ul>
+                    <li>No written acknowledgment within the state’s required window.</li>
+                    <li>Inspection repeatedly rescheduled without good cause.</li>
+                    <li>POL due date set but no written confirmation of received documents.</li>
+                    <li>Denial or reservation of rights without citing the state statutory basis for delay.</li>
+                    <li>Suit limitation approaching with no settlement posture.</li>
+                </ul>
+
+                <h2>Best Practices for Policyholders</h2>
+                <ul>
+                    <li>Send notice immediately and keep proof of delivery.</li>
+                    <li>Submit POL on time; if impossible, obtain a written extension.</li>
+                    <li>Quote the specific state statute when following up on missed deadlines.</li>
+                    <li>Escalate to a supervisor or file a complaint if statutory clocks are ignored.</li>
+                    <li>Consult counsel well before the suit limitation to preserve leverage.</li>
+                </ul>
+
+                <a href="/app/authority-guides.html" class="back-link">← Back to Authority Guides</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const search = document.getElementById("authority-search");
+    const links = document.querySelectorAll(".authority-nav ul li");
+
+    if (!search) return;
+
+    search.addEventListener("input", () => {
+        const query = search.value.toLowerCase();
+
+        links.forEach(li => {
+            const text = li.textContent.toLowerCase();
+            li.style.display = text.includes(query) ? "" : "none";
+        });
+    });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const content = document.querySelector('.frosted-card');
+    const headings = content.querySelectorAll('h2, h3');
+
+    const tocList = document.getElementById('toc-list');
+
+    headings.forEach((heading, index) => {
+        const id = heading.innerText.replace(/\s+/g, '-').toLowerCase() + '-' + index;
+        heading.id = id;
+
+        const li = document.createElement('li');
+        li.classList.add(heading.tagName.toLowerCase());
+
+        const link = document.createElement('a');
+        link.href = '#' + id;
+        link.innerText = heading.innerText;
+
+        li.appendChild(link);
+        tocList.appendChild(li);
+    });
+
+    // ScrollSpy
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            const link = tocList.querySelector(`a[href="#${entry.target.id}"]`);
+            if (entry.isIntersecting) {
+                tocList.querySelectorAll('a').forEach(a => a.classList.remove('active'));
+                if (link) link.classList.add('active');
+            }
+        });
+    }, { threshold: 0.4 });
+
+    headings.forEach(heading => observer.observe(heading));
+});
+</script>
+
+</body>
+</html>

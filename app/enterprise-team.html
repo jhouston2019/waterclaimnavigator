@@ -1,0 +1,194 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Team Management • Claim Navigator</title>
+    <link rel="stylesheet" href="/app/assets/css/style.css">
+    <link rel="stylesheet" href="/app/assets/css/design-system.css">
+    <link rel="stylesheet" href="/app/assets/css/resource-center.css">
+    <script src="/app/assets/js/user-tier.js"></script>
+    <script src="/app/assets/js/org.js"></script>
+
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+</head>
+<body class="resource-center enterprise-team-page">
+<header class="header">
+  <div class="bar container">
+    <div class="brand"><div class="logo"></div><div>Claim Navigation AI</div></div>
+    <nav class="nav">
+      <a href="/app/index.html">Home</a>
+      <span>></span>
+      <a href="/app/enterprise-dashboard.html">Enterprise Dashboard</a>
+      <span>></span>
+      <span>Team Management</span>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div class="team-container">
+    <div class="team-header">
+      <h1>Team Members</h1>
+      <div class="seat-info">
+        Seats Used: <span id="seats-used">0</span> / <span id="seats-total">0</span>
+        <div class="seat-bar">
+          <div class="seat-bar-fill" id="seat-bar-fill"></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="team-list" id="team-list">
+      <!-- Team members will be rendered here -->
+    </div>
+    
+    <div class="add-member-section">
+      <h3>Add Team Member</h3>
+      <div class="add-member-form">
+        <input id="team-email" type="email" placeholder="Email address" required>
+        <select id="team-role">
+          <option value="member">Member</option>
+          <option value="manager">Manager</option>
+          <option value="admin">Admin</option>
+        </select>
+        <button id="team-add" class="btn-primary">Add Member</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+function renderTeam() {
+  if (!window.CNOrg) {
+    document.getElementById("team-list").innerHTML = "<p>Organization module not loaded.</p>";
+    return;
+  }
+  
+  const org = CNOrg.getOrg();
+  
+  if (!org || !org.members || org.members.length === 0) {
+    document.getElementById("team-list").innerHTML = "<p style='color: #dbeafe;'>No team members yet. Add your first member below.</p>";
+    return;
+  }
+  
+  const list = document.getElementById("team-list");
+  list.innerHTML = org.members.map(m => `
+    <div class="team-row">
+      <span>${m.email}</span>
+      <span class="role-badge ${m.role}">${m.role}</span>
+      <button onclick="removeMember('${m.email}')">Remove</button>
+    </div>
+  `).join("");
+}
+
+function renderSeats() {
+  if (!window.CNOrg) return;
+  
+  const org = CNOrg.getOrg();
+  if (!org) return;
+  
+  const used = org.usedSeats || 0;
+  const total = org.seats || 5;
+  
+  document.getElementById("seats-used").textContent = used;
+  document.getElementById("seats-total").textContent = total;
+  
+  const pct = total > 0 ? (used / total) * 100 : 0;
+  document.getElementById("seat-bar-fill").style.width = pct + "%";
+}
+
+function removeMember(email) {
+  if (!confirm(`Remove ${email} from the team?`)) {
+    return;
+  }
+  
+  if (!window.CNOrg) {
+    alert("Organization module not loaded.");
+    return;
+  }
+  
+  CNOrg.removeMember(email);
+  renderTeam();
+  renderSeats();
+  
+  if (window.CNAnalytics) {
+    CNAnalytics.log("team_member_removed", { email });
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Check if user is enterprise
+  if (window.CNUserTier && !CNUserTier.isEnterprise()) {
+    alert("Team management is available for Enterprise tier only.");
+    location.href = "/app/upgrade.html";
+    return;
+  }
+  
+  // Check if org exists
+  if (window.CNOrg) {
+    const org = CNOrg.getOrg();
+    if (!org || !org.name) {
+      alert("No organization found. Please create one first.");
+      location.href = "/app/enterprise-create.html";
+      return;
+    }
+  }
+  
+  renderTeam();
+  renderSeats();
+  
+  const addBtn = document.getElementById("team-add");
+  const emailInput = document.getElementById("team-email");
+  const roleSelect = document.getElementById("team-role");
+  
+  addBtn.addEventListener("click", () => {
+    const email = emailInput.value.trim();
+    const role = roleSelect.value;
+    
+    if (!email) {
+      alert("Please enter an email address.");
+      return;
+    }
+    
+    if (!window.CNOrg) {
+      alert("Organization module not loaded.");
+      return;
+    }
+    
+    const org = CNOrg.getOrg();
+    
+    // Check seat limits
+    if (org.usedSeats >= org.seats) {
+      alert("Maximum seats reached. Contact Enterprise Sales to expand your license.");
+      return;
+    }
+    
+    const success = CNOrg.addMember(email, role);
+    
+    if (success) {
+      emailInput.value = "";
+      renderTeam();
+      renderSeats();
+      
+      if (window.CNAnalytics) {
+        CNAnalytics.log("team_member_added", { email, role });
+      }
+    } else {
+      if (org.members.some(m => m.email === email)) {
+        alert("This email is already a team member.");
+      } else {
+        alert("Failed to add member. Please check seat limits.");
+      }
+    }
+  });
+  
+  // Allow Enter key to submit
+  emailInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      addBtn.click();
+    }
+  });
+});
+</script>
+
+
+
+</body></html>
+

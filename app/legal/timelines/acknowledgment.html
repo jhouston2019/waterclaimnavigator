@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Acknowledgment Rules</title>
+    <link rel="stylesheet" href="/app/css/design-system.css" />
+    <script src="/assets/js/navigation-template.js"></script>
+</head>
+
+<body>
+    <script>createNavigationBar();</script>
+
+
+<section class="hero-section hero-navy">
+    <div class="hero-content">
+        <h1>Acknowledgment Rules</h1>
+        <p class="subtitle">State deadlines for acknowledging notice of loss and confirming next steps in writing.</p>
+    </div>
+</section>
+
+<div class="authority-layout">
+    <?php include($_SERVER['DOCUMENT_ROOT'] . '/app/partials/authority-sidebar.html'); ?>
+
+    <div class="authority-content">
+        <div class="breadcrumbs">
+            <a href="/app/authority-guides.html">Authority Guides</a> ›
+            <span>Acknowledgment Rules</span>
+        </div>
+        <div class="toc-container">
+            <h3>On This Page</h3>
+            <ul id="toc-list"></ul>
+        </div>
+        <div class="container standard-page">
+            <div class="frosted-card">
+                <h2>Overview</h2>
+                <p>Most states require carriers to acknowledge receipt of a claim within a set number of days and provide initial instructions. Early acknowledgment sets the tone for timely inspections, document requests, and payments.</p>
+
+                <h2>Key Rules & Requirements</h2>
+                <ul>
+                    <li><strong>Timeframe:</strong> Commonly 7–15 days from notice of loss (shorter in some jurisdictions).</li>
+                    <li><strong>Content:</strong> Acknowledgment should confirm claim number, adjuster contact, and any immediate actions required.</li>
+                    <li><strong>Method:</strong> Written acknowledgment is best practice; some states require written confirmation of oral notices.</li>
+                    <li><strong>Receipt of documents:</strong> Carriers should confirm receipt of proofs sent with the notice.</li>
+                    <li><strong>Statutory references:</strong> Many unfair claims acts specify the acknowledgment deadline and penalties for failure.</li>
+                </ul>
+
+                <h2>Step-by-Step Guidance</h2>
+                <ol>
+                    <li>Send initial notice by email/portal and request written confirmation.</li>
+                    <li>If no acknowledgment by the statutory date, send a <strong>follow-up citing the rule</strong> and asking for claim number and adjuster assignment.</li>
+                    <li>Confirm preferred communication channels and inspection scheduling process.</li>
+                    <li>Provide any urgent mitigation receipts and request instructions on debris retention.</li>
+                    <li>Escalate to a supervisor or regulator if acknowledgment remains missing.</li>
+                </ol>
+
+                <h2>Required Documentation</h2>
+                <ul>
+                    <li>Proof of notice (email sent, portal submission, call log).</li>
+                    <li>Follow-up emails requesting acknowledgment.</li>
+                    <li>Any initial photos or invoices submitted with notice.</li>
+                    <li>State statute citation showing required timeline.</li>
+                </ul>
+
+                <h2>Common Insurer Tactics</h2>
+                <ul>
+                    <li>Claiming no record of the notice to reset the clock.</li>
+                    <li>Providing verbal acknowledgment without contact information or next steps.</li>
+                    <li>Assigning multiple adjusters without clarity on the primary contact.</li>
+                </ul>
+
+                <h2>Red Flags to Watch For</h2>
+                <ul>
+                    <li>No claim number or adjuster after the statutory deadline.</li>
+                    <li>Repeated transfers between departments with no ownership.</li>
+                    <li>Lack of written confirmation of mitigation instructions.</li>
+                </ul>
+
+                <h2>Best Practices for Policyholders</h2>
+                <ul>
+                    <li>Always request written acknowledgment and keep delivery proofs.</li>
+                    <li>Summarize any phone notice in an email to create a record.</li>
+                    <li>Ask for inspection date windows in the first acknowledgment.</li>
+                    <li>Use statutory language to reinforce deadlines if ignored.</li>
+                </ul>
+
+                <a href="/app/authority-guides.html" class="back-link">← Back to Authority Guides</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const search = document.getElementById("authority-search");
+    const links = document.querySelectorAll(".authority-nav ul li");
+
+    if (!search) return;
+
+    search.addEventListener("input", () => {
+        const query = search.value.toLowerCase();
+
+        links.forEach(li => {
+            const text = li.textContent.toLowerCase();
+            li.style.display = text.includes(query) ? "" : "none";
+        });
+    });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const content = document.querySelector('.frosted-card');
+    const headings = content.querySelectorAll('h2, h3');
+
+    const tocList = document.getElementById('toc-list');
+
+    headings.forEach((heading, index) => {
+        const id = heading.innerText.replace(/\s+/g, '-').toLowerCase() + '-' + index;
+        heading.id = id;
+
+        const li = document.createElement('li');
+        li.classList.add(heading.tagName.toLowerCase());
+
+        const link = document.createElement('a');
+        link.href = '#' + id;
+        link.innerText = heading.innerText;
+
+        li.appendChild(link);
+        tocList.appendChild(li);
+    });
+
+    // ScrollSpy
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            const link = tocList.querySelector(`a[href="#${entry.target.id}"]`);
+            if (entry.isIntersecting) {
+                tocList.querySelectorAll('a').forEach(a => a.classList.remove('active'));
+                if (link) link.classList.add('active');
+            }
+        });
+    }, { threshold: 0.4 });
+
+    headings.forEach(heading => observer.observe(heading));
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contractor Estimate Interpreter - Claim Navigator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/app/assets/css/style.css">
+    <link rel="stylesheet" href="/app/assets/css/design-system.css">
+    <link rel="stylesheet" href="/app/assets/css/claim-analysis.css">
+    <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+    
+</head>
+<body class="contractor-estimate-page">
+    <!-- Header -->
+    <header class="header">
+        <div class="bar container">
+            <div class="brand">
+                <div class="logo"></div>
+                <div>Claim Navigation AI</div>
+            </div>
+            <nav class="nav">
+                <a href="/app/index.html">Home</a>
+                <span>></span>
+                <a href="/app/resource-center.html">Resource Center</a>
+                <span>></span>
+                <span>Contractor Estimate Interpreter</span>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Header -->
+        <div class="tool-header">
+            <h1>Contractor Estimate Interpreter</h1>
+            <p>Upload an estimate and get a clear breakdown, missing scope analysis, and comparison guidance.</p>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="content-grid">
+            <!-- Upload & Input Panel -->
+            <div class="card">
+                <h2 style="margin-top: 0; color: #ffffff !important;">Upload & Input</h2>
+                
+                <div class="form-group">
+                    <label for="estimate-file">Contractor Estimate (PDF or Image) *</label>
+                    <div class="upload-area" id="upload-area">
+                        <p style="font-size: 1.1rem; margin-bottom: 0.5rem;">📄 Drag & Drop Estimate Here</p>
+                        <p style="font-size: 0.875rem; color: rgba(255, 255, 255, 0.7) !important;">or click to browse</p>
+                        <input type="file" id="estimate-file" class="file-input" accept=".pdf,.png,.jpg,.jpeg" required>
+                    </div>
+                    <div id="file-list" class="file-list"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Property Areas/Rooms Affected (Select all that apply)</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="areas" value="roof">
+                            <span>Roof</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="areas" value="interior">
+                            <span>Interior</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="areas" value="exterior">
+                            <span>Exterior</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="areas" value="foundation">
+                            <span>Foundation</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="areas" value="plumbing">
+                            <span>Plumbing</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="areas" value="electrical">
+                            <span>Electrical</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="areas" value="hvac">
+                            <span>HVAC</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="areas" value="kitchen">
+                            <span>Kitchen</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="areas" value="bathroom">
+                            <span>Bathroom</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="areas" value="other">
+                            <span>Other</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="loss-type">Loss Type</label>
+                    <select id="loss-type">
+                        <option value="">Select loss type...</option>
+                        <option value="Fire">Fire</option>
+                        <option value="Water">Water</option>
+                        <option value="Wind">Wind</option>
+                        <option value="Hail">Hail</option>
+                        <option value="Hurricane">Hurricane</option>
+                        <option value="Mold">Mold</option>
+                        <option value="Theft">Theft</option>
+                        <option value="Vandalism">Vandalism</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="severity">Severity</label>
+                    <select id="severity">
+                        <option value="">Select severity...</option>
+                        <option value="Low">Low</option>
+                        <option value="Moderate">Moderate</option>
+                        <option value="Severe">Severe</option>
+                        <option value="Catastrophic">Catastrophic</option>
+                    </select>
+                </div>
+                
+                <button type="button" class="btn btn-primary" id="analyze-btn" style="width: 100%;">
+                    Analyze Estimate
+                </button>
+            </div>
+
+            <!-- Results Panel -->
+            <div class="card results-panel" id="results-panel">
+                <h2 style="margin-top: 0; color: #ffffff !important;">Analysis Results</h2>
+                
+                <!-- Summary Card -->
+                <div class="summary-card" id="summary-card">
+                    <!-- Will be populated by JS -->
+                </div>
+                
+                <!-- ROM Cross-Check -->
+                <div class="rom-comparison" id="rom-comparison">
+                    <!-- Will be populated by JS -->
+                </div>
+                
+                <!-- Line Item Breakdown -->
+                <div id="line-items-section">
+                    <h3 style="color: #ffffff !important; margin-bottom: 1rem;">Line Item Breakdown</h3>
+                    <table class="line-items-table" id="line-items-table">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Quantity</th>
+                                <th>Unit</th>
+                                <th>Unit Price</th>
+                                <th>Line Total</th>
+                                <th>Category</th>
+                            </tr>
+                        </thead>
+                        <tbody id="line-items-body">
+                            <!-- Will be populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Missing Scope -->
+                <div id="missing-scope-section">
+                    <h3 style="color: #ffffff !important; margin-bottom: 1rem;">Missing Scope & Gaps</h3>
+                    <ul class="missing-scope-list" id="missing-scope-list">
+                        <!-- Will be populated by JS -->
+                    </ul>
+                </div>
+                
+                <!-- Recommendations -->
+                <div id="recommendations-section">
+                    <h3 style="color: #ffffff !important; margin-bottom: 1rem;">Recommendations</h3>
+                    <ul class="recommendations-list" id="recommendations-list">
+                        <!-- Will be populated by JS -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div class="loading-indicator" id="loading-indicator">
+            <p>Analyzing estimate...</p>
+        </div>
+
+        <!-- Actions Footer -->
+        <div class="actions-footer" id="actions-footer" style="display: none;">
+            <button type="button" class="btn btn-primary" id="save-journal-btn">Save to Claim Journal</button>
+            <button type="button" class="btn btn-secondary" id="add-evidence-btn">Add to Evidence Organizer</button>
+            <button type="button" class="btn btn-secondary" id="add-timeline-btn">Add to Timeline</button>
+            <button type="button" class="btn btn-secondary" id="export-pdf-btn" data-export-target="#results-panel" data-export-filename="contractor-estimate-interpretation.pdf">Export PDF Report</button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 Claim Navigator • Contractor Estimate Interpreter</p>
+        </div>
+    </footer>
+
+    <script type="module" src="/app/assets/js/contractor-estimate-interpreter.js"></script>
+    <script src="/app/assets/js/utils/pdf-export.js"></script>
+</body>
+</html>
+

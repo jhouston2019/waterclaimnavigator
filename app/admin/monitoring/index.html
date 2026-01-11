@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enterprise Monitoring Dashboard - Claim Navigator</title>
+  <link rel="stylesheet" href="/app/assets/css/style.css">
+  <link rel="stylesheet" href="/app/assets/css/design-system.css">
+  
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+</head>
+<body>
+  <div class="admin-container">
+    <aside class="sidebar">
+      <h2>📊 Monitoring</h2>
+      <nav>
+        <a href="/app/admin/monitoring/index.html" class="active">Dashboard</a>
+        <a href="/app/admin/monitoring/errors.html">Errors</a>
+        <a href="/app/admin/monitoring/performance.html">Performance</a>
+        <a href="/app/admin/monitoring/usage.html">Usage</a>
+        <a href="/app/admin/monitoring/ai-costs.html">AI Costs</a>
+        <a href="/app/admin/monitoring/rate-limits.html">Rate Limits</a>
+        <a href="/app/admin/monitoring/events.html">Events</a>
+        <a href="/app/admin/monitoring/health.html">Health</a>
+        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.2);">
+          <a href="/app/admin/ai-console/index.html" style="color: rgba(255,255,255,0.7);">🔧 AI Console</a>
+          <a href="/app/resource-center.html" style="color: rgba(255,255,255,0.7); display: block; margin-top: 0.5rem;">📚 Resource Center</a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="warning-banner">
+        <strong>⚠️ Admin Access Only</strong> - Enterprise monitoring dashboard for system health, performance, and usage analytics.
+      </div>
+
+      <h1>Enterprise Monitoring Dashboard</h1>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="value" id="total-requests">-</div>
+          <div class="label">Total Requests (24h)</div>
+          <div class="trend" id="requests-trend"></div>
+        </div>
+        <div class="stat-card">
+          <div class="value" id="error-rate">-</div>
+          <div class="label">Error Rate</div>
+          <div class="trend" id="error-trend"></div>
+        </div>
+        <div class="stat-card">
+          <div class="value" id="avg-latency">-</div>
+          <div class="label">Avg Latency (ms)</div>
+          <div class="trend" id="latency-trend"></div>
+        </div>
+        <div class="stat-card">
+          <div class="value" id="ai-costs">-</div>
+          <div class="label">AI Costs (24h)</div>
+          <div class="trend" id="costs-trend"></div>
+        </div>
+        <div class="stat-card">
+          <div class="value" id="active-keys">-</div>
+          <div class="label">Active API Keys</div>
+        </div>
+        <div class="stat-card">
+          <div class="value" id="system-health">-</div>
+          <div class="label">System Health</div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+        <div class="card">
+          <h3>Recent Errors</h3>
+          <div id="recent-errors">Loading...</div>
+        </div>
+        <div class="card">
+          <h3>Top Endpoints</h3>
+          <div id="top-endpoints">Loading...</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>System Events (Last Hour)</h3>
+        <div id="recent-events">Loading...</div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="/app/assets/js/admin/monitoring/dashboard.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Depreciation Calculator - Claim Navigator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/tool-visual-alignment.css">
+  <script src="../../storage/claimStorage.js"></script>
+  <script src="../assets/js/tool-registry.js"></script>
+</head>
+<body class="tool-page">
+  
+  <!-- Tool Header -->
+  <div class="tool-page-header">
+    <h1 class="tool-page-title">Depreciation Calculator</h1>
+    <p class="tool-page-subtitle">Calculate depreciation for items</p>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="tool-content-area">
+    
+    <!-- Tool Content -->
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <h2 class="tool-card-title">Step 8 Tool</h2>
+      </div>
+      <div class="tool-card-body">
+        <p>This tool is part of Step 8 of the Step-by-Step Claim Guide.</p>
+        
+        
+
+        
+        <!-- Input Form -->
+        <form data-tool-form class="tool-form">
+          <div class="tool-form-group">
+            <label for="itemDescription" class="tool-label">Item Description</label>
+            <input 
+              type="text" 
+              id="itemDescription" 
+              name="itemDescription" 
+              class="tool-input" 
+              placeholder="e.g., Roof, HVAC System, Flooring"
+              required
+            />
+          </div>
+
+          <div class="tool-form-group">
+            <label for="originalCost" class="tool-label">Original Cost (RCV)</label>
+            <input 
+              type="number" 
+              id="originalCost" 
+              name="originalCost" 
+              class="tool-input" 
+              placeholder="0.00"
+              step="0.01"
+              min="0"
+              required
+            />
+          </div>
+
+          <div class="tool-form-group">
+            <label for="itemAge" class="tool-label">Age of Item (years)</label>
+            <input 
+              type="number" 
+              id="itemAge" 
+              name="itemAge" 
+              class="tool-input" 
+              placeholder="0"
+              step="0.1"
+              min="0"
+              required
+            />
+          </div>
+
+          <div class="tool-form-group">
+            <label for="usefulLife" class="tool-label">Useful Life (years)</label>
+            <input 
+              type="number" 
+              id="usefulLife" 
+              name="usefulLife" 
+              class="tool-input" 
+              placeholder="0"
+              step="1"
+              min="1"
+              required
+            />
+          </div>
+
+          <div class="tool-form-group">
+            <label for="depreciationMethod" class="tool-label">Depreciation Method</label>
+            <select id="depreciationMethod" name="depreciationMethod" class="tool-input" required>
+              <option value="">Select method...</option>
+              <option value="straight-line">Straight Line</option>
+              <option value="declining-balance">Declining Balance</option>
+              <option value="sum-of-years">Sum of Years Digits</option>
+            </select>
+          </div>
+
+          <div class="tool-form-actions">
+            <button type="submit" data-analyze-btn class="tool-btn tool-btn-primary">
+              Calculate Depreciation
+            </button>
+          </div>
+        </form>
+
+        <!-- Output Area -->
+        <div data-tool-output id="output" class="tool-output" style="display: none;">
+          <h3 class="tool-section-title">Analysis Results</h3>
+          <div class="tool-output-content"></div>
+          
+          <div class="tool-form-actions" style="margin-top: 1.5rem;">
+            <button data-export-pdf class="tool-btn tool-btn-secondary">
+              Export as PDF
+            </button>
+            <button data-copy-clipboard class="tool-btn tool-btn-secondary">
+              Copy to Clipboard
+            </button>
+          </div>
+        </div>
+
+
+        <div class="tool-section">
+          <h3 class="tool-section-title">What This Tool Does</h3>
+          <p>Calculate depreciation for items</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="tool-section">
+      <button class="tool-btn tool-btn-secondary" onclick="goBack()">
+        ← Back to Claim Guide
+      </button>
+      
+    </div>
+
+  </div>
+
+  <script>
+    function goBack() {
+      window.location.href = '../../step-by-step-claim-guide.html?step=8';
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Tool loaded: depreciation-calculator');
+    });
+  </script>
+
+
+  <script type="module">
+    import { AIToolController } from '../assets/js/controllers/index.js';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await AIToolController.initTool({
+        toolId: 'depreciation-calculator',
+        toolName: 'Depreciation Calculator',
+        backendFunction: '/.netlify/functions/calculate-depreciation',
+        outputFormat: 'calculation'
+      });
+    });
+  </script>
+
+</body>
+</html>

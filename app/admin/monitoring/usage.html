@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Usage Analytics - Monitoring Dashboard</title>
+  <link rel="stylesheet" href="/app/assets/css/style.css">
+  
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+</head>
+<body>
+  <div class="admin-container">
+    <aside class="sidebar">
+      <h2>📊 Monitoring</h2>
+      <nav>
+        <a href="/app/admin/monitoring/index.html">Dashboard</a>
+        <a href="/app/admin/monitoring/errors.html">Errors</a>
+        <a href="/app/admin/monitoring/performance.html">Performance</a>
+        <a href="/app/admin/monitoring/usage.html" class="active">Usage</a>
+        <a href="/app/admin/monitoring/ai-costs.html">AI Costs</a>
+        <a href="/app/admin/monitoring/rate-limits.html">Rate Limits</a>
+        <a href="/app/admin/monitoring/events.html">Events</a>
+        <a href="/app/admin/monitoring/health.html">Health</a>
+      </nav>
+    </aside>
+    <main class="main-content">
+      <h1>API Key & AI Usage Dashboard</h1>
+      <div class="card">
+        <h3>API Key Usage</h3>
+        <table id="api-usage-table">
+          <thead>
+            <tr>
+              <th>API Key</th>
+              <th>Endpoint</th>
+              <th>Requests</th>
+              <th>Success Rate</th>
+              <th>Avg Latency</th>
+            </tr>
+          </thead>
+          <tbody id="api-usage-tbody">Loading...</tbody>
+        </table>
+      </div>
+      <div class="card">
+        <h3>Endpoint Distribution</h3>
+        <div id="endpoint-chart" style="height: 300px;"></div>
+      </div>
+    </main>
+  </div>
+  <script type="module" src="/app/assets/js/admin/monitoring/usage.js"></script>
+</body>
+</html>
+
+

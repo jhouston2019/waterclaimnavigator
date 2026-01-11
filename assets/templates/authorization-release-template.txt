@@ -1,0 +1,17 @@
+AUTHORIZATION FOR RELEASE OF INSURANCE CLAIM INFORMATION
+
+Insured: {{Insured Name}}
+Policy Number: {{Policy Number}}
+Claim Number: {{Claim Number}}
+Date of Loss: {{Date of Loss}}
+
+I hereby authorize {{Recipient Name}} to obtain from {{Insurer Name}} any and all information, documents, and data relating to my insurance claim, including policy coverage, adjuster reports, estimates, and correspondence.
+
+This authorization is made solely for the purpose of assisting in claim handling, negotiation, or representation. I understand that this release may include confidential or personally identifiable information. I may revoke this authorization at any time by written notice.
+
+This authorization shall expire on {{Authorization Expiration Date}}, unless earlier revoked.
+
+Signature of Insured: _________________________   Date: ____________
+Printed Name: _______________________________
+
+NOTICE: Federal and state law may protect certain information from disclosure. The insurer is released from liability for reliance on this authorization.

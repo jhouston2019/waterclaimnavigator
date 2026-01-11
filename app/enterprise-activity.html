@@ -1,0 +1,84 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Organization Activity • Claim Navigator</title>
+    <link rel="stylesheet" href="/app/assets/css/style.css">
+    <link rel="stylesheet" href="/app/assets/css/design-system.css">
+    <link rel="stylesheet" href="/app/assets/css/resource-center.css">
+    <script src="/app/assets/js/user-tier.js"></script>
+    <script src="/app/assets/js/org.js"></script>
+    <script src="/app/assets/js/analytics.js"></script>
+
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+</head>
+<body class="resource-center enterprise-activity-page">
+<header class="header">
+  <div class="bar container">
+    <div class="brand"><div class="logo"></div><div>Claim Navigation AI</div></div>
+    <nav class="nav">
+      <a href="/app/index.html">Home</a>
+      <span>></span>
+      <a href="/app/enterprise-dashboard.html">Enterprise Dashboard</a>
+      <span>></span>
+      <span>Activity Feed</span>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div class="activity-container">
+    <div class="activity-header">
+      <h1>Organization Activity Feed</h1>
+      <p>Recent events and actions across your organization</p>
+    </div>
+    
+    <div class="activity-feed" id="activity-feed">
+      <!-- Activity items will be rendered here -->
+    </div>
+  </div>
+</main>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // Check if user is enterprise
+  if (window.CNUserTier && !CNUserTier.isEnterprise()) {
+    alert("Activity feed is available for Enterprise tier only.");
+    location.href = "/app/upgrade.html";
+    return;
+  }
+  
+  const events = JSON.parse(localStorage.getItem("cn_events") || "[]");
+  const feedEl = document.getElementById("activity-feed");
+  
+  if (events.length === 0) {
+    feedEl.innerHTML = '<div class="empty-feed">No activity recorded yet. Start using ClaimNavigator to see events here.</div>';
+    return;
+  }
+  
+  // Get last 50 events, reverse to show newest first
+  const recentEvents = events.slice(-50).reverse();
+  
+  const feed = recentEvents.map(e => {
+    const date = new Date(e.ts);
+    const dateStr = date.toLocaleString();
+    
+    return `
+      <div class="activity-item">
+        <strong>${e.event}</strong>
+        <span>${dateStr}</span>
+        <pre>${JSON.stringify(e.data || {}, null, 2)}</pre>
+      </div>
+    `;
+  }).join("");
+  
+  feedEl.innerHTML = feed;
+  
+  if (window.CNAnalytics) {
+    CNAnalytics.log("activity_feed_viewed");
+  }
+});
+</script>
+
+
+
+</body></html>
+

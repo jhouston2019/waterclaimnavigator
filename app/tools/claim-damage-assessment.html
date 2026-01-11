@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claim Damage Assessment - Claim Navigator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/tool-visual-alignment.css">
+  <link rel="stylesheet" href="../assets/css/structured-tool-outputs.css">
+  <script src="../../storage/claimStorage.js"></script>
+  <script src="../assets/js/tool-registry.js"></script>
+</head>
+<body class="tool-page">
+  
+  <!-- Tool Header -->
+  <div class="tool-page-header">
+    <h1 class="tool-page-title">Claim Damage Assessment</h1>
+    <p class="tool-page-subtitle">Comprehensive damage assessment and documentation</p>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="tool-content-area">
+    
+    <!-- Tool Content -->
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <h2 class="tool-card-title">L3 Analysis Tool</h2>
+      </div>
+      <div class="tool-card-body">
+        <p>Generate a comprehensive damage assessment with estimated costs and documentation requirements for your claim.</p>
+        
+        <!-- Input Form -->
+        <form data-tool-form class="tool-form">
+          <div class="tool-form-group">
+            <label for="damagePhotos" class="tool-label">Upload Damage Photos (Optional)</label>
+            <input 
+              type="file" 
+              id="damagePhotos" 
+              name="damagePhotos" 
+              class="tool-input" 
+              accept="image/*,.pdf"
+              multiple
+            />
+            <small>Upload photos showing damage to different areas.</small>
+          </div>
+
+          <div class="tool-form-group">
+            <label for="claimType" class="tool-label">Type of Damage</label>
+            <select id="claimType" name="claimType" class="tool-input" required>
+              <option value="">Select damage type...</option>
+              <option value="fire">Fire Damage</option>
+              <option value="water">Water Damage</option>
+              <option value="wind">Wind/Hurricane Damage</option>
+              <option value="hail">Hail Damage</option>
+              <option value="theft">Theft/Vandalism</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="tool-form-group">
+            <label for="affectedRooms" class="tool-label">Affected Rooms/Areas</label>
+            <input 
+              type="text" 
+              id="affectedRooms" 
+              name="affectedRooms" 
+              class="tool-input" 
+              placeholder="e.g., Living room, kitchen, master bedroom"
+              required
+            />
+            <small>List all rooms or areas with damage, separated by commas.</small>
+          </div>
+
+          <div class="tool-form-group">
+            <label for="lossCategory" class="tool-label">Loss Category</label>
+            <select id="lossCategory" name="lossCategory" class="tool-input" required>
+              <option value="">Select loss category...</option>
+              <option value="structure">Structure</option>
+              <option value="contents">Contents</option>
+              <option value="both">Structure & Contents</option>
+              <option value="ale">Additional Living Expenses</option>
+            </select>
+          </div>
+
+          <div class="tool-form-group">
+            <label for="context" class="tool-label">Damage Description (max 500 chars)</label>
+            <textarea 
+              id="context" 
+              name="context" 
+              class="tool-textarea" 
+              rows="4" 
+              maxlength="500"
+              placeholder="Describe the extent and nature of the damage..."
+              required
+            ></textarea>
+          </div>
+
+          <div class="tool-form-actions">
+            <button type="submit" data-analyze-btn class="tool-btn tool-btn-primary">
+              Assess Damage
+            </button>
+          </div>
+        </form>
+
+        <!-- Output Area -->
+        <div data-tool-output id="output" class="tool-output" style="display: none;">
+          <h3 class="tool-section-title">Damage Assessment Results</h3>
+          <div class="tool-output-content"></div>
+          
+          <div class="tool-form-actions" style="margin-top: 1.5rem;">
+            <button data-export-pdf class="tool-btn tool-btn-secondary">
+              Export as PDF
+            </button>
+            <button data-copy-clipboard class="tool-btn tool-btn-secondary">
+              Copy to Clipboard
+            </button>
+          </div>
+        </div>
+
+        <div class="tool-section">
+          <h3 class="tool-section-title">What This Tool Does</h3>
+          <p>This tool analyzes your damage description and photos to generate a comprehensive assessment including estimated costs, severity ratings, and documentation requirements for each affected area.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="tool-section">
+      <button class="tool-btn tool-btn-secondary" onclick="goBack()">
+        ← Back to Resource Center
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+    function goBack() {
+      window.location.href = '../resource-center.html';
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Tool loaded: claim-damage-assessment');
+    });
+  </script>
+
+  <script type="module">
+    import { AIToolController } from '../assets/js/controllers/index.js';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await AIToolController.initTool({
+        toolId: 'claim-damage-assessment',
+        toolName: 'Claim Damage Assessment',
+        backendFunction: '/.netlify/functions/ai-estimate-comparison',
+        outputFormat: 'structured',
+        customData: { analysis_mode: 'damage-assessment' }
+      });
+    });
+  </script>
+
+</body>
+</html>
+
+

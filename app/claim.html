@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claim Dashboard - Claim Navigator</title>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  
+  <!-- Sentry Loader Script -->
+  <script
+    src="https://js.sentry-cdn.com/0c1da5bb8247f021348e7b67a0a6b96.min.js"
+    crossorigin="anonymous"
+  ></script>
+  
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+</head>
+<body>
+  <div class="claim-dashboard">
+    <!-- Claim Header -->
+    <div class="claim-header">
+      <h1 id="claim-title">Loading Claim...</h1>
+      <p id="claim-subtitle">Retrieving claim information...</p>
+    </div>
+
+    <!-- Claim Information -->
+    <div class="claim-info" id="claim-info">
+      <div class="info-card">
+        <h3>Policy Number</h3>
+        <p id="policy-number">-</p>
+      </div>
+      <div class="info-card">
+        <h3>Insured Name</h3>
+        <p id="insured-name">-</p>
+      </div>
+      <div class="info-card">
+        <h3>Insurance Company</h3>
+        <p id="insurer">-</p>
+      </div>
+      <div class="info-card">
+        <h3>Date of Loss</h3>
+        <p id="date-of-loss">-</p>
+      </div>
+      <div class="info-card">
+        <h3>Type of Loss</h3>
+        <p id="type-of-loss">-</p>
+      </div>
+      <div class="info-card">
+        <h3>Property Type</h3>
+        <p id="property-type">-</p>
+      </div>
+      <div class="info-card">
+        <h3>Status</h3>
+        <p id="claim-status">-</p>
+      </div>
+      <div class="info-card">
+        <h3>License Status</h3>
+        <p id="license-status">-</p>
+      </div>
+    </div>
+
+    <!-- Tools Section -->
+    <div class="tools-section">
+      <h2>Available Tools & Documents</h2>
+      <p>Access your claim-specific AI tools and document library.</p>
+      
+      <div class="tools-grid" id="tools-grid">
+        <div class="loading">Loading tools...</div>
+      </div>
+    </div>
+
+    <!-- Access Log -->
+    <div class="access-log">
+      <h2>Recent Activity</h2>
+      <div id="access-log">
+        <div class="loading">Loading activity...</div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+    // Initialize Sentry
+    Sentry.init({
+      dsn: "{{ SENTRY_DSN }}", // Netlify will inject this env var, or replace with full DSN for testing
+      integrations: [new Sentry.BrowserTracing()],
+      tracesSampleRate: 1.0,             // capture 100% of traces
+      replaysSessionSampleRate: 0.1,     // capture 10% of normal sessions
+      replaysOnErrorSampleRate: 1.0,     // capture 100% of sessions with errors
+    });
+
+    // Test error (uncomment to verify)
+    // myUndefinedFunction();
+    
+    const supabase = createClient(
+      'https://your-project.supabase.co',
+      'your-anon-key'
+    );
+
+    let currentClaim = null;
+    let currentUser = null;
+
+    // Get claim ID from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const claimId = urlParams.get('id') || window.location.pathname.split('/').pop();
+
+    async function init() {
+      try {
+        // Get current user
+        const { data: { user }, error: authError } = await supabase.auth.getUser();
+        if (authError || !user) {
+          window.location.href = '/app/login.html';
+          return;
+        }
+        currentUser = user;
+
+        // Load claim data
+        await loadClaimData();
+        
+        // Load tools
+        await loadTools();
+        
+        // Load access log
+        await loadAccessLog();
+
+      } catch (error) {
+        console.error('Error initializing dashboard:', error);
+        showError('Failed to load claim dashboard. Please try again.');
+      }
+    }
+
+    async function loadClaimData() {
+      try {
+        const { data: claim, error } = await supabase
+          .from('claims')
+          .select('*')
+          .eq('id', claimId)
+          .eq('user_id', currentUser.id)
+          .single();
+
+        if (error || !claim) {
+          throw new Error('Claim not found or access denied');
+        }
+
+        currentClaim = claim;
+
+        // Update header
+        document.getElementById('claim-title').textContent = `Claim: ${claim.insured_name}`;
+        document.getElementById('claim-subtitle').textContent = `Policy #${claim.policy_number} - ${claim.insurer}`;
+
+        // Update claim info
+        document.getElementById('policy-number').textContent = claim.policy_number;
+        document.getElementById('insured-name').textContent = claim.insured_name;
+        document.getElementById('insurer').textContent = claim.insurer;
+        document.getElementById('date-of-loss').textContent = new Date(claim.date_of_loss).toLocaleDateString();
+        document.getElementById('type-of-loss').textContent = claim.type_of_loss;
+        document.getElementById('property-type').textContent = claim.property_type;
+        
+        // Status badges
+        const statusElement = document.getElementById('claim-status');
+        statusElement.innerHTML = `<span class="status-badge status-${claim.status}">${claim.status}</span>`;
+        
+        const licenseElement = document.getElementById('license-status');
+        if (claim.status === 'paid') {
+          licenseElement.innerHTML = '<span class="status-badge status-paid">Active</span>';
+        } else {
+          licenseElement.innerHTML = '<span class="status-badge status-new">Pending</span>';
+        }
+
+      } catch (error) {
+        console.error('Error loading claim data:', error);
+        throw error;
+      }
+    }
+
+    async function loadTools() {
+      const toolsGrid = document.getElementById('tools-grid');
+      
+      if (currentClaim.status !== 'paid') {
+        toolsGrid.innerHTML = `
+          <div class="error">
+            <h4>Payment Required</h4>
+            <p>Please complete payment to access claim tools and documents.</p>
+            <button class="btn-tool" onclick="window.location.href='/app/claims/new.html'">Complete Payment</button>
+          </div>
+        `;
+        return;
+      }
+
+      const tools = [
+        {
+          title: 'AI Document Generator',
+          description: 'Generate custom claim documents using AI',
+          actions: [
+            { text: 'Generate Document', action: 'generate' },
+            { text: 'View Templates', action: 'templates' }
+          ]
+        },
+        {
+          title: 'Document Library',
+          description: 'Access your claim-specific document library',
+          actions: [
+            { text: 'Browse Documents', action: 'library' },
+            { text: 'Download All', action: 'download-all' }
+          ]
+        },
+        {
+          title: 'Appeal Builder',
+          description: 'Create professional appeal letters',
+          actions: [
+            { text: 'Start Appeal', action: 'appeal' },
+            { text: 'View Examples', action: 'examples' }
+          ]
+        },
+        {
+          title: 'Claim Analysis',
+          description: 'AI-powered claim analysis and recommendations',
+          actions: [
+            { text: 'Analyze Claim', action: 'analyze' },
+            { text: 'View Report', action: 'report' }
+          ]
+        },
+        {
+          title: 'Timeline & Sequence',
+          description: '12-month roadmap with phases, milestones, and deadlines',
+          actions: [
+            { text: 'View Timeline', action: 'timeline' },
+            { text: 'Checklist Mode', action: 'checklist' }
+          ]
+        }
+      ];
+
+      toolsGrid.innerHTML = tools.map(tool => `
+        <div class="tool-card">
+          <h4>${tool.title}</h4>
+          <p>${tool.description}</p>
+          <div class="tool-actions">
+            ${tool.actions.map(action => `
+              <button class="btn-tool" onclick="handleToolAction('${action.action}')">
+                ${action.text}
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function loadAccessLog() {
+      try {
+        const { data: logs, error } = await supabase
+          .from('claim_access_logs')
+          .select('*')
+          .eq('claim_id', claimId)
+          .order('timestamp', { ascending: false })
+          .limit(10);
+
+        if (error) {
+          throw error;
+        }
+
+        const logContainer = document.getElementById('access-log');
+        
+        if (logs.length === 0) {
+          logContainer.innerHTML = '<p>No recent activity</p>';
+          return;
+        }
+
+        logContainer.innerHTML = logs.map(log => `
+          <div class="log-entry">
+            <div class="log-info">
+              <strong>${log.action}</strong>
+              ${log.document_id ? ` - ${log.document_id}` : ''}
+              ${log.document_type ? ` (${log.document_type})` : ''}
+            </div>
+            <div class="log-time">
+              ${new Date(log.timestamp).toLocaleString()}
+            </div>
+          </div>
+        `).join('');
+
+      } catch (error) {
+        console.error('Error loading access log:', error);
+        document.getElementById('access-log').innerHTML = '<p>Error loading activity log</p>';
+      }
+    }
+
+    function handleToolAction(action) {
+      // Log the action
+      logAction(action);
+      
+      switch (action) {
+        case 'generate':
+          window.location.href = `/app/response-center.html?claim_id=${claimId}&tab=ai-generator`;
+          break;
+        case 'templates':
+          window.location.href = `/app/response-center.html?claim_id=${claimId}&tab=templates`;
+          break;
+        case 'library':
+          window.location.href = `/app/response-center.html?claim_id=${claimId}&tab=documents`;
+          break;
+        case 'download-all':
+          downloadAllDocuments();
+          break;
+        case 'appeal':
+          window.location.href = `/app/response-center.html?claim_id=${claimId}&tab=appeal`;
+          break;
+        case 'examples':
+          window.location.href = `/app/response-center.html?claim_id=${claimId}&tab=examples`;
+          break;
+        case 'analyze':
+          window.location.href = `/app/response-center.html?claim_id=${claimId}&tab=analysis`;
+          break;
+        case 'report':
+          window.location.href = `/app/response-center.html?claim_id=${claimId}&tab=report`;
+          break;
+        case 'timeline':
+          window.location.href = `/app/timeline.html?id=${claimId}`;
+          break;
+        case 'checklist':
+          window.location.href = `/app/timeline.html?id=${claimId}&view=checklist`;
+          break;
+      }
+    }
+
+    async function logAction(action) {
+      try {
+        await supabase
+          .from('claim_access_logs')
+          .insert([{
+            user_id: currentUser.id,
+            claim_id: claimId,
+            action: action,
+            document_type: 'tool_access',
+            metadata: {
+              tool_action: action,
+              timestamp: new Date().toISOString()
+            }
+          }]);
+      } catch (error) {
+        console.error('Error logging action:', error);
+      }
+    }
+
+    async function downloadAllDocuments() {
+      try {
+        // Log the action
+        await logAction('download_all');
+        
+        // Call the download all function
+        const response = await fetch('/.netlify/functions/download-all', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`
+          },
+          body: JSON.stringify({
+            claim_id: claimId
+          })
+        });
+
+        if (response.ok) {
+          showSuccess('Download started successfully');
+        } else {
+          throw new Error('Download failed');
+        }
+      } catch (error) {
+        console.error('Error downloading documents:', error);
+        showError('Failed to start download. Please try again.');
+      }
+    }
+
+    function showError(message) {
+      const errorDiv = document.createElement('div');
+      errorDiv.className = 'error';
+      errorDiv.textContent = message;
+      document.querySelector('.claim-dashboard').insertBefore(errorDiv, document.querySelector('.claim-dashboard').firstChild);
+      
+      setTimeout(() => errorDiv.remove(), 5000);
+    }
+
+    function showSuccess(message) {
+      const successDiv = document.createElement('div');
+      successDiv.className = 'success';
+      successDiv.textContent = message;
+      document.querySelector('.claim-dashboard').insertBefore(successDiv, document.querySelector('.claim-dashboard').firstChild);
+      
+      setTimeout(() => successDiv.remove(), 3000);
+    }
+
+    // Initialize the dashboard
+    init();
+  </script>
+<script type="module" src="/app/assets/js/diagnostics.js"></script>
+<script type="module" src="/app/assets/js/window-bridge.js"></script>
+</body>
+</html>

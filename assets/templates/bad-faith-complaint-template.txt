@@ -1,0 +1,24 @@
+FORMAL BAD FAITH COMPLAINT
+
+To: {{Insurer Name}}
+From: {{Insured Name}}
+Policy Number: {{Policy Number}}
+Claim Number: {{Claim Number}}
+Date of Loss: {{Date of Loss}}
+
+This correspondence constitutes a formal notice of violation and complaint of bad faith claims handling under the Unfair Claims Settlement Practices Act and related state statutes.
+
+Summary of Violations:
+• Failure to promptly investigate and acknowledge communications.
+• Failure to provide a reasonable explanation for claim denial or delay.
+• Failure to act fairly and equitably toward the insured.
+• Unreasonable undervaluation of covered damages.
+
+Demand for Cure:
+Payment in full of all owed benefits, interest, and applicable penalties within fifteen (15) days, along with written confirmation of corrective action.
+
+Failure to comply may result in referral to the Department of Insurance and initiation of legal proceedings.
+
+Sincerely,
+___________________________   ______________________
+{{Insured Name}}              Date

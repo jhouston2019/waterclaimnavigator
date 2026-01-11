@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expert Opinion Request Generator - Claim Navigator</title>
+    <link rel="stylesheet" href="/app/assets/css/style.css">
+    <link rel="stylesheet" href="/app/css/design-system.css">
+    <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+    
+    <script src="/app/assets/js/navigation-template.js"></script>
+</head>
+<body class="tool-page">
+  <script>createNavigationBar('Expert Opinion');</script>
+
+  <section class="hero-section hero-navy">
+    <div class="hero-content">
+      <h1>Expert Opinion Request Generator</h1>
+      <p class="subtitle">Clear guidance for this step of your claim.</p>
+    </div>
+  </section>
+
+  <main>
+    <section class="page-section">
+      <div class="frosted-card">
+        <h2>🧠 Expert Opinion Request Generator</h2>
+        <p>Generate professional requests for expert opinions, witness coordination, and specialized analysis.</p>
+
+        <label>Upload Supporting Documents:
+          <div class="file-upload">
+            <input type="file" id="documents" class="input" multiple accept=".pdf,.doc,.docx,.txt,.jpg,.png">
+            <p>Upload PDF, DOC, images, or other supporting files</p>
+          </div>
+        </label>
+
+        <div class="form-row">
+          <label>Claim Type:
+            <select id="claimType" class="input">
+              <option value="">Select Claim Type</option>
+              <option value="fire">Fire Damage</option>
+              <option value="water">Water Damage</option>
+              <option value="wind">Wind/Hail Damage</option>
+              <option value="structural">Structural</option>
+              <option value="mold">Mold</option>
+              <option value="other">Other</option>
+            </select>
+          </label>
+          <label>Desired Expertise:
+            <select id="expertise" class="input">
+              <option value="">Select Expertise Area</option>
+              <option value="engineering">Engineering</option>
+              <option value="construction">Construction</option>
+              <option value="fire-investigation">Fire Investigation</option>
+              <option value="forensic-accounting">Forensic Accounting</option>
+              <option value="medical">Medical</option>
+              <option value="automotive">Automotive</option>
+              <option value="electrical">Electrical</option>
+              <option value="plumbing">Plumbing</option>
+              <option value="roofing">Roofing</option>
+              <option value="other">Other</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="form-row">
+          <label>Urgency Level:
+            <select id="urgency" class="input">
+              <option value="standard">Standard (2-4 weeks)</option>
+              <option value="expedited">Expedited (1-2 weeks)</option>
+              <option value="urgent">Urgent (3-7 days)</option>
+              <option value="emergency">Emergency (24-48 hours)</option>
+            </select>
+          </label>
+          <label>Budget Range:
+            <input id="budget" class="input" placeholder="e.g., $2,000 - $5,000" type="number" step="100">
+          </label>
+        </div>
+
+        <label>Timeline Requirements (Date):
+          <input id="timeline" class="input" type="date">
+        </label>
+
+        <label>Brief Context (Optional, max 500 chars):
+          <textarea id="context" class="input" maxlength="500" rows="3" placeholder="e.g., Need structural engineer to assess foundation damage..."></textarea>
+        </label>
+
+        <button class="button primary" onclick="runAnalysis('expert')">Generate Expert Request</button>
+        <div id="result-expert" class="results"></div>
+      </div>
+    </section>
+  </main>
+
+    <script>
+        async function runAnalysis(module) {
+            const resultDiv = document.getElementById('result-' + module);
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '<p><em>Analyzing, please wait...</em></p>';
+
+            const inputs = {
+                description: document.getElementById('description').value,
+                expertise: document.getElementById('expertise').value,
+                urgency: document.getElementById('urgency').value,
+                qualifications: document.getElementById('qualifications').value,
+                budget: document.getElementById('budget').value,
+                timeline: document.getElementById('timeline').value,
+                requirements: document.getElementById('requirements').value,
+                fileCount: document.getElementById('documents').files.length
+            };
+
+            try {
+                const res = await fetch('/.netlify/functions/claim-analysis', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ module, inputs })
+                });
+                
+                const data = await res.json();
+                resultDiv.innerHTML = data.ok ? data.html : '<p class="error">Error: ' + (data.error || 'No response') + '</p>';
+            } catch (e) {
+                resultDiv.innerHTML = '<p class="error">Network error. Try again.</p>';
+            }
+        }
+    </script>
+    <script type="module" src="/app/assets/js/tools/claim-analysis-expert.js"></script>
+</body>
+</html>

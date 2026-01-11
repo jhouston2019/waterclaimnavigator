@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>State-Specific Regulations</title>
+    <link rel="stylesheet" href="/app/css/design-system.css" />
+    <script src="/assets/js/navigation-template.js"></script>
+</head>
+
+<body>
+    <script>createNavigationBar();</script>
+
+
+<section class="hero-section hero-navy">
+    <div class="hero-content">
+        <h1>State-Specific Regulations</h1>
+        <p class="subtitle">Plain-language summaries of unfair claims practices acts, good-faith duties, and consumer protections in every jurisdiction.</p>
+    </div>
+</section>
+
+<div class="authority-layout">
+    <?php include($_SERVER['DOCUMENT_ROOT'] . '/app/partials/authority-sidebar.html'); ?>
+
+    <div class="authority-content">
+        <div class="breadcrumbs">
+            <a href="/app/authority-guides.html">Authority Guides</a> ›
+            <span>State-Specific Regulations</span>
+        </div>
+        <div class="toc-container">
+            <h3>On This Page</h3>
+            <ul id="toc-list"></ul>
+        </div>
+        <div class="container standard-page">
+            <div class="frosted-card">
+                <h2>Overview</h2>
+                <p>States adopt unfair claims practices acts (UCPAs) and related regulations that obligate carriers to act promptly, communicate clearly, and pay what is owed. These rules complement the policy contract and set minimum conduct standards.</p>
+
+                <h2>Key Rules & Requirements</h2>
+                <ul>
+                    <li><strong>Good faith & fair dealing:</strong> Carriers must investigate promptly, evaluate honestly, and avoid unreasonable delay or underpayment.</li>
+                    <li><strong>Clear communication:</strong> Statutes require timely responses to inquiries, written reasons for denials, and citation of policy provisions relied upon.</li>
+                    <li><strong>Standards for investigations:</strong> Many states prohibit requiring unnecessary proofs, mandate trained adjusters, and require consideration of all coverage parts.</li>
+                    <li><strong>Fair settlement:</strong> Insurers may not compel litigation through low offers when liability is clear.</li>
+                    <li><strong>Interest & penalties:</strong> Late payment often triggers statutory interest or bad-faith exposure.</li>
+                    <li><strong>Anti-retaliation:</strong> Consumers cannot be penalized for filing complaints or invoking rights.</li>
+                </ul>
+
+                <h2>Step-by-Step Guidance</h2>
+                <ol>
+                    <li>Pull your state’s <strong>UCPA/Unfair Claims Settlement Practices Act</strong> citation and bookmark the relevant sections.</li>
+                    <li>When requesting action, <strong>quote the specific subsection</strong> (e.g., response deadlines, documentation duties).</li>
+                    <li>Maintain a <strong>communication log</strong> with dates of requests, insurer replies, and any missed statutory windows.</li>
+                    <li>Ask for <strong>written explanations</strong> that cite both policy language and facts relied on for decisions.</li>
+                    <li>If conduct violates a rule, <strong>send a cure letter</strong> referencing the statute and the corrective step requested.</li>
+                    <li>Escalate to supervisors or file a <strong>department complaint</strong> when violations persist.</li>
+                </ol>
+
+                <h2>Required Documentation</h2>
+                <ul>
+                    <li>Copy of the <strong>state unfair claims practices statute/regulation</strong>.</li>
+                    <li>Policy excerpts for the provisions the carrier is applying.</li>
+                    <li>Timeline of requests, responses, inspections, and payments.</li>
+                    <li>Written denial or partial-denial letters with cited reasons.</li>
+                    <li>Any internal guidelines provided (estimating standards, depreciation rules).</li>
+                </ul>
+
+                <h2>Common Insurer Tactics</h2>
+                <ul>
+                    <li>Using vague denials without citing the specific policy provision.</li>
+                    <li>Requesting redundant documents to pause statutory decision clocks.</li>
+                    <li>Issuing oral positions to avoid creating a written record.</li>
+                    <li>Under-scoping inspections while claiming full evaluation.</li>
+                    <li>Delaying payment of undisputed amounts pending unrelated investigations.</li>
+                </ul>
+
+                <h2>Red Flags to Watch For</h2>
+                <ul>
+                    <li>No acknowledgment or status updates within required response windows.</li>
+                    <li>Denial letters missing statutory notice language or appeal details.</li>
+                    <li>Investigations limited to one coverage part when others may apply.</li>
+                    <li>Repeated requests for documents already provided.</li>
+                    <li>Failure to issue a revised estimate when new damage is confirmed.</li>
+                </ul>
+
+                <h2>Best Practices for Policyholders</h2>
+                <ul>
+                    <li>Always ask adjusters to <strong>cite the regulation</strong> supporting any request or deadline.</li>
+                    <li>Keep everything in writing; summarize phone calls by email same day.</li>
+                    <li>Seek a <strong>second inspection</strong> if the first was rushed or incomplete.</li>
+                    <li>Demand partial payments for undisputed amounts while disputes are resolved.</li>
+                    <li>Use the state complaint process when regulatory duties are ignored.</li>
+                </ul>
+
+                <a href="/app/authority-guides.html" class="back-link">← Back to Authority Guides</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const search = document.getElementById("authority-search");
+    const links = document.querySelectorAll(".authority-nav ul li");
+
+    if (!search) return;
+
+    search.addEventListener("input", () => {
+        const query = search.value.toLowerCase();
+
+        links.forEach(li => {
+            const text = li.textContent.toLowerCase();
+            li.style.display = text.includes(query) ? "" : "none";
+        });
+    });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const content = document.querySelector('.frosted-card');
+    const headings = content.querySelectorAll('h2, h3');
+
+    const tocList = document.getElementById('toc-list');
+
+    headings.forEach((heading, index) => {
+        const id = heading.innerText.replace(/\s+/g, '-').toLowerCase() + '-' + index;
+        heading.id = id;
+
+        const li = document.createElement('li');
+        li.classList.add(heading.tagName.toLowerCase());
+
+        const link = document.createElement('a');
+        link.href = '#' + id;
+        link.innerText = heading.innerText;
+
+        li.appendChild(link);
+        tocList.appendChild(li);
+    });
+
+    // ScrollSpy
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            const link = tocList.querySelector(`a[href="#${entry.target.id}"]`);
+            if (entry.isIntersecting) {
+                tocList.querySelectorAll('a').forEach(a => a.classList.remove('active'));
+                if (link) link.classList.add('active');
+            }
+        });
+    }, { threshold: 0.4 });
+
+    headings.forEach(heading => observer.observe(heading));
+});
+</script>
+
+</body>
+</html>

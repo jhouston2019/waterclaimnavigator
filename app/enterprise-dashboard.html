@@ -1,0 +1,128 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Enterprise Dashboard • Claim Navigator</title>
+    <link rel="stylesheet" href="/app/assets/css/style.css">
+    <link rel="stylesheet" href="/app/assets/css/design-system.css">
+    <link rel="stylesheet" href="/app/assets/css/resource-center.css">
+    <script src="/app/assets/js/analytics.js"></script>
+    <script src="/app/assets/js/activation.js"></script>
+    <script src="/app/assets/js/claim-health.js"></script>
+    <script src="/app/assets/js/user-tier.js"></script>
+    <script src="/app/assets/js/api-keys.js"></script>
+
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+</head>
+<body class="resource-center enterprise-dashboard-page">
+<header class="header">
+  <div class="bar container">
+    <div class="brand"><div class="logo"></div><div>Claim Navigation AI</div></div>
+    <nav class="nav">
+      <a href="/app/index.html">Home</a>
+      <span>></span>
+      <a href="/app/resource-center.html">Resource Center</a>
+      <span>></span>
+      <span>Enterprise Dashboard</span>
+    </nav>
+    <!-- Tier Badge -->
+    <li class="nav-tier-badge">
+      <span id="nav-tier-label">Free</span>
+    </li>
+  </div>
+</header>
+
+<main class="container enterprise-dashboard">
+  <h1>Enterprise Claim Overview</h1>
+  <p class="sub">High-level view of claim activity and health across this account.</p>
+
+  <section class="enterprise-grid">
+    <div class="card">
+      <h2>Claim Health Distribution</h2>
+      <p id="ed-health-summary">Loading...</p>
+    </div>
+
+    <div class="card">
+      <h2>Roadmap Engagement</h2>
+      <ul id="ed-roadmap-engagement">Loading...</ul>
+    </div>
+
+    <div class="card">
+      <h2>Tool Usage</h2>
+      <ul id="ed-tool-usage">Loading...</ul>
+    </div>
+
+    <div class="card">
+      <h2>Attribution Snapshot</h2>
+      <ul id="ed-attribution">Loading...</ul>
+    </div>
+  </section>
+</main>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Check tier access
+    if (!window.CNUserTier || !CNUserTier.isEnterprise()) {
+      alert("Enterprise Dashboard is available for Enterprise tier only.");
+      window.location.href = "/app/upgrade.html";
+      return;
+    }
+
+    // Load data
+    const events = JSON.parse(localStorage.getItem("cn_events") || "[]");
+    const activation = window.getActivation ? getActivation() : JSON.parse(localStorage.getItem("cn_activation") || "{}");
+    const health = window.computeClaimHealth ? computeClaimHealth() : 0;
+
+    // Claim Health Summary
+    const healthSummary = document.getElementById("ed-health-summary");
+    if (healthSummary) {
+      healthSummary.textContent = `Average Claim Health Score (this browser): ${health}%`;
+    }
+
+    // Roadmap Engagement (stages completed)
+    const roadmapEngagement = document.getElementById("ed-roadmap-engagement");
+    if (roadmapEngagement) {
+      let completedStages = 0;
+      for (let i = 1; i <= 6; i++) {
+        if (activation[`stage_${i}_complete`]) completedStages++;
+      }
+      roadmapEngagement.innerHTML = `
+        <li>Stages completed: ${completedStages} of 6</li>
+        <li>Full roadmap completion: ${activation["full_activation"] ? "Yes" : "No"}</li>
+      `;
+    }
+
+    // Tool usage (from analytics link_click events)
+    const toolUsageCounts = {};
+    events
+      .filter(e => e.event === "link_click" && e.data && e.data.href)
+      .forEach(e => {
+        const href = e.data.href;
+        toolUsageCounts[href] = (toolUsageCounts[href] || 0) + 1;
+      });
+
+    const toolUsageList = document.getElementById("ed-tool-usage");
+    if (toolUsageList) {
+      const usageSorted = Object.entries(toolUsageCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
+      if (usageSorted.length === 0) {
+        toolUsageList.innerHTML = "<li>No tool activity yet.</li>";
+      } else {
+        toolUsageList.innerHTML = usageSorted
+          .map(([href, count]) => `<li>${href.split('/').pop()} – ${count} clicks</li>`)
+          .join("");
+      }
+    }
+
+    // Attribution snapshot
+    const attributionList = document.getElementById("ed-attribution");
+    if (attributionList) {
+      const attr = localStorage.getItem("cn_attribution");
+      attributionList.innerHTML = attr
+        ? `<li>Primary acquisition source: ${attr}</li>`
+        : `<li>No attribution source recorded yet.</li>`;
+    }
+  });
+</script>
+
+
+
+</body></html>
+

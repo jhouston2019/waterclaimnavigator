@@ -1,0 +1,1423 @@
+/* ================================
+   GLOBAL DESIGN SYSTEM
+   Modern, minimal, clean design
+=============================== */
+
+/* Resource Center Page Styles */
+body.resource-center {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  background: var(--cn-bg-page) !important;
+  color: var(--cn-text-primary) !important;
+  margin: 0;
+  padding: 0;
+}
+
+/* Ensure all text on light backgrounds is dark */
+body.resource-center,
+body.resource-center * {
+  color: var(--cn-text-primary);
+}
+
+/* Headings should be darker */
+body.resource-center h1,
+body.resource-center h2,
+body.resource-center h3,
+body.resource-center h4,
+body.resource-center h5,
+body.resource-center h6 {
+  color: var(--cn-text-primary) !important;
+}
+
+/* Paragraphs and body text */
+body.resource-center p,
+body.resource-center span,
+body.resource-center div,
+body.resource-center li,
+body.resource-center td,
+body.resource-center th {
+  color: var(--cn-text-secondary);
+}
+
+/* Links */
+body.resource-center a:not(.btn-primary):not(.search-btn):not([class*="btn-primary"]) {
+  color: var(--cn-accent);
+}
+
+body.resource-center a:not(.btn-primary):not(.search-btn):not([class*="btn-primary"]):hover {
+  color: #1d4ed8;
+}
+
+/* But allow white text on colored backgrounds (buttons, etc.) */
+body.resource-center .btn-primary,
+body.resource-center .search-btn,
+body.resource-center button[class*="btn-primary"],
+body.resource-center a[class*="btn-primary"],
+body.resource-center button.btn-primary {
+  color: #ffffff !important;
+}
+
+body.resource-center-page {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: #4b5563;
+  background-color: #f8f9fb;
+}
+
+body.resource-center-page h1, 
+body.resource-center-page h2, 
+body.resource-center-page h3 {
+  font-weight: 600;
+  line-height: 1.4;
+  color: #1f2937;
+}
+
+body.resource-center-page p, 
+body.resource-center-page label, 
+body.resource-center-page textarea, 
+body.resource-center-page input, 
+body.resource-center-page button, 
+body.resource-center-page a {
+  font-weight: 400;
+}
+
+/* ================================
+   DOCUMENT OUTPUT TYPOGRAPHY
+=============================== */
+.cn-doc-content {
+  font-family: 'Inter', Arial, sans-serif;
+  line-height: 1.55;
+  font-size: 14px;
+  color: #111; /* Darker text for PDF printing */
+  position: relative;
+  z-index: 2;
+  background: transparent;
+}
+
+/* Headings inside the generated document */
+.cn-doc-content h1,
+.cn-doc-content h2,
+.cn-doc-content h3 {
+  margin-top: 20px;
+  margin-bottom: 8px;
+  color: #111;
+}
+
+.cn-doc-content h1 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  padding-top: 0;
+}
+
+.cn-doc-content h2 {
+  margin-top: 24px;
+  margin-bottom: 12px;
+}
+
+.cn-doc-content h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+/* Better paragraph spacing */
+.cn-doc-content p {
+  margin-bottom: 14px;
+  line-height: 1.65;
+  orphans: 3;
+  widows: 3;
+}
+
+.cn-doc-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* Legal-style blockquote */
+.cn-doc-content blockquote {
+  padding-left: 12px;
+  border-left: 3px solid #888;
+  margin: 12px 0;
+  color: #333;
+}
+
+/* ================================
+   DOCUMENT WATERMARK STYLES
+=============================== */
+.cn-doc-page {
+  padding: 32px 40px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.05);
+  margin-bottom: 40px;
+}
+
+.cn-doc-header {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 13px;
+  color: #111;
+}
+
+.cn-doc-header-meta {
+  text-align: right;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.cn-doc-footer {
+  border-top: 1px solid #ccc;
+  padding-top: 12px;
+  margin-top: 40px;
+  font-size: 12px;
+  color: #444;
+  text-align: center;
+  opacity: 0.9;
+}
+
+.cn-doc-watermark-bg {
+  position: relative;
+}
+
+.cn-doc-watermark-bg::before {
+  content: "Claim Navigator";
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-30deg);
+  font-size: 48px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(0,0,0,0.04); /* lowered from .09 */
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Page break support for multi-page documents */
+.page-break {
+  page-break-before: always;
+}
+
+/* Roadmap Breadcrumb */
+.roadmap-breadcrumb {
+  margin-bottom: 20px;
+  padding: 10px 0;
+  font-size: 14px;
+  opacity: 0.85;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.roadmap-breadcrumb a {
+  color: #38bdf8;
+  text-decoration: none;
+}
+
+.roadmap-breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.roadmap-stage-label {
+  opacity: 0.7;
+}
+
+/* Stage highlighting - dimmed tools */
+.stage-dimmed {
+  opacity: 0.45;
+  filter: grayscale(35%);
+}
+
+/* ================================
+   MEGA BUILD C - COMPLIANCE BANNER
+=============================== */
+.cn-compliance-banner {
+  position: relative;
+  background: rgba(15,23,42,0.96);
+  color: #e5e7eb;
+  font-size: 12px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin: 8px 0 16px 0;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.cn-compliance-banner strong {
+  font-weight: 700;
+  color: #fbbf24;
+}
+
+.cn-compliance-banner button {
+  margin-left: auto;
+  border: none;
+  background: transparent;
+  color: #9ca3af;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.cn-compliance-banner button:hover {
+  color: #f9fafb;
+  background: rgba(255,255,255,0.1);
+}
+
+/* Hide banner when printing */
+@media print {
+  .cn-compliance-banner {
+    display: none !important;
+  }
+}
+
+/* ================================
+   MEGA BUILD A - UI POLISH
+   Responsive & Mobile Adjustments
+=============================== */
+
+/* Mobile & Tablet Responsive */
+@media (max-width: 768px) {
+  .glasscard {
+    padding: 16px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .tool-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .tool-card {
+    padding: 16px !important;
+  }
+
+  #claim-health-box,
+  #claim-portfolio-entry {
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  #portfolio-preview {
+    padding: 20px !important;
+  }
+
+  .cn-doc-page {
+    padding: 20px !important;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+}
+
+/* Prevent horizontal overflow */
+.container,
+.main-content,
+.content-columns {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* ================================
+   RESOURCE CENTER LAYOUT
+=============================== */
+
+/* Main container */
+body.resource-center .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--cn-spacing-2xl) var(--cn-spacing-xl);
+}
+
+body.resource-center .main-content {
+  background: transparent;
+  padding: 0;
+}
+
+/* Hero Section */
+body.resource-center .hero-section {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0 0 40px 0;
+  text-align: left;
+}
+
+body.resource-center .main-title {
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--cn-text-primary);
+  margin: 0 0 16px 0;
+  text-shadow: none;
+}
+
+body.resource-center .hero-subtitle {
+  font-size: 15px;
+  color: var(--cn-text-secondary);
+  margin: 0 0 24px 0;
+  text-shadow: none;
+}
+
+/* Context Pill - Minimal Design */
+body.resource-center .context-pill {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 12px;
+  background: #eef2f7;
+  border: none;
+  border-radius: var(--cn-radius-full);
+  margin: 0 0 40px 0;
+  max-width: fit-content;
+  font-size: 14px;
+  backdrop-filter: none;
+}
+
+body.resource-center .context-label {
+  color: var(--cn-text-secondary);
+  font-weight: 500;
+}
+
+body.resource-center .context-value {
+  color: var(--cn-text-secondary);
+  font-weight: 500;
+}
+
+body.resource-center .context-link {
+  color: var(--cn-accent);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.12s ease;
+}
+
+body.resource-center .context-link:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+/* Section Titles */
+body.resource-center .column-title {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--cn-text-secondary);
+  margin: 0 0 24px 0;
+  padding: 0;
+  border: none;
+  text-shadow: none;
+}
+
+/* Content Columns */
+body.resource-center .content-columns {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-top: 0;
+}
+
+body.resource-center .content-column {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+/* Tool Grid - Responsive */
+body.resource-center .tool-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 0;
+}
+
+@media (max-width: 1024px) {
+  body.resource-center .tool-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  body.resource-center .tool-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+body.resource-center .tool-grid-centered {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  justify-items: stretch;
+}
+
+@media (max-width: 1024px) {
+  body.resource-center .tool-grid-centered {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  body.resource-center .tool-grid-centered {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Tool Cards - Minimal Design */
+body.resource-center .tool-card {
+  background: var(--cn-bg-surface);
+  border: 1px solid var(--cn-border-subtle);
+  border-radius: var(--cn-radius-md);
+  padding: var(--cn-spacing-lg) var(--cn-spacing-lg);
+  text-decoration: none;
+  color: var(--cn-text-primary);
+  transition: box-shadow 0.12s ease, border-color 0.12s ease;
+  box-shadow: var(--cn-shadow-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  min-height: auto;
+}
+
+body.resource-center .tool-card:hover {
+  box-shadow: var(--cn-shadow-medium);
+  border-color: var(--cn-border-medium);
+  transform: none;
+}
+
+body.resource-center .tool-card h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--cn-text-primary);
+  margin: 0;
+  line-height: 1.4;
+  text-shadow: none;
+}
+
+body.resource-center .tool-card p {
+  font-size: 15px;
+  color: var(--cn-text-secondary);
+  margin: 0;
+  line-height: 1.5;
+  text-shadow: none;
+}
+
+body.resource-center .tool-card .badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: var(--cn-radius-full);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+  background: #eef2f7;
+  color: var(--cn-text-secondary);
+}
+
+/* Stage Highlighting */
+body.resource-center .stage-highlight {
+  border-color: var(--cn-accent) !important;
+  background: var(--cn-accent-soft) !important;
+}
+
+body.resource-center .stage-dimmed {
+  opacity: 0.40;
+  filter: none;
+  pointer-events: auto;
+}
+
+/* Glass Cards - Convert to Minimal */
+body.resource-center .glasscard {
+  background: var(--cn-bg-surface);
+  border: 1px solid var(--cn-border-subtle);
+  border-radius: var(--cn-radius-md);
+  padding: var(--cn-spacing-lg) var(--cn-spacing-lg);
+  box-shadow: var(--cn-shadow-soft);
+  backdrop-filter: none;
+}
+
+/* Claim Health Box */
+body.resource-center #claim-health-box {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px 24px;
+  max-width: 600px;
+  margin: 0 auto 20px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  color: #1f2937 !important;
+}
+
+body.resource-center #claim-health-box h3 {
+  margin-top: 0;
+  color: var(--cn-text-primary) !important;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+body.resource-center #claim-health-score {
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--cn-accent) !important;
+  margin: 10px 0;
+}
+
+body.resource-center #claim-health-flags {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0 0;
+  color: var(--cn-text-secondary) !important;
+}
+
+body.resource-center #claim-health-flags li {
+  color: var(--cn-text-secondary) !important;
+}
+
+body.resource-center #claim-health-state-note {
+  font-size: 12px;
+  color: var(--cn-text-muted) !important;
+  margin-top: 12px;
+}
+
+/* Data Management Panel */
+body.resource-center #claim-portfolio-entry,
+body.resource-center .glasscard[style*="data-management"] {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px 24px;
+  max-width: 600px;
+  margin: 20px auto;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+
+body.resource-center #claim-portfolio-entry {
+  color: var(--cn-text-primary) !important;
+}
+
+body.resource-center #claim-portfolio-entry h3 {
+  margin-top: 0;
+  color: var(--cn-text-primary) !important;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+body.resource-center #claim-portfolio-entry p {
+  color: var(--cn-text-secondary) !important;
+  margin-bottom: 15px;
+}
+
+/* CN Agent Section */
+body.resource-center .cn-agent-section {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 24px;
+  margin: 40px 0;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  text-align: left;
+  backdrop-filter: none;
+}
+
+body.resource-center .cn-agent-section h4 {
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--cn-text-primary);
+}
+
+body.resource-center .cn-agent-section p {
+  color: var(--cn-text-secondary);
+  margin: 0 0 16px 0;
+}
+
+body.resource-center .cn-agent-section .btn-primary {
+  background: var(--cn-accent);
+  color: #ffffff !important;
+  padding: 14px 28px;
+  font-weight: 600;
+  border-radius: var(--cn-radius-sm);
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.12s ease;
+}
+
+body.resource-center .cn-agent-section .btn-primary:hover {
+  background: #1d4ed8;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Search Container */
+body.resource-center .search-container {
+  display: flex;
+  max-width: 100%;
+  margin: 0;
+  gap: 8px;
+}
+
+body.resource-center .main-search {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid var(--cn-border-subtle);
+  border-radius: var(--cn-radius-sm);
+  font-size: 15px;
+  background: var(--cn-bg-surface);
+  color: var(--cn-text-primary);
+}
+
+body.resource-center .main-search::placeholder {
+  color: var(--cn-text-muted);
+}
+
+body.resource-center .search-btn {
+  background: var(--cn-accent);
+  color: #ffffff !important;
+  border: none;
+  border-radius: var(--cn-radius-sm);
+  padding: 12px 24px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+
+body.resource-center .search-btn:hover {
+  background: #1d4ed8;
+}
+
+/* Buttons */
+body.resource-center .btn-primary {
+  background: var(--cn-accent);
+  color: #ffffff !important;
+  padding: 14px 28px;
+  font-weight: 600;
+  border-radius: var(--cn-radius-sm);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.12s ease;
+}
+
+body.resource-center .btn-primary:hover {
+  background: #1d4ed8;
+  transform: none;
+  box-shadow: none;
+}
+
+body.resource-center .btn-secondary {
+  background: var(--cn-bg-surface);
+  color: var(--cn-text-secondary) !important;
+  padding: 14px 28px;
+  font-weight: 600;
+  border-radius: var(--cn-radius-sm);
+  border: 1px solid var(--cn-border-subtle);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: border-color 0.12s ease;
+}
+
+body.resource-center .btn-secondary:hover {
+  border-color: var(--cn-border-medium);
+}
+
+/* ================================
+   CLAIM ROADMAP STYLES
+=============================== */
+
+/* Roadmap Page Background */
+body.resource-center.roadmap-page {
+  background: var(--cn-bg-surface) !important;
+  color: var(--cn-text-primary) !important;
+  margin: 0;
+  padding: 0;
+}
+
+body.resource-center.roadmap-page::before {
+  display: none;
+}
+
+/* Ensure all text on white background is dark */
+body.resource-center.roadmap-page,
+body.resource-center.roadmap-page * {
+  color: var(--cn-text-primary);
+}
+
+/* Headings should be darker */
+body.resource-center.roadmap-page h1,
+body.resource-center.roadmap-page h2,
+body.resource-center.roadmap-page h3,
+body.resource-center.roadmap-page h4,
+body.resource-center.roadmap-page h5,
+body.resource-center.roadmap-page h6 {
+  color: var(--cn-text-primary) !important;
+}
+
+/* Paragraphs and body text */
+body.resource-center.roadmap-page p,
+body.resource-center.roadmap-page span,
+body.resource-center.roadmap-page div,
+body.resource-center.roadmap-page li,
+body.resource-center.roadmap-page td,
+body.resource-center.roadmap-page th {
+  color: var(--cn-text-secondary);
+}
+
+/* Links */
+body.resource-center.roadmap-page a:not(.btn-primary):not([class*="btn-primary"]):not(.drawer-secondary-link) {
+  color: var(--cn-accent);
+}
+
+body.resource-center.roadmap-page a:not(.btn-primary):not([class*="btn-primary"]):not(.drawer-secondary-link):hover {
+  color: #1d4ed8;
+}
+
+/* But allow white text on colored backgrounds (buttons, stage circles, etc.) */
+body.resource-center.roadmap-page .btn-primary,
+body.resource-center.roadmap-page button[class*="btn-primary"],
+body.resource-center.roadmap-page a[class*="btn-primary"],
+body.resource-center.roadmap-page button.btn-primary,
+body.resource-center.roadmap-page .stage-node.active .stage-circle,
+body.resource-center.roadmap-page .stage-node.completed .stage-circle,
+body.resource-center.roadmap-page .stage-node.completed .stage-circle::after {
+  color: #ffffff !important;
+}
+
+/* Roadmap Main Container */
+body.resource-center.roadmap-page .claim-roadmap-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--cn-spacing-2xl) var(--cn-spacing-xl);
+}
+
+/* Hero Section */
+body.resource-center.roadmap-page .roadmap-hero {
+  text-align: left;
+  margin-bottom: 40px;
+  padding: 0;
+}
+
+body.resource-center.roadmap-page .roadmap-hero h1 {
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--cn-text-primary);
+  margin: 0 0 8px 0;
+  text-shadow: none;
+}
+
+body.resource-center.roadmap-page .roadmap-hero p {
+  font-size: 15px;
+  color: var(--cn-text-secondary);
+  margin: 0;
+  text-shadow: none;
+}
+
+/* Progress Indicator */
+body.resource-center.roadmap-page .roadmap-progress {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 40px;
+  padding: var(--cn-spacing-lg);
+  background: var(--cn-bg-surface);
+  border: 1px solid var(--cn-border-subtle);
+  border-radius: var(--cn-radius-md);
+  box-shadow: var(--cn-shadow-soft);
+  backdrop-filter: none;
+  color: var(--cn-text-primary) !important;
+}
+
+body.resource-center.roadmap-page .progress-ring {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 4px solid var(--cn-border-subtle);
+  background: var(--cn-bg-page);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body.resource-center.roadmap-page .progress-ring::after {
+  content: attr(data-complete) '%';
+  position: absolute;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cn-text-primary) !important;
+  z-index: 1;
+}
+
+body.resource-center.roadmap-page .progress-label {
+  font-size: 14px;
+  color: var(--cn-text-muted) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+body.resource-center.roadmap-page .progress-value {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--cn-text-primary) !important;
+}
+
+body.resource-center.roadmap-page .progress-stage {
+  font-size: 15px;
+  color: var(--cn-text-secondary) !important;
+}
+
+/* Stage Rail */
+body.resource-center.roadmap-page .stage-rail {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 40px;
+  padding: 0;
+  position: relative;
+  gap: 32px;
+}
+
+body.resource-center.roadmap-page .stage-rail::before {
+  display: none;
+}
+
+body.resource-center.roadmap-page .stage-node {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: opacity 0.12s ease;
+  position: relative;
+  z-index: 1;
+}
+
+body.resource-center.roadmap-page .stage-node:hover {
+  transform: none;
+  opacity: 0.8;
+}
+
+/* Stage Circle */
+body.resource-center.roadmap-page .stage-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--cn-border-subtle);
+  color: var(--cn-text-primary);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.12s ease;
+  position: relative;
+  border: none;
+  font-size: 16px;
+}
+
+body.resource-center.roadmap-page .stage-node.active .stage-circle {
+  background: var(--cn-accent);
+  color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(37,99,235,0.15);
+}
+
+body.resource-center.roadmap-page .stage-node.completed .stage-circle {
+  background: var(--cn-accent-success);
+  color: #ffffff;
+}
+
+body.resource-center.roadmap-page .stage-node.completed .stage-circle {
+  position: relative;
+}
+
+body.resource-center.roadmap-page .stage-node.completed .stage-circle::after {
+  content: '✓';
+  color: #ffffff;
+  font-size: 18px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: 700;
+}
+
+body.resource-center.roadmap-page .stage-node.completed .stage-circle {
+  color: transparent;
+}
+
+body.resource-center.roadmap-page .stage-node.pending .stage-circle {
+  background: var(--cn-border-subtle);
+  color: var(--cn-text-muted);
+}
+
+body.resource-center.roadmap-page .stage-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--cn-text-primary);
+  text-align: center;
+  text-shadow: none;
+}
+
+body.resource-center.roadmap-page .stage-subtitle {
+  font-size: 13px;
+  color: var(--cn-text-muted);
+  text-align: center;
+  text-shadow: none;
+}
+
+body.resource-center.roadmap-page .stage-node.active .stage-title {
+  color: var(--cn-text-primary);
+}
+
+/* Stage Drawer */
+body.resource-center.roadmap-page .stage-drawer {
+  background: var(--cn-bg-surface);
+  border: 1px solid var(--cn-border-subtle);
+  border-radius: var(--cn-radius-lg);
+  padding: var(--cn-spacing-xl);
+  margin-top: 8px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: var(--cn-shadow-large);
+  backdrop-filter: none;
+}
+
+body.resource-center.roadmap-page .stage-drawer-inner {
+  max-width: 100%;
+  margin: 0;
+}
+
+body.resource-center.roadmap-page .stage-drawer-header {
+  margin-bottom: 32px;
+  text-align: left;
+}
+
+body.resource-center.roadmap-page .stage-drawer-header h2 {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--cn-text-primary) !important;
+  margin: 0 0 8px 0;
+  text-shadow: none;
+}
+
+body.resource-center.roadmap-page .stage-drawer-header p {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--cn-text-secondary) !important;
+  margin: 0;
+  text-shadow: none;
+}
+
+body.resource-center.roadmap-page .drawer-subcopy {
+  opacity: 1;
+  font-size: 15px;
+  color: var(--cn-text-secondary) !important;
+  margin-bottom: 24px;
+  font-style: normal;
+}
+
+/* Stage Tool Cards */
+body.resource-center.roadmap-page .stage-drawer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+body.resource-center.roadmap-page .stage-tool-card {
+  background: var(--cn-bg-surface-soft);
+  border: 1px solid var(--cn-border-subtle);
+  border-radius: var(--cn-radius-md);
+  padding: var(--cn-spacing-lg);
+  text-decoration: none;
+  transition: box-shadow 0.12s ease, border-color 0.12s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  box-shadow: var(--cn-shadow-soft);
+  color: var(--cn-text-primary) !important;
+}
+
+body.resource-center.roadmap-page .stage-tool-card:hover {
+  box-shadow: var(--cn-shadow-medium);
+  border-color: var(--cn-border-medium);
+  transform: none;
+  background: var(--cn-bg-surface);
+}
+
+body.resource-center.roadmap-page .stage-tool-card h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--cn-text-primary) !important;
+  margin: 0;
+  text-shadow: none;
+}
+
+body.resource-center.roadmap-page .stage-tool-card p {
+  font-size: 15px;
+  color: var(--cn-text-secondary) !important;
+  margin: 0;
+  line-height: 1.5;
+  text-shadow: none;
+}
+
+body.resource-center.roadmap-page .tool-cta {
+  font-size: 14px;
+  color: var(--cn-accent) !important;
+  font-weight: 600;
+  margin-top: auto;
+  text-shadow: none;
+}
+
+body.resource-center.roadmap-page .stage-tool-card:hover .tool-cta {
+  color: #1d4ed8;
+}
+
+/* Stage Drawer Footer */
+body.resource-center.roadmap-page .stage-drawer-footer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-top: 24px;
+  border-top: 1px solid #e5e7eb;
+}
+
+body.resource-center.roadmap-page .btn-primary {
+  background: var(--cn-accent);
+  color: #ffffff !important;
+  padding: 14px 28px;
+  font-weight: 600;
+  border-radius: var(--cn-radius-sm);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.12s ease;
+  margin-top: 0;
+}
+
+body.resource-center.roadmap-page .btn-primary:hover {
+  background: #1d4ed8;
+  transform: none;
+  box-shadow: none;
+}
+
+body.resource-center.roadmap-page .btn-outline {
+  background: var(--cn-bg-surface);
+  color: var(--cn-text-secondary) !important;
+  border: 1px solid var(--cn-border-subtle);
+  border-radius: var(--cn-radius-sm);
+  padding: 14px 28px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.12s ease;
+}
+
+body.resource-center.roadmap-page .btn-outline:hover {
+  border-color: var(--cn-border-medium);
+  background: var(--cn-bg-surface);
+}
+
+body.resource-center.roadmap-page .drawer-secondary-link {
+  color: var(--cn-text-secondary) !important;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.12s ease;
+}
+
+body.resource-center.roadmap-page .drawer-secondary-link:hover {
+  color: var(--cn-accent) !important;
+}
+
+/* Stage Summary Card */
+body.resource-center.roadmap-page .stage-summary-card {
+  margin-top: 32px;
+  background: #f8fafc;
+  padding: 20px 24px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  color: #1f2937 !important;
+}
+
+body.resource-center.roadmap-page .stage-summary-card h4 {
+  margin-bottom: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937 !important;
+}
+
+body.resource-center.roadmap-page .stage-summary-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px 0;
+}
+
+body.resource-center.roadmap-page .stage-summary-card li {
+  margin: 8px 0;
+  color: #4b5563 !important;
+  font-size: 14px;
+}
+
+body.resource-center.roadmap-page .stage-summary-time {
+  opacity: 1;
+  font-size: 14px;
+  color: #6b7280 !important;
+  margin: 0;
+}
+
+/* Smart Recommendation */
+body.resource-center.roadmap-page .smart-recommendation {
+  margin-top: 24px;
+  background: #eff6ff;
+  border-left: 3px solid #2563eb;
+  padding: 16px 20px;
+  border-radius: 8px;
+  color: #1f2937 !important;
+}
+
+body.resource-center.roadmap-page .smart-recommendation h4 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937 !important;
+}
+
+body.resource-center.roadmap-page .smart-recommendation p {
+  margin: 0;
+  color: #4b5563 !important;
+  font-size: 15px;
+}
+
+/* Why Stage Matters */
+body.resource-center.roadmap-page .why-stage-matters {
+  margin-top: 24px;
+}
+
+body.resource-center.roadmap-page .why-trigger {
+  background: none;
+  border: none;
+  color: #2563eb !important;
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 8px;
+  padding: 0;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+body.resource-center.roadmap-page .why-trigger:hover {
+  text-decoration: underline;
+}
+
+body.resource-center.roadmap-page .why-content {
+  opacity: 1;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #4b5563 !important;
+  margin-top: 8px;
+}
+
+body.resource-center.roadmap-page .why-content.hidden {
+  display: none;
+}
+
+/* Tool Status Icon */
+body.resource-center.roadmap-page .tool-status-icon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 14px;
+  opacity: 1;
+}
+
+body.resource-center.roadmap-page .tool-status-complete {
+  color: #10b981;
+}
+
+body.resource-center.roadmap-page .tool-status-pending {
+  color: #9ca3af;
+}
+
+/* Tool Badges */
+body.resource-center.roadmap-page .tool-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 600;
+  z-index: 10;
+  background: #eef2f7;
+  color: #374151;
+}
+
+body.resource-center.roadmap-page .tool-badge-pro {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+body.resource-center.roadmap-page .tool-badge-enterprise {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+/* Roadmap Status Indicator */
+body.resource-center.roadmap-page .roadmap-status-indicator {
+  text-align: right;
+  font-size: 14px;
+  color: #6b7280 !important;
+  margin: 0 32px 16px 0;
+  padding: 0;
+}
+
+/* Roadmap Responsive */
+@media (max-width: 768px) {
+  body.resource-center.roadmap-page .stage-rail {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 24px;
+    padding-bottom: 8px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  body.resource-center.roadmap-page .stage-rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  body.resource-center.roadmap-page .stage-node {
+    min-width: 80px;
+    flex: 0 0 auto;
+  }
+
+  body.resource-center.roadmap-page .stage-drawer {
+    padding: 20px;
+  }
+
+  body.resource-center.roadmap-page .stage-drawer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  body.resource-center.roadmap-page .claim-roadmap-main {
+    padding: 32px 20px;
+  }
+
+  body.resource-center.roadmap-page .roadmap-progress {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+/* Resource Center Mobile Responsive */
+@media (max-width: 768px) {
+  body.resource-center .container {
+    padding: 32px 20px;
+  }
+
+  body.resource-center .main-title {
+    font-size: 28px;
+  }
+
+  body.resource-center .tool-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  body.resource-center .tool-grid-centered {
+    grid-template-columns: 1fr;
+  }
+
+  body.resource-center .content-columns {
+    gap: 32px;
+  }
+}
+
+/* AI Response Agent input scaling */
+textarea,
+input[type="text"],
+input[type="email"] {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Portfolio preview container */
+#portfolio-preview {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* Button disabled state */
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed !important;
+}
+
+/* ================================
+   MEGA BUILD C - PRINT/PDF POLISH
+=============================== */
+@page {
+  size: auto;
+  margin: 20mm;
+}
+
+/* Ensure headers and footers don't clip */
+.cn-doc-page {
+  page-break-inside: avoid;
+}
+
+/* Force page breaks where class is used */
+.page-break {
+  page-break-before: always;
+  break-before: page;
+}
+
+/* Avoid breaking headings from their content */
+.cn-doc-content h1,
+.cn-doc-content h2,
+.cn-doc-content h3 {
+  page-break-after: avoid;
+}
+
+/* Print-safe colors (avoid full-black backgrounds) */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  
+  .cn-doc-page {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  .cn-compliance-banner {
+    display: none !important;
+  }
+  
+  /* Hide UI elements when printing */
+  button,
+  .btn,
+  .roadmap-controls,
+  .roadmap-buttons,
+  .roadmap-actions {
+    display: none !important;
+  }
+}

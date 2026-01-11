@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compliance Review Tool - Claim Navigator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/tool-visual-alignment.css">
+  <script src="../../storage/claimStorage.js"></script>
+  <script src="../assets/js/tool-registry.js"></script>
+</head>
+<body class="tool-page">
+  
+  <!-- Tool Header -->
+  <div class="tool-page-header">
+    <h1 class="tool-page-title">Compliance Review Tool</h1>
+    <p class="tool-page-subtitle">Evaluate compliance with policy duties</p>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="tool-content-area">
+    
+    <!-- Tool Content -->
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <h2 class="tool-card-title">Step 2 Tool</h2>
+      </div>
+      <div class="tool-card-body">
+        <p>This tool is part of Step 2 of the Step-by-Step Claim Guide.</p>
+        
+        <!-- L1 Structured Form -->
+        <form data-tool-form class="tool-form">
+          <div class="tool-form-group">
+            <label for="reviewDate" class="tool-label">Review Date</label>
+            <input type="date" id="reviewDate" name="reviewDate" class="tool-input" required />
+          </div>
+
+          <div class="tool-form-group">
+            <label for="dutyType" class="tool-label">Policy Duty Type</label>
+            <select id="dutyType" name="dutyType" class="tool-input" required>
+              <option value="">Select duty type...</option>
+              <option value="notice">Notice of Loss</option>
+              <option value="cooperation">Cooperation</option>
+              <option value="documentation">Documentation</option>
+              <option value="examination">Examination Under Oath</option>
+              <option value="proof-of-loss">Proof of Loss</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="tool-form-group">
+            <label for="complianceStatus" class="tool-label">Compliance Status</label>
+            <select id="complianceStatus" name="complianceStatus" class="tool-input" required>
+              <option value="">Select status...</option>
+              <option value="compliant">Compliant</option>
+              <option value="partial">Partially Compliant</option>
+              <option value="non-compliant">Non-Compliant</option>
+              <option value="pending">Pending</option>
+            </select>
+          </div>
+
+          <div class="tool-form-group">
+            <label for="completionDate" class="tool-label">Completion Date</label>
+            <input type="date" id="completionDate" name="completionDate" class="tool-input" />
+          </div>
+
+          <div class="tool-form-group">
+            <label for="notes" class="tool-label">Notes (Optional)</label>
+            <textarea id="notes" name="notes" class="tool-input" rows="2" maxlength="300" placeholder="Brief notes (max 300 characters)..."></textarea>
+          </div>
+
+          <div class="tool-form-actions">
+            <button type="submit" data-save-btn class="tool-btn tool-btn-primary">Save Review</button>
+          </div>
+        </form>
+
+        <div class="tool-section">
+          <h3 class="tool-section-title">What This Tool Does</h3>
+          <p>Evaluate compliance with policy duties</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="tool-section">
+      <button class="tool-btn tool-btn-secondary" onclick="goBack()">
+        ← Back to Claim Guide
+      </button>
+      <button class="tool-btn tool-btn-primary" onclick="markComplete()">
+        Mark as Complete →
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+    function goBack() {
+      window.location.href = '../../step-by-step-claim-guide.html?step=2';
+    }
+
+    function markComplete() {
+      saveClaimData('tool_compliance-review_complete', true);
+      alert('✓ Tool marked as complete!\n\nReturning to Claim Guide...');
+      goBack();
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Tool loaded: compliance-review');
+    });
+  </script>
+
+
+<script type="module">
+  import { WorkflowViewController } from '/app/assets/js/controllers/index.js';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    WorkflowViewController.initTool({
+      "toolId": "compliance-review",
+      "toolName": "Compliance Review",
+      "supabaseTable": "compliance_reports",
+      "viewType": "table"
+});
+  });
+</script>
+
+</body>
+</html>

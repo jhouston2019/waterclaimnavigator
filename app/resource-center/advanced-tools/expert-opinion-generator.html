@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expert Opinion Generator - Claim Navigator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/app/assets/css/style.css">
+    <link rel="stylesheet" href="/app/assets/css/design-system.css">
+    <link rel="stylesheet" href="/app/assets/css/claim-analysis.css">
+    <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+    
+</head>
+<body class="expert-opinion-page">
+    <!-- Header -->
+    <header class="header">
+        <div class="bar container">
+            <div class="brand">
+                <div class="logo"></div>
+                <div>Claim Navigation AI</div>
+            </div>
+            <nav class="nav">
+                <a href="/app/index.html">Home</a>
+                <span>></span>
+                <a href="/app/resource-center.html">Resource Center</a>
+                <span>></span>
+                <a href="/app/resource-center/advanced-tools/advanced-tools.html">Advanced Tools Suite</a>
+                <span>></span>
+                <span>Expert Opinion Generator</span>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Header -->
+    <div class="tool-header" style="max-width: 1000px; margin: 2rem auto;">
+        <h1>Expert Opinion Generator</h1>
+        <p>Generate professional requests for expert opinions, coordinate with specialists, and create expert witness engagement letters.</p>
+    </div>
+
+    <!-- Main Content -->
+    <main class="tool-container">
+        <div class="card">
+            <h2 style="margin-top: 0;">Generate Expert Opinion</h2>
+            
+            <form id="expert-opinion-form">
+                <div class="form-group">
+                    <label>Upload Photos / PDFs (Optional)</label>
+                    <div class="upload-area" id="upload-area">
+                        <p>📄 Upload supporting documents</p>
+                        <input type="file" id="file-input" accept=".pdf,.jpg,.jpeg,.png" multiple style="display: none;">
+                    </div>
+                    <div id="file-list" style="margin-top: 0.5rem; font-size: 0.875rem;"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="situation-description">Describe Situation (max 500 chars)</label>
+                    <textarea id="situation-description" placeholder="Describe the situation requiring expert opinion..." maxlength="500" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="expert-type">Expert Type</label>
+                    <select id="expert-type" required>
+                        <option value="">Select expert type...</option>
+                        <option value="engineer">Engineer</option>
+                        <option value="roofing">Roofing Specialist</option>
+                        <option value="hvac">HVAC Specialist</option>
+                        <option value="mold">Mold Remediation Expert</option>
+                        <option value="general-adjuster">General Adjuster</option>
+                        <option value="construction">Construction Expert</option>
+                        <option value="plumbing">Plumbing Expert</option>
+                        <option value="electrical">Electrical Expert</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Generate Expert Opinion →</button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="card results-panel" id="results-container">
+            <h2>Expert Opinion</h2>
+            
+            <div class="opinion-section" id="cause-analysis">
+                <h3>Cause Analysis</h3>
+                <div id="cause-content"></div>
+            </div>
+            
+            <div class="opinion-section" id="severity-assessment">
+                <h3>Severity Assessment</h3>
+                <div id="severity-content"></div>
+            </div>
+            
+            <div class="opinion-section" id="documentation-requirements">
+                <h3>Documentation Requirements</h3>
+                <div id="documentation-content"></div>
+            </div>
+            
+            <div class="opinion-section" id="recommendations">
+                <h3>Recommendations</h3>
+                <div id="recommendations-content"></div>
+            </div>
+            
+            <div style="margin-top: 2rem;">
+                <button class="btn btn-secondary export-pdf-btn" id="export-pdf" data-export-target="#results-container" data-export-filename="expert-opinion.pdf">Export PDF</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 Claim Navigator • Expert Opinion Generator</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="/app/assets/js/utils/pdf-export.js"></script>
+    <script src="/app/assets/js/advanced-tools/expert-opinion-generator.js"></script>
+</body>
+</html>
+
+

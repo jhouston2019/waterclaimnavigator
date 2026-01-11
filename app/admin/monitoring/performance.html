@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Performance Metrics - Monitoring Dashboard</title>
+  <link rel="stylesheet" href="/app/assets/css/style.css">
+  
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+</head>
+<body>
+  <div class="admin-container">
+    <aside class="sidebar">
+      <h2>📊 Monitoring</h2>
+      <nav>
+        <a href="/app/admin/monitoring/index.html">Dashboard</a>
+        <a href="/app/admin/monitoring/errors.html">Errors</a>
+        <a href="/app/admin/monitoring/performance.html" class="active">Performance</a>
+        <a href="/app/admin/monitoring/usage.html">Usage</a>
+        <a href="/app/admin/monitoring/ai-costs.html">AI Costs</a>
+        <a href="/app/admin/monitoring/rate-limits.html">Rate Limits</a>
+        <a href="/app/admin/monitoring/events.html">Events</a>
+        <a href="/app/admin/monitoring/health.html">Health</a>
+      </nav>
+    </aside>
+    <main class="main-content">
+      <h1>Performance Metrics</h1>
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-value" id="p50-latency">-</div>
+          <div>P50 Latency (ms)</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value" id="p95-latency">-</div>
+          <div>P95 Latency (ms)</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value" id="p99-latency">-</div>
+          <div>P99 Latency (ms)</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value" id="throughput">-</div>
+          <div>Throughput (req/min)</div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Latency Over Time</h3>
+        <div class="chart-container" id="latency-chart"></div>
+      </div>
+      <div class="card">
+        <h3>Endpoint Performance</h3>
+        <table id="endpoint-performance">
+          <thead>
+            <tr>
+              <th>Endpoint</th>
+              <th>P50</th>
+              <th>P95</th>
+              <th>P99</th>
+              <th>Requests</th>
+            </tr>
+          </thead>
+          <tbody id="endpoint-tbody">Loading...</tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+  <script type="module" src="/app/assets/js/admin/monitoring/performance.js"></script>
+</body>
+</html>
+
+

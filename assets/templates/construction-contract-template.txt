@@ -1,0 +1,32 @@
+RESIDENTIAL CONSTRUCTION CONTRACT
+
+Owner: {{Owner Name}}
+Contractor: {{Contractor Name}}
+Property Address: {{Property Address}}
+Contract Price: ${{Contract Price}}
+Start Date: {{Start Date}}     Completion Date: {{Completion Date}}
+
+1. SCOPE OF WORK  
+Contractor agrees to furnish all labor, materials, and supervision necessary to complete the following work:  
+{{Scope of Work}}
+
+2. PAYMENT TERMS  
+Owner shall pay Contractor according to the payment schedule in Exhibit A. Final payment is due upon substantial completion.
+
+3. WARRANTY  
+Contractor warrants all work for a period of one (1) year from completion against defects in materials and workmanship.
+
+4. INSURANCE & LICENSE  
+Contractor certifies that all necessary licenses, liability, and workers' compensation insurance are in effect.
+
+5. CHANGE ORDERS  
+Any changes to this contract must be in writing and signed by both parties.
+
+6. DISPUTE RESOLUTION  
+Any dispute shall be resolved by binding arbitration in accordance with the rules of the American Arbitration Association.
+
+7. ENTIRE AGREEMENT  
+This document constitutes the entire agreement between Owner and Contractor.
+
+Owner Signature: ______________________   Date: ____________  
+Contractor Signature: __________________   Date: ____________

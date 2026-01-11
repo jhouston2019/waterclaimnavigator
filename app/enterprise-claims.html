@@ -1,0 +1,138 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Organization Claims • Claim Navigator</title>
+    <link rel="stylesheet" href="/app/assets/css/style.css">
+    <link rel="stylesheet" href="/app/assets/css/design-system.css">
+    <link rel="stylesheet" href="/app/assets/css/resource-center.css">
+    <script src="/app/assets/js/user-tier.js"></script>
+    <script src="/app/assets/js/org.js"></script>
+    <script src="/app/assets/js/claim-health.js"></script>
+
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+</head>
+<body class="resource-center enterprise-claims-page">
+<header class="header">
+  <div class="bar container">
+    <div class="brand"><div class="logo"></div><div>Claim Navigation AI</div></div>
+    <nav class="nav">
+      <a href="/app/index.html">Home</a>
+      <span>></span>
+      <a href="/app/enterprise-dashboard.html">Enterprise Dashboard</a>
+      <span>></span>
+      <span>Claims Workspace</span>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div class="claims-container">
+    <div class="claims-header">
+      <h1>Organization Claims Workspace</h1>
+      <button id="create-claim" class="btn-primary">Add Claim to Workspace</button>
+    </div>
+    
+    <div class="claims-list" id="claims-list">
+      <!-- Claims will be rendered here -->
+    </div>
+  </div>
+</main>
+
+<script>
+function getHealthLevel(health) {
+  if (health >= 80) return { level: "excellent", label: "Excellent" };
+  if (health >= 60) return { level: "good", label: "Good" };
+  if (health >= 40) return { level: "fair", label: "Fair" };
+  return { level: "poor", label: "Needs Improvement" };
+}
+
+function getStageName(stage) {
+  const stages = {
+    1: "Start Your Claim",
+    2: "Document Damage",
+    3: "Analyze & Compare",
+    4: "Submit & Respond",
+    5: "Negotiate",
+    6: "Resolve or Escalate"
+  };
+  return stages[stage] || `Stage ${stage}`;
+}
+
+function renderClaims() {
+  if (!window.CNOrg) {
+    document.getElementById("claims-list").innerHTML = "<p>Organization module not loaded.</p>";
+    return;
+  }
+  
+  const claims = CNOrg.getOrgClaims();
+  const listEl = document.getElementById("claims-list");
+  
+  if (claims.length === 0) {
+    listEl.innerHTML = '<div class="empty-claims">No claims in workspace yet. Add your first claim to get started.</div>';
+    return;
+  }
+  
+  listEl.innerHTML = claims.map(c => {
+    const healthLevel = getHealthLevel(c.health || 0);
+    const stageName = getStageName(c.stage || 1);
+    
+    return `
+      <div class="claim-row">
+        <h3>${c.title || "Untitled Claim"}</h3>
+        <div class="claim-meta">
+          <span>Stage: ${stageName}</span>
+          <span>
+            Health: ${c.health || 0}%
+            <span class="health-badge ${healthLevel.level}">${healthLevel.label}</span>
+          </span>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Check if user is enterprise
+  if (window.CNUserTier && !CNUserTier.isEnterprise()) {
+    alert("Claims workspace is available for Enterprise tier only.");
+    location.href = "/app/upgrade.html";
+    return;
+  }
+  
+  renderClaims();
+  
+  const createBtn = document.getElementById("create-claim");
+  
+  createBtn.addEventListener("click", () => {
+    const title = prompt("Enter claim title:");
+    if (!title || !title.trim()) {
+      return;
+    }
+    
+    if (!window.CNOrg) {
+      alert("Organization module not loaded.");
+      return;
+    }
+    
+    const health = window.computeClaimHealth ? computeClaimHealth() : 0;
+    const roadmapState = JSON.parse(localStorage.getItem("claimRoadmapProgress") || "{}");
+    const stage = roadmapState.currentStageId || 1;
+    
+    CNOrg.addOrgClaim({
+      title: title.trim(),
+      health,
+      stage
+    });
+    
+    renderClaims();
+    
+    if (window.CNAnalytics) {
+      CNAnalytics.log("org_claim_added", { title: title.trim(), health, stage });
+    }
+  });
+});
+</script>
+
+
+
+</body></html>
+

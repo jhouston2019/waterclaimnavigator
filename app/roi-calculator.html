@@ -1,0 +1,120 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>ROI Calculator • Claim Navigator</title>
+    <link rel="stylesheet" href="/app/assets/css/style.css">
+    <link rel="stylesheet" href="/app/assets/css/design-system.css">
+    <link rel="stylesheet" href="/app/assets/css/resource-center.css">
+    <script src="/app/assets/js/analytics.js"></script>
+    <script src="/app/assets/js/demo-mode.js"></script>
+
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+</head>
+<body class="resource-center roi-calculator-page">
+<header class="header">
+  <div class="bar container">
+    <div class="brand"><div class="logo"></div><div>Claim Navigation AI</div></div>
+    <nav class="nav">
+      <a href="/app/index.html">Home</a>
+      <span>></span>
+      <a href="/app/resource-center.html">Resource Center</a>
+      <span>></span>
+      <span>ROI Calculator</span>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div class="roi-container">
+    <div class="roi-header">
+      <h1>ROI Calculator</h1>
+      <p>Calculate the potential recovery value using Claim Navigator</p>
+    </div>
+
+    <div class="roi-box">
+      <label for="claim-value">Estimated Claim Value ($)</label>
+      <input 
+        id="claim-value" 
+        type="number" 
+        placeholder="e.g. 75000"
+        min="0"
+        step="1000"
+      >
+      <button class="btn-primary" onclick="calcROI()">Calculate ROI</button>
+      
+      <div class="roi-result-box" id="roi-result-box" style="display: none;">
+        <h3>Potential Recovery</h3>
+        <p id="roi-result">$0</p>
+      </div>
+      
+      <div class="roi-breakdown" id="roi-breakdown" style="display: none;">
+        <h4>Calculation Breakdown</h4>
+        <ul id="breakdown-list"></ul>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+function calcROI() {
+  const claimValue = Number(document.getElementById("claim-value").value);
+  
+  if (!claimValue || claimValue <= 0) {
+    alert("Please enter a valid claim value.");
+    return;
+  }
+  
+  // Industry statistics
+  const averageUnderpaymentRate = 0.22; // 22% average underpayment
+  const claimNavigatorLift = 0.65; // 65% recovery rate with ClaimNavigator
+  const averageDelayCost = claimValue * 0.08; // 8% cost of delays
+  
+  // Calculate recovery
+  const underpayment = claimValue * averageUnderpaymentRate;
+  const recovery = underpayment * claimNavigatorLift;
+  const totalValue = recovery - averageDelayCost;
+  
+  // Display result
+  const resultBox = document.getElementById("roi-result-box");
+  const resultEl = document.getElementById("roi-result");
+  const breakdown = document.getElementById("roi-breakdown");
+  const breakdownList = document.getElementById("breakdown-list");
+  
+  resultEl.textContent = `$${Math.round(totalValue).toLocaleString()}`;
+  resultBox.style.display = "block";
+  
+  // Show breakdown
+  breakdownList.innerHTML = `
+    <li><strong>Original Claim Value:</strong> $${claimValue.toLocaleString()}</li>
+    <li><strong>Average Underpayment (22%):</strong> $${Math.round(underpayment).toLocaleString()}</li>
+    <li><strong>ClaimNavigator Recovery Rate (65%):</strong> $${Math.round(recovery).toLocaleString()}</li>
+    <li><strong>Delay Cost Savings (8%):</strong> $${Math.round(averageDelayCost).toLocaleString()}</li>
+    <li><strong>Net Recovery Value:</strong> $${Math.round(totalValue).toLocaleString()}</li>
+  `;
+  breakdown.style.display = "block";
+  
+  // Log to analytics
+  if (window.CNAnalytics) {
+    CNAnalytics.log("roi_calculated", { 
+      claimValue, 
+      recovery: Math.round(totalValue) 
+    });
+  }
+}
+
+// Allow Enter key to calculate
+document.addEventListener("DOMContentLoaded", () => {
+  const input = document.getElementById("claim-value");
+  if (input) {
+    input.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        calcROI();
+      }
+    });
+  }
+});
+</script>
+
+
+
+</body></html>
+

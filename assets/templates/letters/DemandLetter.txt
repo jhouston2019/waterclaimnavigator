@@ -1,0 +1,25 @@
+[HEADER]
+Claimant: {{name}} • Policy: {{policy}} • Claim: {{claim}} • Property: {{address}} • Date: {{date}}
+
+Subject: Demand for Payment of Covered Benefits
+
+To: {{insurer}} (Attn: {{adjuster}})
+
+This letter demands payment for covered benefits owed under the policy. Summary of dispute: {{situation_summary}}.
+
+Payment Summary:
+- Owed Amount (RCV/ACV as applicable): ${{amount}}
+- Basis: [contractor estimate/invoices], photographs, scope itemization.
+- Insurer's offer: [insert]
+- Difference: [insert]
+
+Requests:
+1) Issue payment of ${{amount}} or provide a written explanation with specific policy citations.
+2) Confirm whether any remaining conditions precedent exist (e.g., documents, inspections).
+3) If you disagree, please schedule a reinspection within {{deadline}} days.
+
+Absent timely resolution, I reserve all rights available under the policy and applicable law.
+
+Sincerely,
+{{name}}
+[Attachments: {{attachments}}]

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - Claim Navigator</title>
+  
+  <!-- Sentry Loader Script -->
+  <script
+    src="https://js.sentry-cdn.com/0c1da5bb8247f021348e7b67a0a6b96.min.js"
+    crossorigin="anonymous"
+  ></script>
+  
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+</head>
+<body>
+  <div class="login-container">
+    <h1>Login</h1>
+    <form id="login-form">
+      <label>Email</label>
+      <input type="email" id="email" required />
+      <label>Password</label>
+      <input type="password" id="password" required />
+      <button type="submit">Login</button>
+    </form>
+    <div class="alt">
+      <p>Don’t have an account? <a href="register.html">Register</a></p>
+    </div>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+    // Initialize Sentry
+    Sentry.init({
+      dsn: "{{ SENTRY_DSN }}", // Netlify will inject this env var, or replace with full DSN for testing
+      integrations: [new Sentry.BrowserTracing()],
+      tracesSampleRate: 1.0,             // capture 100% of traces
+      replaysSessionSampleRate: 0.1,     // capture 10% of normal sessions
+      replaysOnErrorSampleRate: 1.0,     // capture 100% of sessions with errors
+    });
+
+    // Test error (uncomment to verify)
+    // myUndefinedFunction();
+
+    // ✅ Initialize Supabase client
+    const supabase = createClient(
+      "{{ SUPABASE_URL }}",
+      "{{ SUPABASE_ANON_KEY }}"
+    );
+
+    const form = document.getElementById('login-form');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+      if (error) {
+        alert("Login failed: " + error.message);
+        return;
+      }
+
+      // ✅ Store session automatically (supabase-js does this by default)
+      const { user, session } = data;
+      if (user) {
+        console.log("Logged in user:", user.email);
+        // Optional: test JWT
+        console.log("Access token:", session?.access_token);
+      }
+
+      // PART 3: Check payment status and redirect accordingly
+      try {
+        const { data: paymentData, error: paymentError } = await supabase
+          .from('payments')
+          .select('status')
+          .eq('user_id', user.id)
+          .eq('status', 'completed')
+          .single();
+
+        if (paymentData && !paymentError) {
+          // Paid user: redirect to Claim Management Center
+          window.location.href = "/app/claim-management-center.html";
+        } else {
+          // Not paid: redirect to checkout
+          window.location.href = "/app/checkout.html?tier=pro";
+        }
+      } catch (err) {
+        console.error('Payment check error:', err);
+        // Default to checkout on error
+        window.location.href = "/app/checkout.html?tier=pro";
+      }
+    });
+  </script>
+<script type="module" src="/app/assets/js/diagnostics.js"></script>
+<script type="module" src="/app/assets/js/window-bridge.js"></script>
+</body>
+</html>

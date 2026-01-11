@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>State Complaint Processes</title>
+    <link rel="stylesheet" href="/app/css/design-system.css" />
+    <script src="/assets/js/navigation-template.js"></script>
+</head>
+
+<body>
+    <script>createNavigationBar();</script>
+
+
+<section class="hero-section hero-navy">
+    <div class="hero-content">
+        <h1>State Complaint Processes</h1>
+        <p class="subtitle">How to file with your state regulator, what to include, and how complaints pressure timely, fair claim handling.</p>
+    </div>
+</section>
+
+<div class="authority-layout">
+    <?php include($_SERVER['DOCUMENT_ROOT'] . '/app/partials/authority-sidebar.html'); ?>
+
+    <div class="authority-content">
+        <div class="breadcrumbs">
+            <a href="/app/authority-guides.html">Authority Guides</a> ›
+            <span>State Complaint Processes</span>
+        </div>
+        <div class="toc-container">
+            <h3>On This Page</h3>
+            <ul id="toc-list"></ul>
+        </div>
+        <div class="container standard-page">
+            <div class="frosted-card">
+                <h2>Overview</h2>
+                <p>Every state insurance department accepts consumer complaints about delayed payments, unfair denials, or poor communication. Filing triggers a regulatory inquiry that often accelerates responses and forces carriers to document their position.</p>
+
+                <h2>Key Rules & Requirements</h2>
+                <ul>
+                    <li><strong>Eligibility:</strong> Policyholders, authorized representatives, and sometimes contractors can file.</li>
+                    <li><strong>Scope:</strong> Departments review compliance with statutes and policy terms; they cannot award damages but can compel responses and levy penalties.</li>
+                    <li><strong>Timelines:</strong> Many states require carriers to respond to the department within 10–20 days.</li>
+                    <li><strong>Documentation:</strong> Complaints should include policy info, timelines, prior requests, and disputed amounts.</li>
+                    <li><strong>No retaliation:</strong> States prohibit carriers from penalizing consumers for filing.</li>
+                </ul>
+
+                <h2>Step-by-Step Guidance</h2>
+                <ol>
+                    <li>Download or open your state’s <strong>online complaint form</strong> from the insurance department site.</li>
+                    <li>Provide <strong>policy number, claim number, and carrier contacts</strong>.</li>
+                    <li>Describe the issue concisely: dates of loss, notice, inspections, payments, and the specific delay or denial.</li>
+                    <li>Attach <strong>supporting documents</strong> (denial letters, estimates, emails showing missed deadlines).</li>
+                    <li>State the <strong>desired resolution</strong>: payment of undisputed amount, written decision, supervisor review, or statutory interest.</li>
+                    <li>Submit and save the confirmation number. Calendar the department’s expected response window.</li>
+                    <li>When the carrier replies, <strong>review for completeness</strong> and follow up with the department if issues remain.</li>
+                </ol>
+
+                <h2>Required Documentation</h2>
+                <ul>
+                    <li>Policy declarations page and claim number.</li>
+                    <li>Timeline of communications and missed deadlines.</li>
+                    <li>Carrier estimates, denial letters, or reservation of rights letters.</li>
+                    <li>Independent estimates, photos, or expert reports showing disputed scope/valuation.</li>
+                    <li>Any prior written complaints or escalation emails.</li>
+                </ul>
+
+                <h2>Common Insurer Tactics</h2>
+                <ul>
+                    <li>Providing minimal responses to regulators that omit context or documents.</li>
+                    <li>Claiming the matter is “under investigation” without specific outstanding items.</li>
+                    <li>Blaming third-party vendors for delay (engineers, contractors) to avoid accountability.</li>
+                    <li>Offering small nuisance payments to close the complaint without addressing the issue.</li>
+                </ul>
+
+                <h2>Red Flags to Watch For</h2>
+                <ul>
+                    <li>No carrier response to the department within the required timeframe.</li>
+                    <li>Responses that do not attach the policy provisions relied on.</li>
+                    <li>Contradictions between what the adjuster told you and what is reported to the regulator.</li>
+                    <li>Refusal to release claim file notes after the complaint is resolved.</li>
+                </ul>
+
+                <h2>Best Practices for Policyholders</h2>
+                <ul>
+                    <li>Keep the narrative short, factual, and tied to statutes or policy clauses.</li>
+                    <li>Ask for a copy of the carrier’s full response to the department.</li>
+                    <li>Escalate internally before filing, but don’t wait so long that deadlines expire.</li>
+                    <li>After resolution, request <strong>written confirmation</strong> of any commitments made.</li>
+                    <li>If issues persist, consider counsel and note any <strong>bad-faith indicators</strong> raised.</li>
+                </ul>
+
+                <a href="/app/authority-guides.html" class="back-link">← Back to Authority Guides</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const search = document.getElementById("authority-search");
+    const links = document.querySelectorAll(".authority-nav ul li");
+
+    if (!search) return;
+
+    search.addEventListener("input", () => {
+        const query = search.value.toLowerCase();
+
+        links.forEach(li => {
+            const text = li.textContent.toLowerCase();
+            li.style.display = text.includes(query) ? "" : "none";
+        });
+    });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const content = document.querySelector('.frosted-card');
+    const headings = content.querySelectorAll('h2, h3');
+
+    const tocList = document.getElementById('toc-list');
+
+    headings.forEach((heading, index) => {
+        const id = heading.innerText.replace(/\s+/g, '-').toLowerCase() + '-' + index;
+        heading.id = id;
+
+        const li = document.createElement('li');
+        li.classList.add(heading.tagName.toLowerCase());
+
+        const link = document.createElement('a');
+        link.href = '#' + id;
+        link.innerText = heading.innerText;
+
+        li.appendChild(link);
+        tocList.appendChild(li);
+    });
+
+    // ScrollSpy
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            const link = tocList.querySelector(`a[href="#${entry.target.id}"]`);
+            if (entry.isIntersecting) {
+                tocList.querySelectorAll('a').forEach(a => a.classList.remove('active'));
+                if (link) link.classList.add('active');
+            }
+        });
+    }, { threshold: 0.4 });
+
+    headings.forEach(heading => observer.observe(heading));
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settlement Analysis & Negotiation - Claim Navigator</title>
+    <link rel="stylesheet" href="/app/assets/css/style.css">
+    <link rel="stylesheet" href="/app/css/design-system.css">
+    <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+    
+    <script src="/app/assets/js/navigation-template.js"></script>
+</head>
+<body class="tool-page">
+  <script>createNavigationBar('Settlement Analysis');</script>
+
+  <section class="hero-section hero-navy">
+    <div class="hero-content">
+      <h1>Settlement Analysis &amp; Negotiation</h1>
+      <p class="subtitle">Clear guidance for this step of your claim.</p>
+    </div>
+  </section>
+
+  <main>
+    <section class="page-section">
+      <div class="frosted-card">
+        <h2>🤝 Settlement Analysis &amp; Negotiation</h2>
+        <p>Analyze settlement offers, calculate fair value, and develop negotiation strategies.</p>
+
+        <div class="form-row">
+          <label>Insurance Offer Amount:
+            <input id="offer" class="input" placeholder="Enter offer amount" type="number" step="0.01">
+          </label>
+          <label>Your Valuation:
+            <input id="valuation" class="input" placeholder="Enter your valuation" type="number" step="0.01">
+          </label>
+        </div>
+
+        <div class="calculation-display" id="gap-display" style="display: none;">
+          <h4>Gap Analysis</h4>
+          <p id="gap-text"></p>
+        </div>
+
+        <label>Primary Dispute Category:
+          <select id="disputed" class="input">
+            <option value="">Select primary dispute...</option>
+            <option value="coverage">Coverage Denial</option>
+            <option value="valuation">Valuation Dispute</option>
+            <option value="causation">Causation Issue</option>
+            <option value="depreciation">Depreciation Disagreement</option>
+            <option value="scope">Scope of Damage</option>
+            <option value="policy-interpretation">Policy Interpretation</option>
+            <option value="other">Other</option>
+          </select>
+        </label>
+
+        <div class="form-row">
+          <label>Jurisdiction:
+            <input id="jurisdiction" class="input" placeholder="State/Province">
+          </label>
+          <label>Days Since Claim Filed:
+            <input id="days" class="input" placeholder="Number of days" type="number">
+          </label>
+        </div>
+
+        <label>Policy Limits:
+          <input id="policyLimits" class="input" placeholder="Enter policy limits (if known)" type="number" step="0.01">
+        </label>
+
+
+        <button class="button primary" onclick="runAnalysis('settlement')">Run Settlement Analysis</button>
+        <div id="result-settlement" class="results"></div>
+      </div>
+    </section>
+  </main>
+
+    <script>
+        // Auto-calculate gap when values change
+        document.getElementById('offer').addEventListener('input', calculateGap);
+        document.getElementById('valuation').addEventListener('input', calculateGap);
+
+        function calculateGap() {
+            const offer = parseFloat(document.getElementById('offer').value) || 0;
+            const valuation = parseFloat(document.getElementById('valuation').value) || 0;
+            
+            if (offer > 0 && valuation > 0) {
+                const gap = valuation - offer;
+                const gapPercent = (gap / valuation) * 100;
+                
+                document.getElementById('gap-display').style.display = 'block';
+                document.getElementById('gap-text').innerHTML = `
+                    <strong>Gap:</strong> $${gap.toLocaleString()} (${gapPercent.toFixed(1)}%)<br>
+                    <strong>Offer as % of Valuation:</strong> ${((offer / valuation) * 100).toFixed(1)}%
+                `;
+            } else {
+                document.getElementById('gap-display').style.display = 'none';
+            }
+        }
+
+        // Fallback removed - module script is the ONLY execution path
+        // If module fails to load, user will see an error instead of silently using old logic
+    </script>
+    <script type="module" src="/app/assets/js/tools/claim-analysis-negotiation.js"></script>
+</body>
+</html>

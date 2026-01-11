@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Version History - AI Console</title>
+  <link rel="stylesheet" href="/app/assets/css/style.css">
+  
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+</head>
+<body>
+  <div class="admin-container">
+    <aside class="sidebar">
+      <h2>🔧 Admin Console</h2>
+      <nav>
+        <a href="/app/admin/ai-console/index.html">Dashboard</a>
+        <a href="/app/admin/ai-console/prompts.html">System Prompts</a>
+        <a href="/app/admin/ai-console/rules.html">Rulesets</a>
+        <a href="/app/admin/ai-console/examples.html">Examples</a>
+        <a href="/app/admin/ai-console/outputs.html">Output Formats</a>
+        <a href="/app/admin/ai-console/versions.html" class="active">Version History</a>
+      </nav>
+    </aside>
+    <main class="main-content">
+      <div class="warning-banner"><strong>⚠️ Admin Access Only</strong></div>
+      <h1>Version History & Rollback</h1>
+      <div class="card">
+        <label><strong>Filter:</strong></label>
+        <select id="filter-type"><option value="">All Types</option><option value="prompt">Prompts</option><option value="ruleset">Rulesets</option><option value="example">Examples</option><option value="output">Output Formats</option></select>
+        <select id="filter-tool"><option value="">All Tools</option></select>
+        <div id="versions-list">Loading...</div>
+      </div>
+      <div class="card" id="rollback-section">
+        <h2>Rollback Center</h2>
+        <div class="diff-viewer">
+          <div class="diff-side">
+            <h3>Current Version</h3>
+            <pre id="current-content"></pre>
+          </div>
+          <div class="diff-side">
+            <h3>Selected Version</h3>
+            <pre id="selected-content"></pre>
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="rollback()">Rollback to Selected Version</button>
+      </div>
+    </main>
+  </div>
+  <script type="module">
+    import { requireAdminAuth } from '/app/assets/js/utils/admin-auth.js';
+    await requireAdminAuth();
+    // Version history and diff logic here
+  </script>
+</body>
+</html>
+
+

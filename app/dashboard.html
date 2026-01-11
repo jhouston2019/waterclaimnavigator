@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Claim - Claim Navigator</title>
+  <link rel="stylesheet" href="/app/assets/css/resource-center.css">
+  
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+</head>
+<body>
+  <div class="dashboard-container">
+    <div class="dashboard-header">
+      <h1>Redirecting to Claim Control Center...</h1>
+      <p>Taking you to the Claim Success Protocol™</p>
+    </div>
+  </div>
+
+  <script src="/app/assets/js/supabase-client.js"></script>
+  <script src="/app/assets/js/auth-session.js"></script>
+  <script>
+    // Redirect to Claim Control Center
+    (async () => {
+      // Require authentication
+      const isAuthenticated = await window.CNAuth?.requireAuth(true);
+      if (!isAuthenticated) return;
+
+      // Redirect to Control Center
+      setTimeout(() => {
+        window.location.href = '/app/claim-control-center.html';
+      }, 1000);
+    })();
+  </script>
+</body>
+</html>

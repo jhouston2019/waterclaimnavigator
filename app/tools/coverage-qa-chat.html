@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coverage Q&A Chat - Claim Navigator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/tool-visual-alignment.css">
+  <script src="../../storage/claimStorage.js"></script>
+  <script src="../assets/js/tool-registry.js"></script>
+</head>
+<body class="tool-page">
+  
+  <!-- Tool Header -->
+  <div class="tool-page-header">
+    <h1 class="tool-page-title">Coverage Q&A Chat</h1>
+    <p class="tool-page-subtitle">Ask questions about your policy coverage</p>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="tool-content-area">
+    
+    <!-- Tool Content -->
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <h2 class="tool-card-title">Step 1 Tool</h2>
+      </div>
+      <div class="tool-card-body">
+        <p>This tool is part of Step 1 of the Step-by-Step Claim Guide.</p>
+        
+        
+
+        
+        <!-- Input Form -->
+        <form data-tool-form class="tool-form">
+          <div class="tool-form-group">
+            <label for="policyUpload" class="tool-label">Upload Policy Document</label>
+            <input 
+              type="file" 
+              id="policyUpload" 
+              name="policyUpload" 
+              class="tool-input" 
+              accept=".pdf,.txt"
+              required
+            />
+            <small>Upload your policy document for coverage Q&A.</small>
+          </div>
+
+          <div class="tool-form-group">
+            <label for="questionCategory" class="tool-label">Question Category</label>
+            <select id="questionCategory" name="questionCategory" class="tool-input" required>
+              <option value="">Select category...</option>
+              <option value="coverage">Coverage Questions</option>
+              <option value="limits">Limits & Sublimits</option>
+              <option value="exclusions">Exclusions</option>
+              <option value="deductibles">Deductibles</option>
+              <option value="endorsements">Endorsements</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="tool-form-group">
+            <label for="context" class="tool-label">Your Question (Optional, max 500 chars)</label>
+            <textarea 
+              id="context" 
+              name="context" 
+              class="tool-textarea" 
+              rows="3" 
+              maxlength="500"
+              placeholder="e.g., Does my policy cover mold remediation?"
+            ></textarea>
+          </div>
+
+          <div class="tool-form-actions">
+            <button type="submit" data-analyze-btn class="tool-btn tool-btn-primary">
+              Get Answer
+            </button>
+          </div>
+        </form>
+
+        <!-- Output Area -->
+        <div data-tool-output id="output" class="tool-output" style="display: none;">
+          <h3 class="tool-section-title">Analysis Results</h3>
+          <div class="tool-output-content"></div>
+          
+          <div class="tool-form-actions" style="margin-top: 1.5rem;">
+            <button data-export-pdf class="tool-btn tool-btn-secondary">
+              Export as PDF
+            </button>
+            <button data-copy-clipboard class="tool-btn tool-btn-secondary">
+              Copy to Clipboard
+            </button>
+          </div>
+        </div>
+
+
+        <div class="tool-section">
+          <h3 class="tool-section-title">What This Tool Does</h3>
+          <p>Ask questions about your policy coverage</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="tool-section">
+      <button class="tool-btn tool-btn-secondary" onclick="goBack()">
+        ← Back to Claim Guide
+      </button>
+      
+    </div>
+
+  </div>
+
+  <script>
+    function goBack() {
+      window.location.href = '../../step-by-step-claim-guide.html?step=1';
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Tool loaded: coverage-qa-chat');
+    });
+  </script>
+
+
+  <script type="module">
+    import { AIToolController } from '../assets/js/controllers/index.js';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await AIToolController.initTool({
+        toolId: 'coverage-qa-chat',
+        toolName: 'Coverage QA Chat',
+        backendFunction: '/.netlify/functions/ai-response-agent',
+        outputFormat: 'text'
+      });
+    });
+  </script>
+
+</body>
+</html>

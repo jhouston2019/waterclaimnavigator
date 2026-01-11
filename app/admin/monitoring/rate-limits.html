@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rate Limit Monitoring - Monitoring Dashboard</title>
+  <link rel="stylesheet" href="/app/assets/css/style.css">
+  
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+</head>
+<body>
+  <div class="admin-container">
+    <aside class="sidebar">
+      <h2>📊 Monitoring</h2>
+      <nav>
+        <a href="/app/admin/monitoring/index.html">Dashboard</a>
+        <a href="/app/admin/monitoring/errors.html">Errors</a>
+        <a href="/app/admin/monitoring/performance.html">Performance</a>
+        <a href="/app/admin/monitoring/usage.html">Usage</a>
+        <a href="/app/admin/monitoring/ai-costs.html">AI Costs</a>
+        <a href="/app/admin/monitoring/rate-limits.html" class="active">Rate Limits</a>
+        <a href="/app/admin/monitoring/events.html">Events</a>
+        <a href="/app/admin/monitoring/health.html">Health</a>
+      </nav>
+    </aside>
+    <main class="main-content">
+      <h1>Rate Limit Monitoring</h1>
+      <div class="card">
+        <h3>Rate Limit Logs</h3>
+        <table id="rate-limit-table">
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>API Key</th>
+              <th>Remaining</th>
+              <th>Limit</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="rate-limit-tbody">Loading...</tbody>
+        </table>
+      </div>
+      <div class="card">
+        <h3>Rate Limit Violations</h3>
+        <div id="violations-list">Loading...</div>
+      </div>
+    </main>
+  </div>
+  <script type="module" src="/app/assets/js/admin/monitoring/rate-limits.js"></script>
+</body>
+</html>
+
+

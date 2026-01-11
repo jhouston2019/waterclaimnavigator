@@ -1,0 +1,147 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Developer Portal • Claim Navigator</title>
+    <link rel="stylesheet" href="/app/assets/css/style.css">
+    <link rel="stylesheet" href="/app/assets/css/design-system.css">
+    <link rel="stylesheet" href="/app/assets/css/resource-center.css">
+    <script src="/app/assets/js/api-keys.js"></script>
+
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+</head>
+<body class="resource-center developer-portal-page">
+<header class="header">
+  <div class="bar container">
+    <div class="brand"><div class="logo"></div><div>Claim Navigation AI</div></div>
+    <nav class="nav">
+      <a href="/app/index.html">Home</a>
+      <span>></span>
+      <a href="/app/api-marketplace.html">API Marketplace</a>
+      <span>></span>
+      <span>Developer Portal</span>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div class="developer-container">
+    <div class="developer-section">
+      <h1>Developer Portal</h1>
+      <p>Access Claim Navigator APIs, documentation, and integration examples.</p>
+    </div>
+
+    <div class="developer-section">
+      <h2>Your API Keys</h2>
+      <div id="api-keys-list"></div>
+      <div class="api-keys-form">
+        <input id="api-key-label" type="text" placeholder="Key label (e.g., 'Staging App')">
+        <button id="create-api-key" class="btn-primary">Create API Key</button>
+      </div>
+    </div>
+
+    <div class="developer-section">
+      <h2>Available APIs</h2>
+      <ul class="api-list">
+        <li><strong>Claim Roadmap API</strong> - Embed our 6-stage guided process</li>
+        <li><strong>Compliance Engine API</strong> - Generate regulatory-ready letters</li>
+        <li><strong>AI Response Agent API</strong> - Draft insurer responses and RFI replies</li>
+        <li><strong>Evidence Organizer API</strong> - Auto-categorize claim photos and documents</li>
+        <li><strong>Claim Health & Scoring API</strong> - Quantify claim readiness (0-100 score)</li>
+      </ul>
+    </div>
+
+    <div class="developer-section">
+      <h2>Quick Example</h2>
+      <div class="code-example">
+        <pre><code>POST /api/claim/roadmap
+Authorization: Bearer YOUR_API_KEY
+Content-Type: application/json
+
+{
+  "claim_type": "fire",
+  "stage": 3,
+  "jurisdiction": "CA"
+}
+
+Response:
+{
+  "status": "ok",
+  "stages": 6,
+  "current_stage": {
+    "id": 3,
+    "title": "Analyze & Compare",
+    "tools": [...]
+  }
+}</code></pre>
+      </div>
+      <p style="margin-top: 1rem;"><a href="/app/api-sandbox.html" style="color: #38bdf8;">Try it in the API Sandbox →</a></p>
+    </div>
+  </div>
+</main>
+
+<script>
+function renderApiKeys() {
+  if (!window.CNApi) {
+    document.getElementById("api-keys-list").innerHTML = "<p>API module not loaded.</p>";
+    return;
+  }
+  
+  const keys = CNApi.getApiKeys();
+  const list = document.getElementById("api-keys-list");
+  
+  if (!keys.length) {
+    list.innerHTML = "<p style='color: #dbeafe; opacity: 0.7;'>No API keys yet. Create one above.</p>";
+    return;
+  }
+  
+  list.innerHTML = keys.map(k => `
+    <div class="api-key-row">
+      <span>${k.label || 'Unnamed Key'}</span>
+      <code>${k.key}</code>
+      <span class="plan-badge">${k.plan}</span>
+      ${k.active ? '' : '<span style="opacity: 0.5;">(Revoked)</span>'}
+    </div>
+  `).join("");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  renderApiKeys();
+  
+  const createBtn = document.getElementById("create-api-key");
+  const labelInput = document.getElementById("api-key-label");
+  
+  createBtn.addEventListener("click", () => {
+    const label = labelInput.value.trim();
+    if (!label) {
+      alert("Please enter a label for your API key.");
+      return;
+    }
+    
+    if (!window.CNApi) {
+      alert("API module not loaded.");
+      return;
+    }
+    
+    const key = CNApi.createApiKey(label, "dev");
+    labelInput.value = "";
+    
+    alert("API Key created: " + key);
+    renderApiKeys();
+    
+    if (window.CNAnalytics) {
+      CNAnalytics.log("api_key_created", { label, plan: "dev" });
+    }
+  });
+  
+  // Allow Enter key to submit
+  labelInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      createBtn.click();
+    }
+  });
+});
+</script>
+
+
+
+</body></html>
+

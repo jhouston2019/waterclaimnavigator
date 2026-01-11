@@ -1,0 +1,24 @@
+DEPARTMENT OF INSURANCE COMPLAINT FORM
+
+Complainant: {{Insured Name}}
+Address: {{Mailing Address}}
+Telephone: {{Phone}}
+Email: {{Email}}
+Policy Number: {{Policy Number}}
+Claim Number: {{Claim Number}}
+Insurance Company: {{Insurer Name}}
+Adjuster: {{Adjuster Name}}
+
+Nature of Complaint (check all that apply):
+[ ] Claim Delay     [ ] Denial of Claim     [ ] Underpayment
+[ ] Poor Communication     [ ] Other: ______________________
+
+Detailed Description of Issue:
+{{Description of Issue}}
+
+Requested Resolution:
+{{Requested Resolution}}
+
+I authorize the Department of Insurance to release this complaint and supporting documentation to the insurer for response. I certify the information provided is true and complete.
+
+Signature: ___________________________   Date: ____________

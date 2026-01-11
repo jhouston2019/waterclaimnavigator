@@ -1,0 +1,15 @@
+NOTICE OF CLAIM
+
+To: {{Insurer Name}}
+From: {{Insured Name}}
+Policy Number: {{Policy Number}}
+Date of Loss: {{Date of Loss}}
+Cause of Loss: {{Cause of Loss}}
+Location of Loss: {{Property Address}}
+
+Pursuant to the policy's "Duties After Loss" condition, this letter serves as formal written notice of claim.  
+Please assign a claim number and acknowledge receipt in writing.
+
+Sincerely,  
+___________________________   ___________________________
+{{Insured Name}}              Date

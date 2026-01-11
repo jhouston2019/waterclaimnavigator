@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Policy Intelligence Engine - Claim Navigator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/tool-visual-alignment.css">
+  <script src="../../storage/claimStorage.js"></script>
+  <script src="../assets/js/tool-registry.js"></script>
+</head>
+<body class="tool-page">
+  
+  <!-- Tool Header -->
+  <div class="tool-page-header">
+    <h1 class="tool-page-title">AI Policy Intelligence Engine</h1>
+    <p class="tool-page-subtitle">Automated AI analysis of your insurance policy</p>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="tool-content-area">
+    
+    <!-- Tool Content -->
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <h2 class="tool-card-title">Step 1 Tool</h2>
+      </div>
+      <div class="tool-card-body">
+        <p>This tool is part of Step 1 of the Step-by-Step Claim Guide.</p>
+        
+        
+
+        
+        <!-- Input Form -->
+        <form data-tool-form class="tool-form">
+          <div class="tool-form-group">
+            <label for="policyUpload" class="tool-label">Upload Insurance Policy</label>
+            <input 
+              type="file" 
+              id="policyUpload" 
+              name="policyUpload" 
+              class="tool-input" 
+              accept=".pdf,.doc,.docx,.txt"
+              required
+            />
+            <small class="tool-help-text">Accepted formats: PDF, DOC, DOCX, TXT</small>
+          </div>
+
+          <div class="tool-form-group">
+            <label for="policyType" class="tool-label">Policy Type</label>
+            <select id="policyType" name="policyType" class="tool-input" required>
+              <option value="">Select policy type...</option>
+              <option value="homeowners">Homeowners (HO-3)</option>
+              <option value="condo">Condo (HO-6)</option>
+              <option value="renters">Renters (HO-4)</option>
+              <option value="commercial">Commercial Property</option>
+              <option value="business-owners">Business Owners Policy (BOP)</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="tool-form-group">
+            <label for="claimType" class="tool-label">Claim Type</label>
+            <select id="claimType" name="claimType" class="tool-input" required>
+              <option value="">Select claim type...</option>
+              <option value="water">Water Damage</option>
+              <option value="fire">Fire Damage</option>
+              <option value="wind">Wind/Hurricane Damage</option>
+              <option value="theft">Theft/Vandalism</option>
+              <option value="liability">Liability</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="tool-form-group">
+            <label for="analysisContext" class="tool-label">Analysis Context (Optional)</label>
+            <textarea 
+              id="analysisContext" 
+              name="analysisContext" 
+              class="tool-input" 
+              rows="3" 
+              maxlength="500"
+              placeholder="Brief context about what you're looking for (max 500 characters)..."
+            ></textarea>
+            <small class="tool-help-text">Character count: <span id="charCount">0</span>/500</small>
+          </div>
+
+          <div class="tool-form-actions">
+            <button type="submit" data-analyze-btn class="tool-btn tool-btn-primary">
+              Analyze Policy
+            </button>
+          </div>
+        </form>
+
+        <script>
+          // Character counter for context field
+          document.getElementById('analysisContext')?.addEventListener('input', function(e) {
+            const count = e.target.value.length;
+            document.getElementById('charCount').textContent = count;
+          });
+        </script>
+
+        <!-- Output Area -->
+        <div data-tool-output id="output" class="tool-output" style="display: none;">
+          <h3 class="tool-section-title">Analysis Results</h3>
+          <div class="tool-output-content"></div>
+          
+          <div class="tool-form-actions" style="margin-top: 1.5rem;">
+            <button data-export-pdf class="tool-btn tool-btn-secondary">
+              Export as PDF
+            </button>
+            <button data-copy-clipboard class="tool-btn tool-btn-secondary">
+              Copy to Clipboard
+            </button>
+          </div>
+        </div>
+
+
+        <div class="tool-section">
+          <h3 class="tool-section-title">What This Tool Does</h3>
+          <p>Automated AI analysis of your insurance policy</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="tool-section">
+      <button class="tool-btn tool-btn-secondary" onclick="goBack()">
+        ← Back to Claim Guide
+      </button>
+      
+    </div>
+
+  </div>
+
+  <script>
+    function goBack() {
+      window.location.href = '../../step-by-step-claim-guide.html?step=1';
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Tool loaded: policy-intelligence-engine');
+    });
+  </script>
+
+
+  <script type="module">
+    import { AIToolController } from '../assets/js/controllers/index.js';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await AIToolController.initTool({
+        toolId: 'policy-intelligence-engine',
+        toolName: 'Policy Intelligence Engine',
+        backendFunction: '/.netlify/functions/ai-policy-review',
+        outputFormat: 'structured'
+      });
+    });
+  </script>
+
+</body>
+</html>

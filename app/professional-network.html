@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Network - Claim Navigator</title>
+    <link rel="stylesheet" href="/app/assets/css/tailwind.css">
+    <link rel="stylesheet" href="/app/assets/css/style.css">
+    
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+</head>
+<body class="min-h-screen ">
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="brand">Claim Navigation AI</div>
+            <nav class="nav">
+                <a href="/app/index.html">Home</a>
+                <span >></span>
+                <span >Professional Network</span>
+                <span >></span>
+                <a href="/app/resource-center.html">Resource Center</a>
+            </nav>
+        </div>
+    </header>
+
+
+    <main class="max-w-6xl mx-auto p-6">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold  mb-4">👥 Professional Network</h1>
+            <p class="text-lg ">
+                Connect with insurance professionals, attorneys, and claim experts to get the help you need.
+            </p>
+        </div>
+
+        <!-- Search and Filter -->
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="Search professionals by name, specialty, or location..." id="searchInput">
+            <div class="filter-tags">
+                <div class="filter-tag active" data-filter="all">All Professionals</div>
+                <div class="filter-tag" data-filter="attorney">Attorneys</div>
+                <div class="filter-tag" data-filter="adjuster">Public Adjusters</div>
+                <div class="filter-tag" data-filter="contractor">Contractors</div>
+                <div class="filter-tag" data-filter="appraiser">Appraisers</div>
+                <div class="filter-tag" data-filter="consultant">Consultants</div>
+            </div>
+        </div>
+
+        <!-- Professional Directory -->
+        <div id="professionalDirectory">
+            <!-- Insurance Attorney -->
+            <div class="professional-card" data-category="attorney">
+                <div class="professional-header">
+                    <div class="professional-avatar">SA</div>
+                    <div class="professional-info">
+                        <h3>Sarah Anderson</h3>
+                        <div class="professional-title">Insurance Attorney</div>
+                    </div>
+                </div>
+                <div class="professional-rating">
+                    <div class="stars">★★★★★</div>
+                    <div class="rating-text">4.9/5 (127 reviews)</div>
+                </div>
+                <div class="professional-description">
+                    Specialized in insurance bad faith cases and complex property damage claims. Over 15 years of experience helping policyholders maximize their settlements.
+                </div>
+                <div class="professional-specialties">
+                    <span class="specialty-tag">Bad Faith</span>
+                    <span class="specialty-tag">Property Damage</span>
+                    <span class="specialty-tag">Settlement Negotiation</span>
+                    <span class="specialty-tag">Appeals</span>
+                </div>
+                <div class="professional-actions">
+                    <a href="mailto:sarah@insuranceattorney.com" class="btn-primary">Contact Sarah</a>
+                    <a href="/app/state-rights/index.html" class="btn-secondary">Legal Rights Guide</a>
+                </div>
+            </div>
+
+            <!-- Public Adjuster -->
+            <div class="professional-card" data-category="adjuster">
+                <div class="professional-header">
+                    <div class="professional-avatar">MJ</div>
+                    <div class="professional-info">
+                        <h3>Michael Johnson</h3>
+                        <div class="professional-title">Licensed Public Adjuster</div>
+                    </div>
+                </div>
+                <div class="professional-rating">
+                    <div class="stars">★★★★★</div>
+                    <div class="rating-text">4.8/5 (89 reviews)</div>
+                </div>
+                <div class="professional-description">
+                    Licensed public adjuster with expertise in fire, water, and storm damage claims. Works exclusively for policyholders to ensure fair settlements.
+                </div>
+                <div class="professional-specialties">
+                    <span class="specialty-tag">Fire Damage</span>
+                    <span class="specialty-tag">Water Damage</span>
+                    <span class="specialty-tag">Storm Claims</span>
+                    <span class="specialty-tag">Documentation</span>
+                </div>
+                <div class="professional-actions">
+                    <a href="mailto:michael@publicadjuster.com" class="btn-primary">Contact Michael</a>
+                    <a href="/app/resource-center/evidence-organizer.html" class="btn-secondary">Evidence Tools</a>
+                </div>
+            </div>
+
+            <!-- Restoration Contractor -->
+            <div class="professional-card" data-category="contractor">
+                <div class="professional-header">
+                    <div class="professional-avatar">RC</div>
+                    <div class="professional-info">
+                        <h3>Robert Chen</h3>
+                        <div class="professional-title">Certified Restoration Contractor</div>
+                    </div>
+                </div>
+                <div class="professional-rating">
+                    <div class="stars">★★★★★</div>
+                    <div class="rating-text">4.9/5 (156 reviews)</div>
+                </div>
+                <div class="professional-description">
+                    IICRC certified contractor specializing in fire and water damage restoration. Provides detailed damage assessments and repair estimates.
+                </div>
+                <div class="professional-specialties">
+                    <span class="specialty-tag">Fire Restoration</span>
+                    <span class="specialty-tag">Water Damage</span>
+                    <span class="specialty-tag">Mold Remediation</span>
+                    <span class="specialty-tag">Estimates</span>
+                </div>
+                <div class="professional-actions">
+                    <a href="mailto:robert@restorationpro.com" class="btn-primary">Contact Robert</a>
+                    <a href="/app/response-center/claim-analysis-tools/damage-assessment.html" class="btn-secondary">Damage Assessment</a>
+                </div>
+            </div>
+
+            <!-- Insurance Appraiser -->
+            <div class="professional-card" data-category="appraiser">
+                <div class="professional-header">
+                    <div class="professional-avatar">EM</div>
+                    <div class="professional-info">
+                        <h3>Emily Martinez</h3>
+                        <div class="professional-title">Independent Insurance Appraiser</div>
+                    </div>
+                </div>
+                <div class="professional-rating">
+                    <div class="stars">★★★★★</div>
+                    <div class="rating-text">4.7/5 (73 reviews)</div>
+                </div>
+                <div class="professional-description">
+                    Independent appraiser providing unbiased property valuations and damage assessments. Works for both policyholders and insurance companies.
+                </div>
+                <div class="professional-specialties">
+                    <span class="specialty-tag">Property Valuation</span>
+                    <span class="specialty-tag">Damage Assessment</span>
+                    <span class="specialty-tag">Market Analysis</span>
+                    <span class="specialty-tag">Expert Testimony</span>
+                </div>
+                <div class="professional-actions">
+                    <a href="mailto:emily@appraiser.com" class="btn-primary">Contact Emily</a>
+                    <a href="/app/resource-center/financial-calculator.html" class="btn-secondary">Value Calculator</a>
+                </div>
+            </div>
+
+            <!-- Insurance Consultant -->
+            <div class="professional-card" data-category="consultant">
+                <div class="professional-header">
+                    <div class="professional-avatar">DW</div>
+                    <div class="professional-info">
+                        <h3>David Wilson</h3>
+                        <div class="professional-title">Insurance Claims Consultant</div>
+                    </div>
+                </div>
+                <div class="professional-rating">
+                    <div class="stars">★★★★★</div>
+                    <div class="rating-text">4.8/5 (94 reviews)</div>
+                </div>
+                <div class="professional-description">
+                    Former insurance adjuster with 20+ years experience. Now consults for policyholders on claim strategy and negotiation tactics.
+                </div>
+                <div class="professional-specialties">
+                    <span class="specialty-tag">Claim Strategy</span>
+                    <span class="specialty-tag">Negotiation</span>
+                    <span class="specialty-tag">Policy Review</span>
+                    <span class="specialty-tag">Settlement</span>
+                </div>
+                <div class="professional-actions">
+                    <a href="mailto:david@claimsconsultant.com" class="btn-primary">Contact David</a>
+                    <a href="/app/resource-center/negotiation-tools.html" class="btn-secondary">Negotiation Tools</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Resources -->
+        <div class=" rounded-2xl p-8 shadow-sm mt-8">
+            <h2 class="text-2xl font-semibold mb-6">🔗 Additional Resources</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="font-semibold mb-3">📞 Emergency Contacts</h3>
+                    <ul class="text-sm  space-y-2">
+                        <li>• State Insurance Department: (555) 123-4567</li>
+                        <li>• Insurance Ombudsman: (555) 234-5678</li>
+                        <li>• Legal Aid Society: (555) 345-6789</li>
+                        <li>• Emergency Restoration: (555) 456-7890</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-3">📋 Professional Organizations</h3>
+                    <ul class="text-sm  space-y-2">
+                        <li>• National Association of Public Insurance Adjusters</li>
+                        <li>• American Bar Association - Insurance Law</li>
+                        <li>• Institute of Inspection, Cleaning and Restoration</li>
+                        <li>• National Association of Insurance Commissioners</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#0f172a]  p-6 mt-16">
+        <div class="max-w-6xl mx-auto text-center">
+            <p class="text-sm ">
+                © 2024 Claim Navigator. All rights reserved. | 
+                <a href="/privacy.html" class="underline hover:text-blue-300">Privacy Policy</a> | 
+                <a href="/terms.html" class="underline hover:text-blue-300">Terms of Service</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.professional-card');
+            
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Filter functionality
+        document.querySelectorAll('.filter-tag').forEach(tag => {
+            tag.addEventListener('click', function() {
+                // Remove active class from all tags
+                document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+                // Add active class to clicked tag
+                this.classList.add('active');
+                
+                const filter = this.dataset.filter;
+                const cards = document.querySelectorAll('.professional-card');
+                
+                cards.forEach(card => {
+                    if (filter === 'all' || card.dataset.category === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

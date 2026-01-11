@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Service Health - Monitoring Dashboard</title>
+  <link rel="stylesheet" href="/app/assets/css/style.css">
+  
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+</head>
+<body>
+  <div class="admin-container">
+    <aside class="sidebar">
+      <h2>📊 Monitoring</h2>
+      <nav>
+        <a href="/app/admin/monitoring/index.html">Dashboard</a>
+        <a href="/app/admin/monitoring/errors.html">Errors</a>
+        <a href="/app/admin/monitoring/performance.html">Performance</a>
+        <a href="/app/admin/monitoring/usage.html">Usage</a>
+        <a href="/app/admin/monitoring/ai-costs.html">AI Costs</a>
+        <a href="/app/admin/monitoring/rate-limits.html">Rate Limits</a>
+        <a href="/app/admin/monitoring/events.html">Events</a>
+        <a href="/app/admin/monitoring/health.html" class="active">Health</a>
+      </nav>
+    </aside>
+    <main class="main-content">
+      <h1>Service Health & SLA Status</h1>
+      <div class="card" style="text-align: center;">
+        <h2>Overall System Health</h2>
+        <div class="health-indicator" id="health-indicator">-</div>
+        <div id="health-status">Checking...</div>
+        <div style="margin-top: 1rem;">
+          <strong>Uptime:</strong> <span id="uptime">-</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Dependency Status</h3>
+        <div class="dependency-grid" id="dependencies">Loading...</div>
+      </div>
+      <div class="card">
+        <h3>Recent Outages</h3>
+        <div id="outages-list">Loading...</div>
+      </div>
+    </main>
+  </div>
+  <script type="module" src="/app/assets/js/admin/monitoring/health.js"></script>
+</body>
+</html>
+
+

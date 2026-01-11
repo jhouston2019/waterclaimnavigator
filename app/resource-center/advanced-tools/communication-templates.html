@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Communication Templates Module - Claim Navigator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/app/assets/css/style.css">
+    <link rel="stylesheet" href="/app/assets/css/design-system.css">
+    <link rel="stylesheet" href="/app/assets/css/claim-analysis.css">
+    <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+    
+</head>
+<body class="communication-templates-page">
+    <!-- Header -->
+    <header class="header">
+        <div class="bar container">
+            <div class="brand">
+                <div class="logo"></div>
+                <div>Claim Navigation AI</div>
+            </div>
+            <nav class="nav">
+                <a href="/app/index.html">Home</a>
+                <span>></span>
+                <a href="/app/resource-center.html">Resource Center</a>
+                <span>></span>
+                <a href="/app/resource-center/advanced-tools/advanced-tools.html">Advanced Tools Suite</a>
+                <span>></span>
+                <span>Communication Templates</span>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Header -->
+    <div class="tool-header" style="max-width: 1000px; margin: 2rem auto;">
+        <h1>Communication Templates Module</h1>
+        <p>Organized interface for accessing professional communication templates for letters, emails, and official correspondence.</p>
+    </div>
+
+    <!-- Main Content -->
+    <main class="tool-container">
+        <div class="card">
+            <h2 style="margin-top: 0;">Browse Templates</h2>
+            
+            <div class="form-group">
+                <label for="category-filter">Category</label>
+                <select id="category-filter">
+                    <option value="">All Categories</option>
+                    <option value="demand">Demand Letters</option>
+                    <option value="appeal">Appeal Letters</option>
+                    <option value="complaint">Complaints</option>
+                    <option value="request">Information Requests</option>
+                    <option value="follow-up">Follow-Up Letters</option>
+                    <option value="deadline">Deadline Notices</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="template-search">Search Templates</label>
+                <input type="text" id="template-search" placeholder="Search template titles...">
+            </div>
+        </div>
+        
+        <div class="card" id="results-container" style="display: none;">
+            <h2>Template Preview</h2>
+            
+            <div class="templates-layout">
+                <div class="templates-list" id="templates-list">
+                    <!-- Template list will be populated here -->
+                </div>
+                
+                <div class="preview-pane">
+                    <h3 id="preview-title">Select a template to preview</h3>
+                    <textarea id="template-preview" readonly placeholder="Template content will appear here..."></textarea>
+                    
+                    <div style="margin-top: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <button class="btn btn-primary" id="insert-details">Insert Claim Details</button>
+                        <button class="btn btn-secondary export-pdf-btn" id="export-pdf" data-export-target="#results-container" data-export-filename="communication-template.pdf">Export Template PDF</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 Claim Navigator • Communication Templates Module</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="/app/assets/js/utils/pdf-export.js"></script>
+    <script src="/app/assets/js/advanced-tools/communication-templates.js"></script>
+</body>
+</html>
+
+

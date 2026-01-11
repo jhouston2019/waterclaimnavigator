@@ -1,0 +1,206 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>API Sandbox • Claim Navigator</title>
+    <link rel="stylesheet" href="/app/assets/css/style.css">
+    <link rel="stylesheet" href="/app/assets/css/design-system.css">
+    <link rel="stylesheet" href="/app/assets/css/resource-center.css">
+    <script src="/app/assets/js/api-keys.js"></script>
+
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+</head>
+<body class="resource-center api-sandbox-page">
+<header class="header">
+  <div class="bar container">
+    <div class="brand"><div class="logo"></div><div>Claim Navigation AI</div></div>
+    <nav class="nav">
+      <a href="/app/index.html">Home</a>
+      <span>></span>
+      <a href="/app/developer.html">Developer Portal</a>
+      <span>></span>
+      <span>API Sandbox</span>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div class="sandbox-container">
+    <div class="sandbox-section">
+      <h1>API Sandbox</h1>
+      <p>Test ClaimNavigator APIs in-browser (simulated).</p>
+      
+      <label>API Endpoint</label>
+      <select id="sandbox-api">
+        <option value="roadmap">Claim Roadmap API</option>
+        <option value="compliance">Compliance Engine API</option>
+        <option value="ai_agent">AI Response Agent API</option>
+        <option value="evidence">Evidence Organizer API</option>
+        <option value="health">Claim Health Score API</option>
+      </select>
+      
+      <label>Request Payload (JSON)</label>
+      <textarea id="sandbox-payload" rows="8">{
+  "claim_type": "fire",
+  "stage": 3,
+  "jurisdiction": "CA"
+}</textarea>
+      
+      <button id="sandbox-run" class="btn-primary">Run API Call</button>
+      
+      <h3>Response</h3>
+      <div class="sandbox-response">
+        <pre id="sandbox-response">Click "Run API Call" to see the response...</pre>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const runBtn = document.getElementById("sandbox-run");
+  const apiSelect = document.getElementById("sandbox-api");
+  const payloadTextarea = document.getElementById("sandbox-payload");
+  const responsePre = document.getElementById("sandbox-response");
+  
+  runBtn.addEventListener("click", () => {
+    const api = apiSelect.value;
+    const payloadText = payloadTextarea.value.trim();
+    
+    // Validate JSON
+    let payload;
+    try {
+      payload = JSON.parse(payloadText);
+    } catch (e) {
+      responsePre.textContent = `Error: Invalid JSON payload.\n\n${e.message}`;
+      responsePre.style.color = "#ef4444";
+      return;
+    }
+    
+    responsePre.style.color = "#dbeafe";
+    responsePre.textContent = "Processing...";
+    
+    // Simulate API call delay
+    setTimeout(() => {
+      if (!window.CNApi) {
+        responsePre.textContent = "Error: API module not loaded.";
+        responsePre.style.color = "#ef4444";
+        return;
+      }
+      
+      // Record the API call
+      CNApi.recordApiCall(api, "dev");
+      
+      // Generate mock response based on API
+      let response;
+      if (api === "roadmap") {
+        response = {
+          status: "ok",
+          stages: 6,
+          current_stage: {
+            id: payload.stage || 3,
+            title: "Analyze & Compare",
+            tools: [
+              { name: "Claim Analysis Tools", href: "/app/claim-analysis.html" },
+              { name: "ROM Estimator", href: "/app/rom-tool.html" }
+            ]
+          },
+          message: "Roadmap data retrieved successfully."
+        };
+      } else if (api === "compliance") {
+        response = {
+          status: "ok",
+          letters: 3,
+          risk_flags: ["deadline", "documentation"],
+          jurisdiction: payload.jurisdiction || "CA",
+          compliance_score: 78,
+          recommendations: [
+            "File regulatory complaint within 7 days",
+            "Request formal appraisal process"
+          ]
+        };
+      } else if (api === "ai_agent") {
+        response = {
+          status: "ok",
+          draft: "This is a sample AI-generated response to your insurer's communication. It addresses the key points raised and maintains a professional tone while asserting your rights under the policy.",
+          tone: "professional",
+          word_count: 145,
+          compliance_checked: true
+        };
+      } else if (api === "evidence") {
+        response = {
+          status: "ok",
+          categorized: 12,
+          categories: {
+            "photos": 8,
+            "receipts": 3,
+            "correspondence": 1
+          },
+          metadata_extracted: true,
+          organization_score: 92
+        };
+      } else if (api === "health") {
+        response = {
+          status: "ok",
+          health_score: 78,
+          level: "good",
+          completed_stages: payload.stage || 3,
+          milestones: [
+            "Stage 1 completed",
+            "Evidence organized",
+            "First document generated"
+          ],
+          recommendations: [
+            "Complete Stage 4 to improve score",
+            "Use AI Response Agent for faster responses"
+          ]
+        };
+      }
+      
+      responsePre.textContent = JSON.stringify(response, null, 2);
+      
+      if (window.CNAnalytics) {
+        CNAnalytics.log("api_sandbox_call", { api, payload });
+      }
+    }, 500);
+  });
+  
+  // Update payload example when API changes
+  apiSelect.addEventListener("change", () => {
+    const api = apiSelect.value;
+    const examples = {
+      roadmap: `{
+  "claim_type": "fire",
+  "stage": 3,
+  "jurisdiction": "CA"
+}`,
+      compliance: `{
+  "claim_type": "water",
+  "jurisdiction": "FL",
+  "deadline_concerns": true
+}`,
+      ai_agent: `{
+  "insurer_message": "We are denying your claim due to...",
+  "claim_type": "fire",
+  "tone": "professional"
+}`,
+      evidence: `{
+  "files": ["photo1.jpg", "receipt.pdf"],
+  "claim_type": "hurricane"
+}`,
+      health: `{
+  "claim_type": "fire",
+  "stage": 3,
+  "completed_milestones": ["stage_1", "evidence_organized"]
+}`
+    };
+    
+    if (examples[api]) {
+      payloadTextarea.value = examples[api];
+    }
+  });
+});
+</script>
+
+
+
+</body></html>
+

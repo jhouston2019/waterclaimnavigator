@@ -1,0 +1,14 @@
+REQUEST FOR RELEASE OF WITHHELD DEPRECIATION
+
+To: {{Insurer Name}}
+From: {{Insured Name}}
+Policy Number: {{Policy Number}}
+Claim Number: {{Claim Number}}
+Date of Loss: {{Date of Loss}}
+
+All covered repairs have been completed in full.  
+Enclosed are paid invoices, completion photographs, and contractor certifications as evidence of completion.
+
+Please release the recoverable depreciation withheld from the prior settlement.
+
+Signature of Insured: ___________________________   Date: ____________

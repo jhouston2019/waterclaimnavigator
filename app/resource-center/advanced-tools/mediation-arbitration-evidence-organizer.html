@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mediation / Arbitration Evidence Organizer - Claim Navigator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/app/assets/css/style.css">
+    <link rel="stylesheet" href="/app/assets/css/design-system.css">
+    <link rel="stylesheet" href="/app/assets/css/claim-analysis.css">
+    <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+    
+</head>
+<body class="evidence-organizer-page">
+    <!-- Header -->
+    <header class="header">
+        <div class="bar container">
+            <div class="brand">
+                <div class="logo"></div>
+                <div>Claim Navigation AI</div>
+            </div>
+            <nav class="nav">
+                <a href="/app/index.html">Home</a>
+                <span>></span>
+                <a href="/app/resource-center.html">Resource Center</a>
+                <span>></span>
+                <a href="/app/resource-center/advanced-tools/advanced-tools.html">Advanced Tools Suite</a>
+                <span>></span>
+                <span>Mediation / Arbitration Evidence Organizer</span>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Header -->
+    <div class="tool-header" style="max-width: 1000px; margin: 2rem auto;">
+        <h1>Mediation / Arbitration Evidence Organizer</h1>
+        <p>Organize and prepare evidence packages for mediation and arbitration proceedings with AI-powered categorization.</p>
+    </div>
+
+    <!-- Main Content -->
+    <main class="tool-container">
+        <div class="card">
+            <h2 style="margin-top: 0;">Organize Evidence</h2>
+            
+            <form id="evidence-form">
+                <div class="form-group">
+                    <label>Upload Evidence</label>
+                    <div class="upload-area" id="upload-area">
+                        <p style="font-size: 1.25rem; margin-bottom: 0.5rem;">📄 Drag and drop files here</p>
+                        <p style="color: rgba(255, 255, 255, 0.7);">or click to browse</p>
+                        <input type="file" id="file-input" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" multiple style="display: none;">
+                    </div>
+                    <div id="file-list" style="margin-top: 1rem; font-size: 0.875rem;"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="dispute-type">Dispute Type</label>
+                    <select id="dispute-type" required>
+                        <option value="">Select dispute type...</option>
+                        <option value="mediation">Mediation</option>
+                        <option value="arbitration">Arbitration</option>
+                        <option value="appraisal">Appraisal</option>
+                        <option value="litigation">Litigation</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Generate Evidence Package →</button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="card" id="evidence-grid-container" style="display: none;">
+            <h2>Evidence Grid</h2>
+            <div class="evidence-grid" id="evidence-grid">
+                <!-- Evidence items will be populated here -->
+            </div>
+        </div>
+        
+        <div class="card results-panel" id="results-container">
+            <h2>Evidence Package</h2>
+            
+            <div class="package-section" id="exhibits">
+                <h3>Exhibits</h3>
+                <div id="exhibits-content"></div>
+            </div>
+            
+            <div class="package-section" id="chronology">
+                <h3>Chronology</h3>
+                <div id="chronology-content"></div>
+            </div>
+            
+            <div class="package-section" id="arguments">
+                <h3>Key Arguments</h3>
+                <div id="arguments-content"></div>
+            </div>
+            
+            <div style="margin-top: 2rem;">
+                <button class="btn btn-secondary export-pdf-btn" id="export-pdf" data-export-target="#results-container" data-export-filename="evidence-package.pdf">Export PDF</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 Claim Navigator • Mediation / Arbitration Evidence Organizer</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="/app/assets/js/utils/pdf-export.js"></script>
+    <script src="/app/assets/js/advanced-tools/mediation-arbitration-evidence-organizer.js"></script>
+</body>
+</html>
+
+

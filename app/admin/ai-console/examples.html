@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Examples - AI Console</title>
+  <link rel="stylesheet" href="/app/assets/css/style.css">
+  
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+</head>
+<body>
+  <div class="admin-container">
+    <aside class="sidebar">
+      <h2>🔧 Admin Console</h2>
+      <nav>
+        <a href="/app/admin/ai-console/index.html">Dashboard</a>
+        <a href="/app/admin/ai-console/prompts.html">System Prompts</a>
+        <a href="/app/admin/ai-console/rules.html">Rulesets</a>
+        <a href="/app/admin/ai-console/examples.html" class="active">Examples</a>
+        <a href="/app/admin/ai-console/outputs.html">Output Formats</a>
+        <a href="/app/admin/ai-console/versions.html">Version History</a>
+      </nav>
+    </aside>
+    <main class="main-content">
+      <div class="warning-banner"><strong>⚠️ Admin Access Only</strong></div>
+      <h1>Few-Shot Examples Manager</h1>
+      <div class="card">
+        <label><strong>Select Tool:</strong></label>
+        <select id="tool-select"><option>Loading...</option></select>
+        <label><strong>Examples (JSON Array):</strong></label>
+        <textarea id="examples-editor" placeholder='[{"input": "...", "output": "..."}]'></textarea>
+        <button class="btn btn-primary" onclick="saveExamples()">Save & Version</button>
+      </div>
+    </main>
+  </div>
+  <script type="module">
+    import { requireAdminAuth } from '/app/assets/js/utils/admin-auth.js';
+    await requireAdminAuth();
+    // Load tools and examples logic here
+  </script>
+</body>
+</html>
+
+

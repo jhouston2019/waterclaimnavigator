@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Reasoning Console - Claim Navigator</title>
+  <link rel="stylesheet" href="/app/assets/css/style.css">
+  <link rel="stylesheet" href="/app/assets/css/design-system.css">
+  
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+</head>
+<body>
+  <div class="admin-container">
+    <aside class="sidebar">
+      <h2>🔧 Admin Console</h2>
+      <nav>
+        <a href="/app/admin/ai-console/index.html" class="active">Dashboard</a>
+        <a href="/app/admin/ai-console/prompts.html">System Prompts</a>
+        <a href="/app/admin/ai-console/rules.html">Rulesets</a>
+        <a href="/app/admin/ai-console/examples.html">Examples</a>
+        <a href="/app/admin/ai-console/outputs.html">Output Formats</a>
+        <a href="/app/admin/ai-console/versions.html">Version History</a>
+        <a href="/app/admin/ai-console/versions.html#rollback">Rollback Center</a>
+        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.2);">
+          <a href="/app/admin/monitoring/index.html" style="color: rgba(255,255,255,0.7);">📊 Monitoring Dashboard</a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="warning-banner">
+        <strong>⚠️ Admin Access Only</strong> - This console allows modification of AI system prompts, rulesets, and configurations. All changes are logged and versioned.
+      </div>
+
+      <h1>AI Reasoning Console Dashboard</h1>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="value" id="total-tools">-</div>
+          <div class="label">Total Tools</div>
+        </div>
+        <div class="stat-card">
+          <div class="value" id="total-versions">-</div>
+          <div class="label">Total Versions</div>
+        </div>
+        <div class="stat-card">
+          <div class="value" id="recent-changes">-</div>
+          <div class="label">Changes (24h)</div>
+        </div>
+        <div class="stat-card">
+          <div class="value" id="active-admins">-</div>
+          <div class="label">Active Admins</div>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <div class="tab active" data-tab="overview">Overview</div>
+        <div class="tab" data-tab="recent">Recent Changes</div>
+        <div class="tab" data-tab="tools">Tools Status</div>
+      </div>
+
+      <div class="tab-content active" id="overview">
+        <div class="card">
+          <h3>System Overview</h3>
+          <p>Manage AI system prompts, rulesets, examples, and output formats for all 17 advanced tools.</p>
+          <ul>
+            <li><strong>System Prompts:</strong> Core AI instructions for each tool</li>
+            <li><strong>Rulesets:</strong> Business rules and compliance logic</li>
+            <li><strong>Examples:</strong> Few-shot learning examples</li>
+            <li><strong>Output Formats:</strong> JSON schema definitions</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tab-content" id="recent">
+        <div class="card">
+          <h3>Recent Changes</h3>
+          <div id="recent-changes-list">Loading...</div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="tools">
+        <div class="card">
+          <h3>Tools Status</h3>
+          <div id="tools-status-list">Loading...</div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module">
+    import { requireAdminAuth } from '/app/assets/js/utils/admin-auth.js';
+
+    // Check admin auth
+    const auth = await requireAdminAuth();
+    if (!auth.authenticated) {
+      // Redirect handled by requireAdminAuth
+      return;
+    }
+
+    // Tab switching
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const tabName = tab.dataset.tab;
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tabName).classList.add('active');
+      });
+    });
+
+    // Load dashboard data
+    async function loadDashboard() {
+      try {
+        const response = await fetch('/.netlify/functions/admin/ai-console/dashboard-stats');
+        const data = await response.json();
+        
+        if (data.success) {
+          document.getElementById('total-tools').textContent = data.data.totalTools || 0;
+          document.getElementById('total-versions').textContent = data.data.totalVersions || 0;
+          document.getElementById('recent-changes').textContent = data.data.recentChanges || 0;
+          document.getElementById('active-admins').textContent = data.data.activeAdmins || 0;
+        }
+      } catch (error) {
+        console.error('Failed to load dashboard:', error);
+      }
+    }
+
+    loadDashboard();
+  </script>
+</body>
+</html>
+

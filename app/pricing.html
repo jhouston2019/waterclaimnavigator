@@ -1,0 +1,147 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Pricing • Claim Navigator</title>
+    <link rel="stylesheet" href="/app/assets/css/style.css">
+    <link rel="stylesheet" href="/app/assets/css/design-system.css">
+    <link rel="stylesheet" href="/app/assets/css/resource-center.css">
+    <script src="/app/assets/js/analytics.js"></script>
+    <script src="/app/assets/js/user-tier.js"></script>
+    <script src="/app/assets/js/upgrade-hooks.js"></script>
+
+  <link rel="stylesheet" href="/app/assets/css/tool-visual-alignment.css">
+</head>
+<body class="resource-center pricing-page">
+<header class="header">
+  <div class="bar container">
+    <div class="brand"><div class="logo"></div><div>Claim Navigation AI</div></div>
+    <nav class="nav">
+      <a href="/app/index.html">Home</a>
+      <span>></span>
+      <a href="/app/resource-center.html">Resource Center</a>
+      <span>></span>
+      <span>Pricing</span>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div class="pricing-container">
+    <div class="pricing-header">
+      <h1>Choose Your Plan</h1>
+      <p class="sub">Unlock tools that increase your payout, speed your claim, and reduce friction.</p>
+    </div>
+
+    <div class="pricing-grid">
+      <div class="plan free">
+        <h2>Free</h2>
+        <p class="price">$0</p>
+        <ul class="features">
+          <li>Basic Claim Roadmap</li>
+          <li>Evidence Organizer</li>
+          <li>Claim Journal</li>
+          <li>Document Generator (basic)</li>
+          <li>ROM Estimator</li>
+        </ul>
+        <button class="btn-outline" disabled>Current Plan</button>
+      </div>
+
+      <div class="plan pro highlight">
+        <h2>Pro</h2>
+        <p class="price">$197 <span>/ year</span></p>
+        <ul class="features">
+          <li>All Free features</li>
+          <li>AI Response Agent (full)</li>
+          <li>Compliance Engine</li>
+          <li>Advanced Tools Suite</li>
+          <li>Negotiation Scripts</li>
+          <li>Claim Summary PDF</li>
+          <li>Priority Support</li>
+        </ul>
+        <button id="upgrade-pro-btn" class="btn-primary">Upgrade to Pro</button>
+      </div>
+
+      <div class="plan enterprise">
+        <h2>Enterprise</h2>
+        <p class="price">Custom</p>
+        <ul class="features">
+          <li>Everything in Pro</li>
+          <li>Enterprise Dashboard</li>
+          <li>Team Review Tools</li>
+          <li>Compliance Escalation Suite</li>
+          <li>Dedicated Support</li>
+          <li>Custom Integrations</li>
+        </ul>
+        <button class="btn-outline" onclick="location.href='/app/enterprise-contact.html'">Contact Enterprise</button>
+      </div>
+    </div>
+
+    <div class="value-stack">
+      <h3>Why Upgrade?</h3>
+      <ul>
+        <li>Increase claim payout by an average of 22%</li>
+        <li>Reduce claim processing time by 40%</li>
+        <li>Access professional-grade compliance tools</li>
+        <li>Get AI-powered negotiation assistance</li>
+        <li>Export insurer-ready PDF documents</li>
+        <li>Unlock advanced settlement analysis</li>
+      </ul>
+    </div>
+
+    <div class="faq-section">
+      <h3>Frequently Asked Questions</h3>
+      <div class="faq-item">
+        <h4>Can I upgrade later?</h4>
+        <p>Yes, you can upgrade at any time. Your subscription starts immediately upon payment.</p>
+      </div>
+      <div class="faq-item">
+        <h4>What payment methods do you accept?</h4>
+        <p>We accept all major credit cards and PayPal.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Is there a money-back guarantee?</h4>
+        <p>Yes, we offer a 30-day money-back guarantee if you're not satisfied.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Can I cancel anytime?</h4>
+        <p>Yes, you can cancel your subscription at any time. No long-term commitments.</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Upgrade Offer Modal -->
+<div id="upgrade-offer-modal" class="resume-modal hidden">
+  <div class="resume-modal-content">
+    <h3 id="upgrade-offer-title">Upgrade to Pro</h3>
+    <p id="upgrade-offer-desc">Unlock more tools.</p>
+    <div class="resume-modal-actions">
+      <a href="/app/pricing.html" class="btn-primary">See Plans</a>
+      <button class="btn-outline" onclick="if(window.CNUpgrade) CNUpgrade.hide();">Not Now</button>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // Log pricing page view
+  if (window.CNAnalytics) {
+    CNAnalytics.log("pricing_page_view");
+  }
+  
+  // Upgrade button handler
+  const upgradeBtn = document.getElementById("upgrade-pro-btn");
+  if (upgradeBtn) {
+    upgradeBtn.addEventListener("click", () => {
+      if (window.CNAnalytics) {
+        CNAnalytics.log("upgrade_button_clicked", { plan: "pro" });
+      }
+      window.location.href = "/app/checkout.html?tier=pro";
+    });
+  }
+});
+</script>
+
+
+
+</body></html>
+

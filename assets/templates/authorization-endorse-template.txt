@@ -1,0 +1,12 @@
+AUTHORIZATION AND DIRECTION TO ENDORSE INSURANCE PROCEEDS
+
+Insured: {{Insured Name}}
+Policy Number: {{Policy Number}}
+Claim Number: {{Claim Number}}
+
+I hereby authorize {{Financial Institution}} and any mortgagee listed on the above policy to endorse any insurance proceeds issued for this loss and to release such funds to {{Contractor Name}} or their assignees for the purpose of completing necessary repairs.
+
+This direction is given pursuant to the rights afforded to the insured under the policy and applicable state insurance laws. Any funds released shall be applied solely to the cost of repair and restoration of the insured property.
+
+Signature of Insured: _________________________   Date: ____________
+Signature of Mortgagee Representative: ____________________   Date: ____________

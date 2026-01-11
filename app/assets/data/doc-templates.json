@@ -1,0 +1,914 @@
+{
+  "proof-of-loss": {
+    "title": "Sworn Statement in Proof of Loss",
+    "category": "core",
+    "description": "Comprehensive sworn statement and proof of loss with detailed itemization.",
+    "layoutType": "T1",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Insurer Claim Number", "id": "insurerClaimNumber", "type": "text", "required": true},
+      {"label": "Insurance Carrier", "id": "insuranceCarrier", "type": "text", "required": true},
+      {"label": "Amount of Policy at Time of Loss", "id": "policyAmount", "type": "number", "required": true},
+      {"label": "Date Policy Issued", "id": "policyIssuedDate", "type": "date", "required": true},
+      {"label": "Date Policy Expires", "id": "policyExpiresDate", "type": "date", "required": true},
+      {"label": "Insurance Agency", "id": "insuranceAgency", "type": "text"},
+      {"label": "Insurance Agent", "id": "insuranceAgent", "type": "text"},
+      {"label": "To (Recipient)", "id": "recipientName", "type": "text", "required": true},
+      {"label": "Cause of Loss", "id": "causeOfLoss", "type": "textarea", "required": true},
+      {"label": "Time of Loss", "id": "timeOfLoss", "type": "text", "required": true},
+      {"label": "Date of Loss", "id": "dateOfLoss", "type": "date", "required": true},
+      {"label": "Occupancy Description", "id": "occupancyDescription", "type": "textarea", "required": true},
+      {"label": "Title & Interest", "id": "titleInterest", "type": "textarea", "required": true},
+      {"label": "Other Interests", "id": "otherInterests", "type": "textarea"},
+      {"label": "Policy Changes Since Issuance", "id": "policyChanges", "type": "textarea"},
+      {"label": "Total Insurance Amount", "id": "totalInsurance", "type": "number", "required": true},
+      {"label": "Actual Cash Value", "id": "actualCashValue", "type": "number", "required": true},
+      {"label": "Whole Loss and Damage", "id": "totalLoss", "type": "number", "required": true},
+      {"label": "Amount Claimed", "id": "amountClaimed", "type": "number", "required": true},
+      {"label": "Signature Name", "id": "signatureName", "type": "text", "required": true},
+      {"label": "Signature Date", "id": "signatureDate", "type": "date", "required": true}
+    ]
+  },
+  "payment-demand": {
+    "title": "Payment Demand Letter",
+    "category": "core",
+    "description": "Formal letter demanding payment with legal references and deadline.",
+    "layoutType": "T2",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Claimant Name", "id": "claimantName", "type": "text", "required": true},
+      {"label": "Insurer Name", "id": "insurerName", "type": "text", "required": true},
+      {"label": "Policy Number", "id": "policyNumber", "type": "text", "required": true},
+      {"label": "Claim Number", "id": "claimNumber", "type": "text", "required": true},
+      {"label": "Date of Loss", "id": "dateOfLoss", "type": "date", "required": true},
+      {"label": "Amount Owed", "id": "amountOwed", "type": "number", "required": true},
+      {"label": "Reason for Demand", "id": "reason", "type": "textarea", "required": true},
+      {"label": "Response Deadline", "id": "deadline", "type": "date", "required": true},
+      {"label": "Signature Name", "id": "signatureName", "type": "text", "required": true}
+    ]
+  },
+  "damage-assessment": {
+    "title": "Damage Assessment Report",
+    "category": "analysis",
+    "description": "Professional assessment of property damage with detailed analysis and recommendations.",
+    "layoutType": "T6",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Property Address", "id": "propertyAddress", "type": "text", "required": true},
+      {"label": "Assessment Date", "id": "assessmentDate", "type": "date", "required": true},
+      {"label": "Assessor Name", "id": "assessorName", "type": "text", "required": true},
+      {"label": "Assessor License", "id": "assessorLicense", "type": "text", "required": true},
+      {"label": "Damage Description", "id": "damageDescription", "type": "textarea", "required": true},
+      {"label": "Cause of Damage", "id": "causeOfDamage", "type": "text", "required": true},
+      {"label": "Estimated Repair Cost", "id": "repairCost", "type": "number", "required": true},
+      {"label": "Replacement Cost", "id": "replacementCost", "type": "number", "required": true},
+      {"label": "Depreciation", "id": "depreciation", "type": "number", "required": true},
+      {"label": "Actual Cash Value", "id": "actualCashValue", "type": "number", "required": true},
+      {"label": "Recommendations", "id": "recommendations", "type": "textarea", "required": true}
+    ]
+  },
+  "depreciation-schedule": {
+    "title": "Depreciation Schedule",
+    "category": "financial",
+    "description": "Detailed depreciation calculation for damaged property items.",
+    "layoutType": "T4",
+    "outputType": "xlsx",
+    "fields": [
+      {"label": "Property Items", "id": "propertyItems", "type": "table", "required": true, "columns": ["Item", "Purchase Date", "Original Cost", "Age", "Depreciation Rate", "Depreciated Value"]},
+      {"label": "Total Depreciation", "id": "totalDepreciation", "type": "number", "required": true},
+      {"label": "Net Value", "id": "netValue", "type": "number", "required": true}
+    ]
+  },
+  "evidence-log": {
+    "title": "Evidence Documentation Log",
+    "category": "evidence",
+    "description": "Comprehensive log of all evidence collected and organized for your insurance claim.",
+    "layoutType": "T3",
+    "outputType": "xlsx",
+    "fields": [
+      {"label": "Evidence Items", "id": "evidenceItems", "type": "table", "required": true, "columns": ["Date", "Item Type", "Description", "Location", "Photographer", "Notes"]},
+      {"label": "Total Items", "id": "totalItems", "type": "number", "required": true}
+    ]
+  },
+  "appeal-letter": {
+    "title": "Claim Denial Appeal Letter",
+    "category": "appeals",
+    "description": "Professional appeal letter for denied insurance claims with legal arguments.",
+    "layoutType": "T2",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Insurer Name", "id": "insurerName", "type": "text", "required": true},
+      {"label": "Claim Number", "id": "claimNumber", "type": "text", "required": true},
+      {"label": "Denial Reason", "id": "denialReason", "type": "textarea", "required": true},
+      {"label": "Your Arguments", "id": "yourArguments", "type": "textarea", "required": true},
+      {"label": "Supporting Evidence", "id": "supportingEvidence", "type": "textarea", "required": true},
+      {"label": "Legal Basis", "id": "legalBasis", "type": "textarea", "required": true},
+      {"label": "Requested Action", "id": "requestedAction", "type": "textarea", "required": true}
+    ]
+  },
+  "business-interruption": {
+    "title": "Business Interruption Claim",
+    "category": "business",
+    "description": "Comprehensive business interruption claim with financial impact analysis.",
+    "layoutType": "T7",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Business Name", "id": "businessName", "type": "text", "required": true},
+      {"label": "Business Address", "id": "businessAddress", "type": "text", "required": true},
+      {"label": "Business Type", "id": "businessType", "type": "text", "required": true},
+      {"label": "Interruption Start Date", "id": "interruptionStart", "type": "date", "required": true},
+      {"label": "Interruption End Date", "id": "interruptionEnd", "type": "date", "required": true},
+      {"label": "Lost Revenue", "id": "lostRevenue", "type": "number", "required": true},
+      {"label": "Additional Expenses", "id": "additionalExpenses", "type": "number", "required": true},
+      {"label": "Normal Operating Expenses", "id": "normalExpenses", "type": "number", "required": true},
+      {"label": "Total Business Interruption Loss", "id": "totalLoss", "type": "number", "required": true}
+    ]
+  },
+  "expense-reimbursement": {
+    "title": "Expense Reimbursement Request",
+    "category": "financial",
+    "description": "Request for reimbursement of out-of-pocket expenses related to your claim.",
+    "layoutType": "T4",
+    "outputType": "xlsx",
+    "fields": [
+      {"label": "Claim Number", "id": "claimNumber", "type": "text", "required": true},
+      {"label": "Total Amount Requested", "id": "totalAmount", "type": "number", "required": true},
+      {"label": "Expense Details", "id": "expenseDetails", "type": "table", "required": true, "columns": ["Date", "Description", "Amount", "Receipt Number", "Category"]}
+    ]
+  },
+  "appraisal-request": {
+    "title": "Appraisal Request Letter",
+    "category": "core",
+    "description": "Formal request for appraisal process when there is a dispute over damage valuation.",
+    "layoutType": "T2",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Insurer Name", "id": "insurerName", "type": "text", "required": true},
+      {"label": "Claim Number", "id": "claimNumber", "type": "text", "required": true},
+      {"label": "Disputed Amount", "id": "disputedAmount", "type": "number", "required": true},
+      {"label": "Your Valuation", "id": "yourValuation", "type": "number", "required": true},
+      {"label": "Insurer's Valuation", "id": "insurerValuation", "type": "number", "required": true},
+      {"label": "Difference Amount", "id": "differenceAmount", "type": "number", "required": true},
+      {"label": "Appraisal Grounds", "id": "appraisalGrounds", "type": "textarea", "required": true}
+    ]
+  },
+  "regulatory-complaint": {
+    "title": "Insurance Regulatory Complaint",
+    "category": "core",
+    "description": "Formal complaint to state insurance department regarding insurer conduct.",
+    "layoutType": "T5",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "State", "id": "state", "type": "text", "required": true},
+      {"label": "Insurer Name", "id": "insurerName", "type": "text", "required": true},
+      {"label": "Claim Number", "id": "claimNumber", "type": "text", "required": true},
+      {"label": "Complaint Details", "id": "complaintDetails", "type": "textarea", "required": true},
+      {"label": "Violations Alleged", "id": "violations", "type": "textarea", "required": true},
+      {"label": "Damages Sought", "id": "damagesSought", "type": "number", "required": true},
+      {"label": "Supporting Documentation", "id": "supportingDocs", "type": "textarea", "required": true}
+    ]
+  },
+  "settlement-offer": {
+    "title": "Settlement Offer Response",
+    "category": "core",
+    "description": "Professional response to insurance settlement offers with counter-arguments.",
+    "layoutType": "T2",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Insurer Name", "id": "insurerName", "type": "text", "required": true},
+      {"label": "Claim Number", "id": "claimNumber", "type": "text", "required": true},
+      {"label": "Offered Amount", "id": "offeredAmount", "type": "number", "required": true},
+      {"label": "Your Counter-Offer", "id": "counterOffer", "type": "number", "required": true},
+      {"label": "Justification", "id": "justification", "type": "textarea", "required": true},
+      {"label": "Supporting Evidence", "id": "supportingEvidence", "type": "textarea", "required": true},
+      {"label": "Response Deadline", "id": "responseDeadline", "type": "date", "required": true}
+    ]
+  },
+  "notice-of-claim": {
+    "title": "Notice of Claim",
+    "category": "core",
+    "description": "Initial notice of claim to insurance company with basic claim information.",
+    "layoutType": "T1",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Policyholder Name", "id": "policyholderName", "type": "text", "required": true},
+      {"label": "Policy Number", "id": "policyNumber", "type": "text", "required": true},
+      {"label": "Loss Date", "id": "lossDate", "type": "date", "required": true},
+      {"label": "Loss Description", "id": "lossDescription", "type": "textarea", "required": true},
+      {"label": "Estimated Loss Amount", "id": "estimatedLoss", "type": "number", "required": true},
+      {"label": "Property Address", "id": "propertyAddress", "type": "text", "required": true}
+    ]
+  },
+  "coverage-clarification": {
+    "title": "Coverage Clarification Request",
+    "category": "core",
+    "description": "Request for clarification of policy coverage and exclusions.",
+    "layoutType": "T2",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Policy Number", "id": "policyNumber", "type": "text", "required": true},
+      {"label": "Specific Coverage Question", "id": "coverageQuestion", "type": "textarea", "required": true},
+      {"label": "Relevant Policy Section", "id": "policySection", "type": "text", "required": true},
+      {"label": "Your Understanding", "id": "yourUnderstanding", "type": "textarea", "required": true},
+      {"label": "Requested Clarification", "id": "requestedClarification", "type": "textarea", "required": true}
+    ]
+  },
+  "delay-complaint": {
+    "title": "Delay Complaint Letter",
+    "category": "core",
+    "description": "Complaint about unreasonable delays in claim processing.",
+    "layoutType": "T2",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Claim Number", "id": "claimNumber", "type": "text", "required": true},
+      {"label": "Original Claim Date", "id": "originalClaimDate", "type": "date", "required": true},
+      {"label": "Days Since Claim", "id": "daysSinceClaim", "type": "number", "required": true},
+      {"label": "Delay Impact", "id": "delayImpact", "type": "textarea", "required": true},
+      {"label": "Requested Action", "id": "requestedAction", "type": "textarea", "required": true},
+      {"label": "Response Deadline", "id": "responseDeadline", "type": "date", "required": true}
+    ]
+  },
+  "photograph-log": {
+    "title": "Photograph Documentation Log",
+    "category": "evidence",
+    "description": "Organized log of all photographs taken as evidence for your claim.",
+    "layoutType": "T3",
+    "outputType": "xlsx",
+    "fields": [
+      {"label": "Claim Number", "id": "claimNumber", "type": "text", "required": true},
+      {"label": "Photographs", "id": "photographs", "type": "table", "required": true, "columns": ["Photo #", "Date Taken", "Location", "Description", "Photographer", "File Name"]}
+    ]
+  },
+  "repair-replace-analysis": {
+    "title": "Repair vs Replace Analysis",
+    "category": "analysis",
+    "description": "Cost-benefit analysis comparing repair costs to replacement costs.",
+    "layoutType": "T6",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Item Description", "id": "itemDescription", "type": "text", "required": true},
+      {"label": "Repair Cost", "id": "repairCost", "type": "number", "required": true},
+      {"label": "Replacement Cost", "id": "replacementCost", "type": "number", "required": true},
+      {"label": "Age of Item", "id": "ageOfItem", "type": "number", "required": true},
+      {"label": "Expected Lifespan", "id": "expectedLifespan", "type": "number", "required": true},
+      {"label": "Analysis Conclusion", "id": "analysisConclusion", "type": "textarea", "required": true}
+    ]
+  },
+  "out-of-pocket-log": {
+    "title": "Out-of-Pocket Expenses Log",
+    "category": "financial",
+    "description": "Detailed log of all out-of-pocket expenses related to your claim.",
+    "layoutType": "T4",
+    "outputType": "xlsx",
+    "fields": [
+      {"label": "Claim Number", "id": "claimNumber", "type": "text", "required": true},
+      {"label": "Expenses", "id": "expenses", "type": "table", "required": true, "columns": ["Date", "Description", "Amount", "Category", "Receipt #", "Notes"]}
+    ]
+  },
+  "rom-estimate": {
+    "title": "ROM (Rough Order of Magnitude) Estimate",
+    "category": "analysis",
+    "description": "Preliminary cost estimate for repairs or replacement.",
+    "layoutType": "T6",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Project Description", "id": "projectDescription", "type": "textarea", "required": true},
+      {"label": "Labor Costs", "id": "laborCosts", "type": "number", "required": true},
+      {"label": "Material Costs", "id": "materialCosts", "type": "number", "required": true},
+      {"label": "Permit Costs", "id": "permitCosts", "type": "number"},
+      {"label": "Contingency", "id": "contingency", "type": "number", "required": true},
+      {"label": "Total Estimate", "id": "totalEstimate", "type": "number", "required": true}
+    ]
+  },
+  "comparative-estimates": {
+    "title": "Comparative Estimates Analysis",
+    "category": "analysis",
+    "description": "Side-by-side comparison of multiple repair estimates.",
+    "layoutType": "T6",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Project Description", "id": "projectDescription", "type": "textarea", "required": true},
+      {"label": "Estimates", "id": "estimates", "type": "table", "required": true, "columns": ["Contractor", "Labor Cost", "Material Cost", "Total Cost", "Timeline", "Warranty"]}
+    ]
+  },
+  "document-index": {
+    "title": "Document Index",
+    "category": "evidence",
+    "description": "Comprehensive index of all documents related to your claim.",
+    "layoutType": "T3",
+    "outputType": "xlsx",
+    "fields": [
+      {"label": "Claim Number", "id": "claimNumber", "type": "text", "required": true},
+      {"label": "Documents", "id": "documents", "type": "table", "required": true, "columns": ["Document #", "Title", "Date", "Type", "Pages", "Location"]}
+    ]
+  },
+  "sworn-statement": {
+    "title": "Sworn Statement of Loss",
+    "category": "core",
+    "description": "Legally binding sworn statement documenting the loss with notarization requirements.",
+    "layoutType": "T1",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Statement Date", "id": "statementDate", "type": "date", "required": true},
+      {"label": "Notary Information", "id": "notaryInfo", "type": "text", "required": true},
+      {"label": "Loss Statement", "id": "lossStatement", "type": "textarea", "required": true},
+      {"label": "Signature Name", "id": "signatureName", "type": "text", "required": true},
+      {"label": "Signature Date", "id": "signatureDate", "type": "date", "required": true}
+    ]
+  },
+  "supplemental-claim": {
+    "title": "Supplemental Claim Request",
+    "category": "core",
+    "description": "Request for additional coverage or previously undisclosed damages.",
+    "layoutType": "T1",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Original Claim Date", "id": "originalClaimDate", "type": "date", "required": true},
+      {"label": "Supplemental Amount", "id": "supplementalAmount", "type": "number", "required": true},
+      {"label": "Reason for Supplement", "id": "reasonForSupplement", "type": "textarea", "required": true},
+      {"label": "New Evidence", "id": "newEvidence", "type": "textarea", "required": true}
+    ]
+  },
+  "policy-review-request": {
+    "title": "Policy Review Request",
+    "category": "core",
+    "description": "Formal request for comprehensive policy review and coverage analysis.",
+    "layoutType": "T2",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Review Scope", "id": "reviewScope", "type": "select", "required": true, "options": ["Full Policy Review", "Coverage Analysis Only", "Exclusions Review"]},
+      {"label": "Specific Concerns", "id": "specificConcerns", "type": "textarea", "required": true},
+      {"label": "Requested Timeline", "id": "requestedTimeline", "type": "date", "required": true}
+    ]
+  },
+  "bad-faith-complaint": {
+    "title": "Bad Faith Insurance Complaint",
+    "category": "core",
+    "description": "Formal complaint alleging bad faith practices by the insurance company.",
+    "layoutType": "T5",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Bad Faith Actions", "id": "badFaithActions", "type": "textarea", "required": true},
+      {"label": "Damages Sought", "id": "damagesSought", "type": "number", "required": true},
+      {"label": "Supporting Evidence", "id": "supportingEvidence", "type": "textarea", "required": true},
+      {"label": "Legal Basis", "id": "legalBasis", "type": "textarea", "required": true}
+    ]
+  },
+  "mediation-request": {
+    "title": "Mediation Request Letter",
+    "category": "core",
+    "description": "Request for mediation to resolve claim disputes without litigation.",
+    "layoutType": "T2",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Mediation Reason", "id": "mediationReason", "type": "textarea", "required": true},
+      {"label": "Proposed Mediator", "id": "proposedMediator", "type": "text"},
+      {"label": "Timeline Request", "id": "timelineRequest", "type": "date", "required": true}
+    ]
+  },
+  "arbitration-demand": {
+    "title": "Arbitration Demand",
+    "category": "core",
+    "description": "Formal demand for binding arbitration to resolve claim disputes.",
+    "layoutType": "T5",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Arbitration Grounds", "id": "arbitrationGrounds", "type": "textarea", "required": true},
+      {"label": "Arbitrator Preference", "id": "arbitratorPreference", "type": "text"},
+      {"label": "Arbitration Rules", "id": "arbitrationRules", "type": "select", "required": true, "options": ["American Arbitration Association", "JAMS", "CPR Institute"]}
+    ]
+  },
+  "expert-witness-request": {
+    "title": "Expert Witness Request",
+    "category": "core",
+    "description": "Request for independent expert witness evaluation of damages.",
+    "layoutType": "T2",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Expert Field", "id": "expertField", "type": "select", "required": true, "options": ["Construction/Engineering", "Fire Investigation", "Water Damage", "Electrical Systems", "Property Appraisal"]},
+      {"label": "Expert Qualifications", "id": "expertQualifications", "type": "textarea", "required": true},
+      {"label": "Scope of Work", "id": "scopeOfWork", "type": "textarea", "required": true}
+    ]
+  },
+  "subrogation-notice": {
+    "title": "Subrogation Notice",
+    "category": "core",
+    "description": "Notice of subrogation rights and potential third-party recovery.",
+    "layoutType": "T2",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Third Party", "id": "thirdParty", "type": "text", "required": true},
+      {"label": "Subrogation Basis", "id": "subrogationBasis", "type": "textarea", "required": true},
+      {"label": "Recovery Amount", "id": "recoveryAmount", "type": "number", "required": true}
+    ]
+  },
+  "coverage-denial-appeal": {
+    "title": "Coverage Denial Appeal",
+    "category": "appeals",
+    "description": "Appeal of insurance coverage denial with legal arguments.",
+    "layoutType": "T2",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Denial Reason", "id": "denialReason", "type": "textarea", "required": true},
+      {"label": "Policy Language", "id": "policyLanguage", "type": "textarea", "required": true},
+      {"label": "Legal Arguments", "id": "legalArguments", "type": "textarea", "required": true}
+    ]
+  },
+  "settlement-agreement": {
+    "title": "Settlement Agreement",
+    "category": "core",
+    "description": "Comprehensive settlement agreement with all terms and conditions.",
+    "layoutType": "T5",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Settlement Amount", "id": "settlementAmount", "type": "number", "required": true},
+      {"label": "Payment Terms", "id": "paymentTerms", "type": "textarea", "required": true},
+      {"label": "Release Terms", "id": "releaseTerms", "type": "textarea", "required": true}
+    ]
+  },
+  "replacement-cost-analysis": {
+    "title": "Replacement Cost Analysis",
+    "category": "financial",
+    "description": "Detailed analysis of replacement costs for damaged property.",
+    "layoutType": "T6",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Property Type", "id": "propertyType", "type": "select", "required": true, "options": ["Residential", "Commercial", "Industrial"]},
+      {"label": "Replacement Items", "id": "replacementItems", "type": "table", "required": true, "columns": ["Item", "Original Cost", "Current Cost", "Depreciation", "Replacement Value"]}
+    ]
+  },
+  "actual-cash-value": {
+    "title": "Actual Cash Value Calculation",
+    "category": "financial",
+    "description": "Calculation of actual cash value for depreciated property.",
+    "layoutType": "T4",
+    "outputType": "xlsx",
+    "fields": [
+      {"label": "Property Items", "id": "propertyItems", "type": "table", "required": true, "columns": ["Item", "Purchase Date", "Original Cost", "Age", "Depreciation Rate", "ACV"]}
+    ]
+  },
+  "loss-of-use-calculation": {
+    "title": "Loss of Use Calculation",
+    "category": "financial",
+    "description": "Calculation of additional living expenses and loss of use damages.",
+    "layoutType": "T4",
+    "outputType": "xlsx",
+    "fields": [
+      {"label": "Displacement Period", "id": "displacementPeriod", "type": "text", "required": true},
+      {"label": "Additional Expenses", "id": "additionalExpenses", "type": "table", "required": true, "columns": ["Expense Type", "Amount", "Receipt", "Justification"]}
+    ]
+  },
+  "inflation-adjustment": {
+    "title": "Inflation Adjustment Calculation",
+    "category": "financial",
+    "description": "Adjustment of claim values for inflation and market changes.",
+    "layoutType": "T4",
+    "outputType": "xlsx",
+    "fields": [
+      {"label": "Base Year", "id": "baseYear", "type": "date", "required": true},
+      {"label": "Current Year", "id": "currentYear", "type": "date", "required": true},
+      {"label": "Adjustment Items", "id": "adjustmentItems", "type": "table", "required": true, "columns": ["Item", "Original Value", "Inflation Rate", "Adjusted Value"]}
+    ]
+  },
+  "consequential-damages": {
+    "title": "Consequential Damages Claim",
+    "category": "financial",
+    "description": "Claim for consequential damages resulting from the covered loss.",
+    "layoutType": "T7",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Consequential Losses", "id": "consequentialLosses", "type": "textarea", "required": true},
+      {"label": "Causation", "id": "causation", "type": "textarea", "required": true},
+      {"label": "Damage Amount", "id": "damageAmount", "type": "number", "required": true}
+    ]
+  },
+  "mitigation-expenses": {
+    "title": "Mitigation Expenses Claim",
+    "category": "financial",
+    "description": "Claim for reasonable expenses incurred to mitigate damages.",
+    "layoutType": "T4",
+    "outputType": "xlsx",
+    "fields": [
+      {"label": "Mitigation Actions", "id": "mitigationActions", "type": "textarea", "required": true},
+      {"label": "Expense Details", "id": "expenseDetails", "type": "table", "required": true, "columns": ["Date", "Action", "Cost", "Receipt", "Justification"]}
+    ]
+  },
+  "emergency-response-log": {
+    "title": "Emergency Response Log",
+    "category": "evidence",
+    "description": "Comprehensive log of emergency response actions and costs.",
+    "layoutType": "T3",
+    "outputType": "xlsx",
+    "fields": [
+      {"label": "Emergency Type", "id": "emergencyType", "type": "select", "required": true, "options": ["Fire", "Water Damage", "Storm", "Vandalism"]},
+      {"label": "Response Actions", "id": "responseActions", "type": "table", "required": true, "columns": ["Time", "Action", "Responder", "Cost", "Result"]}
+    ]
+  },
+  "chain-of-custody": {
+    "title": "Chain of Custody Documentation",
+    "category": "evidence",
+    "description": "Documentation of evidence chain of custody for legal proceedings.",
+    "layoutType": "T3",
+    "outputType": "xlsx",
+    "fields": [
+      {"label": "Evidence Items", "id": "evidenceItems", "type": "table", "required": true, "columns": ["Item", "Date Collected", "Collected By", "Location", "Current Custodian"]}
+    ]
+  },
+  "witness-statements": {
+    "title": "Witness Statement Collection",
+    "category": "evidence",
+    "description": "Collection and documentation of witness statements.",
+    "layoutType": "T3",
+    "outputType": "xlsx",
+    "fields": [
+      {"label": "Witness Information", "id": "witnessInformation", "type": "table", "required": true, "columns": ["Name", "Contact", "Relationship", "Statement Date", "Key Points"]}
+    ]
+  },
+  "surveillance-log": {
+    "title": "Surveillance Documentation",
+    "category": "evidence",
+    "description": "Documentation of surveillance activities and findings.",
+    "layoutType": "T3",
+    "outputType": "xlsx",
+    "fields": [
+      {"label": "Surveillance Details", "id": "surveillanceDetails", "type": "table", "required": true, "columns": ["Date", "Time", "Location", "Activity", "Duration", "Findings"]}
+    ]
+  },
+  "weather-data": {
+    "title": "Weather Data Documentation",
+    "category": "evidence",
+    "description": "Official weather data supporting weather-related claims.",
+    "layoutType": "T6",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Weather Event", "id": "weatherEvent", "type": "text", "required": true},
+      {"label": "Data Sources", "id": "dataSources", "type": "table", "required": true, "columns": ["Source", "Date", "Time", "Measurement", "Location"]}
+    ]
+  },
+  "fire-investigation": {
+    "title": "Fire Investigation Report",
+    "category": "analysis",
+    "description": "Comprehensive fire investigation findings and analysis.",
+    "layoutType": "T6",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Investigator", "id": "investigator", "type": "text", "required": true},
+      {"label": "Investigation Date", "id": "investigationDate", "type": "date", "required": true},
+      {"label": "Fire Origin", "id": "fireOrigin", "type": "text", "required": true},
+      {"label": "Cause Determination", "id": "causeDetermination", "type": "textarea", "required": true}
+    ]
+  },
+  "water-damage-assessment": {
+    "title": "Water Damage Assessment",
+    "category": "analysis",
+    "description": "Professional assessment of water damage extent and restoration needs.",
+    "layoutType": "T6",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Water Source", "id": "waterSource", "type": "select", "required": true, "options": ["Plumbing Failure", "Appliance Failure", "Storm Water", "Sewer Backup"]},
+      {"label": "Affected Areas", "id": "affectedAreas", "type": "table", "required": true, "columns": ["Room", "Damage Level", "Materials Affected", "Restoration Needed"]}
+    ]
+  },
+  "mold-assessment": {
+    "title": "Mold Assessment Report",
+    "category": "analysis",
+    "description": "Professional mold assessment and remediation recommendations.",
+    "layoutType": "T6",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Mold Type", "id": "moldType", "type": "text", "required": true},
+      {"label": "Affected Areas", "id": "affectedAreas", "type": "table", "required": true, "columns": ["Location", "Mold Level", "Moisture Source", "Remediation Required"]}
+    ]
+  },
+  "structural-assessment": {
+    "title": "Structural Damage Assessment",
+    "category": "analysis",
+    "description": "Engineering assessment of structural damage and repair requirements.",
+    "layoutType": "T6",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Engineer", "id": "engineer", "type": "text", "required": true},
+      {"label": "Structural Elements", "id": "structuralElements", "type": "table", "required": true, "columns": ["Element", "Damage Level", "Safety Risk", "Repair Method", "Cost"]}
+    ]
+  },
+  "electrical-assessment": {
+    "title": "Electrical System Assessment",
+    "category": "analysis",
+    "description": "Professional assessment of electrical system damage and safety.",
+    "layoutType": "T6",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Electrician", "id": "electrician", "type": "text", "required": true},
+      {"label": "System Components", "id": "systemComponents", "type": "table", "required": true, "columns": ["Component", "Damage", "Safety Risk", "Repair/Replace", "Cost"]}
+    ]
+  },
+  "hvac-assessment": {
+    "title": "HVAC System Assessment",
+    "category": "analysis",
+    "description": "Assessment of heating, ventilation, and air conditioning system damage.",
+    "layoutType": "T6",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "HVAC Technician", "id": "hvacTechnician", "type": "text", "required": true},
+      {"label": "System Components", "id": "systemComponents", "type": "table", "required": true, "columns": ["Component", "Damage Level", "Functionality", "Repair Needed", "Cost"]}
+    ]
+  },
+  "roof-assessment": {
+    "title": "Roof Damage Assessment",
+    "category": "analysis",
+    "description": "Professional roof inspection and damage assessment.",
+    "layoutType": "T6",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Roofing Contractor", "id": "roofingContractor", "type": "text", "required": true},
+      {"label": "Roof Sections", "id": "roofSections", "type": "table", "required": true, "columns": ["Section", "Damage Type", "Severity", "Repair Method", "Cost"]}
+    ]
+  },
+  "flooring-assessment": {
+    "title": "Flooring Damage Assessment",
+    "category": "analysis",
+    "description": "Assessment of flooring damage and replacement requirements.",
+    "layoutType": "T6",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Flooring Type", "id": "flooringType", "type": "select", "required": true, "options": ["Hardwood", "Carpet", "Tile", "Laminate"]},
+      {"label": "Affected Areas", "id": "affectedAreas", "type": "table", "required": true, "columns": ["Room", "Flooring Type", "Damage Level", "Repair/Replace", "Cost"]}
+    ]
+  },
+  "appliance-assessment": {
+    "title": "Appliance Damage Assessment",
+    "category": "analysis",
+    "description": "Assessment of damaged appliances and replacement costs.",
+    "layoutType": "T6",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Appliance Technician", "id": "applianceTechnician", "type": "text", "required": true},
+      {"label": "Damaged Appliances", "id": "damagedAppliances", "type": "table", "required": true, "columns": ["Appliance", "Model", "Age", "Damage", "Repair/Replace", "Cost"]}
+    ]
+  },
+  "personal-property-inventory": {
+    "title": "Personal Property Inventory",
+    "category": "evidence",
+    "description": "Comprehensive inventory of damaged personal property.",
+    "layoutType": "T3",
+    "outputType": "xlsx",
+    "fields": [
+      {"label": "Property Items", "id": "propertyItems", "type": "table", "required": true, "columns": ["Item", "Description", "Purchase Date", "Original Cost", "Condition", "Replacement Cost"]}
+    ]
+  },
+  "contents-valuation": {
+    "title": "Contents Valuation Report",
+    "category": "financial",
+    "description": "Professional valuation of damaged personal contents.",
+    "layoutType": "T6",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Valuation Method", "id": "valuationMethod", "type": "select", "required": true, "options": ["Replacement Cost", "Actual Cash Value", "Market Value"]},
+      {"label": "Valuation Items", "id": "valuationItems", "type": "table", "required": true, "columns": ["Item", "Description", "Age", "Original Cost", "Depreciation", "Current Value"]}
+    ]
+  },
+  "specialty-items": {
+    "title": "Specialty Items Documentation",
+    "category": "evidence",
+    "description": "Documentation of specialty items requiring expert valuation.",
+    "layoutType": "T3",
+    "outputType": "xlsx",
+    "fields": [
+      {"label": "Specialty Category", "id": "specialtyCategory", "type": "select", "required": true, "options": ["Artwork", "Jewelry", "Antiques", "Collectibles"]},
+      {"label": "Specialty Items", "id": "specialtyItems", "type": "table", "required": true, "columns": ["Item", "Description", "Provenance", "Appraisal Value", "Expert Required"]}
+    ]
+  },
+  "temporary-housing": {
+    "title": "Temporary Housing Claim",
+    "category": "financial",
+    "description": "Claim for temporary housing expenses during property restoration.",
+    "layoutType": "T4",
+    "outputType": "xlsx",
+    "fields": [
+      {"label": "Displacement Period", "id": "displacementPeriod", "type": "text", "required": true},
+      {"label": "Housing Expenses", "id": "housingExpenses", "type": "table", "required": true, "columns": ["Date", "Expense Type", "Amount", "Receipt", "Justification"]}
+    ]
+  },
+  "storage-expenses": {
+    "title": "Storage Expenses Claim",
+    "category": "financial",
+    "description": "Claim for storage expenses for personal property during restoration.",
+    "layoutType": "T4",
+    "outputType": "xlsx",
+    "fields": [
+      {"label": "Storage Period", "id": "storagePeriod", "type": "text", "required": true},
+      {"label": "Storage Costs", "id": "storageCosts", "type": "table", "required": true, "columns": ["Date", "Storage Facility", "Cost", "Items Stored", "Receipt"]}
+    ]
+  },
+  "moving-expenses": {
+    "title": "Moving Expenses Claim",
+    "category": "financial",
+    "description": "Claim for moving expenses related to the covered loss.",
+    "layoutType": "T4",
+    "outputType": "xlsx",
+    "fields": [
+      {"label": "Moving Reason", "id": "movingReason", "type": "textarea", "required": true},
+      {"label": "Moving Costs", "id": "movingCosts", "type": "table", "required": true, "columns": ["Date", "Service", "Cost", "Receipt", "Justification"]}
+    ]
+  },
+  "pet-care-expenses": {
+    "title": "Pet Care Expenses Claim",
+    "category": "financial",
+    "description": "Claim for additional pet care expenses due to displacement.",
+    "layoutType": "T4",
+    "outputType": "xlsx",
+    "fields": [
+      {"label": "Pet Information", "id": "petInformation", "type": "table", "required": true, "columns": ["Pet Name", "Type", "Special Needs", "Care Required"]},
+      {"label": "Pet Care Costs", "id": "petCareCosts", "type": "table", "required": true, "columns": ["Date", "Service", "Cost", "Receipt", "Justification"]}
+    ]
+  },
+  "childcare-expenses": {
+    "title": "Childcare Expenses Claim",
+    "category": "financial",
+    "description": "Claim for additional childcare expenses due to displacement.",
+    "layoutType": "T4",
+    "outputType": "xlsx",
+    "fields": [
+      {"label": "Child Information", "id": "childInformation", "type": "table", "required": true, "columns": ["Child Name", "Age", "Special Needs", "Care Required"]},
+      {"label": "Childcare Costs", "id": "childcareCosts", "type": "table", "required": true, "columns": ["Date", "Service", "Cost", "Receipt", "Justification"]}
+    ]
+  },
+  "meal-expenses": {
+    "title": "Meal Expenses Claim",
+    "category": "financial",
+    "description": "Claim for additional meal expenses due to displacement.",
+    "layoutType": "T4",
+    "outputType": "xlsx",
+    "fields": [
+      {"label": "Displacement Impact", "id": "displacementImpact", "type": "textarea", "required": true},
+      {"label": "Meal Costs", "id": "mealCosts", "type": "table", "required": true, "columns": ["Date", "Meal Type", "Cost", "Receipt", "Justification"]}
+    ]
+  },
+  "transportation-expenses": {
+    "title": "Transportation Expenses Claim",
+    "category": "financial",
+    "description": "Claim for additional transportation expenses due to displacement.",
+    "layoutType": "T4",
+    "outputType": "xlsx",
+    "fields": [
+      {"label": "Transportation Need", "id": "transportationNeed", "type": "textarea", "required": true},
+      {"label": "Transportation Costs", "id": "transportationCosts", "type": "table", "required": true, "columns": ["Date", "Transport Type", "Cost", "Receipt", "Justification"]}
+    ]
+  },
+  "communication-expenses": {
+    "title": "Communication Expenses Claim",
+    "category": "financial",
+    "description": "Claim for additional communication expenses related to the claim.",
+    "layoutType": "T4",
+    "outputType": "xlsx",
+    "fields": [
+      {"label": "Communication Needs", "id": "communicationNeeds", "type": "textarea", "required": true},
+      {"label": "Communication Costs", "id": "communicationCosts", "type": "table", "required": true, "columns": ["Date", "Service", "Cost", "Receipt", "Justification"]}
+    ]
+  },
+  "catastrophic-event-log": {
+    "title": "Catastrophic Event Log",
+    "category": "catastrophic",
+    "description": "Comprehensive log of catastrophic event impact and response.",
+    "layoutType": "T8",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Event Type", "id": "eventType", "type": "select", "required": true, "options": ["Hurricane", "Tornado", "Earthquake", "Flood", "Wildfire"]},
+      {"label": "Event Timeline", "id": "eventTimeline", "type": "table", "required": true, "columns": ["Date", "Time", "Event", "Impact", "Response"]}
+    ]
+  },
+  "disaster-declaration": {
+    "title": "Disaster Declaration Documentation",
+    "category": "catastrophic",
+    "description": "Documentation of official disaster declarations and federal assistance.",
+    "layoutType": "T8",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Declaration Type", "id": "declarationType", "type": "select", "required": true, "options": ["Federal Disaster Declaration", "State Emergency Declaration", "Local Emergency Declaration"]},
+      {"label": "Declaration Details", "id": "declarationDetails", "type": "table", "required": true, "columns": ["Date", "Authority", "Declaration Number", "Affected Area", "Assistance Available"]}
+    ]
+  },
+  "fema-assistance": {
+    "title": "FEMA Assistance Documentation",
+    "category": "catastrophic",
+    "description": "Documentation of FEMA assistance applications and awards.",
+    "layoutType": "T8",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "FEMA Application", "id": "femaApplication", "type": "text", "required": true},
+      {"label": "Assistance Details", "id": "assistanceDetails", "type": "table", "required": true, "columns": ["Assistance Type", "Amount", "Status", "Date", "Notes"]}
+    ]
+  },
+  "sba-loan-documentation": {
+    "title": "SBA Loan Documentation",
+    "category": "catastrophic",
+    "description": "Documentation of SBA disaster loan applications and awards.",
+    "layoutType": "T8",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "SBA Application", "id": "sbaApplication", "type": "text", "required": true},
+      {"label": "Loan Details", "id": "loanDetails", "type": "table", "required": true, "columns": ["Loan Type", "Amount", "Interest Rate", "Status", "Terms"]}
+    ]
+  },
+  "community-resources": {
+    "title": "Community Resources Documentation",
+    "category": "catastrophic",
+    "description": "Documentation of community assistance and resources utilized.",
+    "layoutType": "T8",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Resource Organizations", "id": "resourceOrganizations", "type": "table", "required": true, "columns": ["Organization", "Service", "Contact", "Assistance Provided", "Date"]}
+    ]
+  },
+  "volunteer-assistance": {
+    "title": "Volunteer Assistance Documentation",
+    "category": "catastrophic",
+    "description": "Documentation of volunteer assistance received during recovery.",
+    "layoutType": "T8",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Volunteer Groups", "id": "volunteerGroups", "type": "table", "required": true, "columns": ["Group", "Service", "Hours", "Value", "Date"]}
+    ]
+  },
+  "donation-documentation": {
+    "title": "Donation Documentation",
+    "category": "catastrophic",
+    "description": "Documentation of donations received and their value.",
+    "layoutType": "T8",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Donations Received", "id": "donationsReceived", "type": "table", "required": true, "columns": ["Donor", "Item/Service", "Value", "Date", "Purpose"]}
+    ]
+  },
+  "recovery-timeline": {
+    "title": "Recovery Timeline",
+    "category": "catastrophic",
+    "description": "Comprehensive timeline of recovery efforts and milestones.",
+    "layoutType": "T8",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Recovery Milestones", "id": "recoveryMilestones", "type": "table", "required": true, "columns": ["Date", "Milestone", "Status", "Next Steps", "Responsible Party"]}
+    ]
+  },
+  "reconstruction-schedule": {
+    "title": "Reconstruction Schedule",
+    "category": "catastrophic",
+    "description": "Detailed schedule of reconstruction activities and timelines.",
+    "layoutType": "T8",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Reconstruction Phases", "id": "reconstructionPhases", "type": "table", "required": true, "columns": ["Phase", "Description", "Start Date", "End Date", "Contractor", "Cost"]}
+    ]
+  },
+  "permit-documentation": {
+    "title": "Permit Documentation",
+    "category": "catastrophic",
+    "description": "Documentation of all permits required for reconstruction.",
+    "layoutType": "T8",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Required Permits", "id": "requiredPermits", "type": "table", "required": true, "columns": ["Permit Type", "Number", "Issuing Authority", "Date", "Expiration"]}
+    ]
+  },
+  "inspection-reports": {
+    "title": "Inspection Reports",
+    "category": "catastrophic",
+    "description": "Collection of all inspection reports during reconstruction.",
+    "layoutType": "T8",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Inspection Details", "id": "inspectionDetails", "type": "table", "required": true, "columns": ["Date", "Inspector", "Type", "Result", "Follow-up Required"]}
+    ]
+  },
+  "contractor-documentation": {
+    "title": "Contractor Documentation",
+    "category": "catastrophic",
+    "description": "Documentation of all contractors and their work.",
+    "layoutType": "T8",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Contractor Information", "id": "contractorInformation", "type": "table", "required": true, "columns": ["Contractor", "License", "Work Performed", "Cost", "Completion Date"]}
+    ]
+  },
+  "warranty-documentation": {
+    "title": "Warranty Documentation",
+    "category": "catastrophic",
+    "description": "Documentation of warranties for work performed.",
+    "layoutType": "T8",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Warranty Information", "id": "warrantyInformation", "type": "table", "required": true, "columns": ["Work Item", "Warranty Period", "Contractor", "Terms", "Contact Info"]}
+    ]
+  },
+  "final-inspection": {
+    "title": "Final Inspection Report",
+    "category": "catastrophic",
+    "description": "Final inspection report confirming completion of all work.",
+    "layoutType": "T8",
+    "outputType": "pdf",
+    "fields": [
+      {"label": "Final Inspector", "id": "finalInspector", "type": "text", "required": true},
+      {"label": "Inspection Results", "id": "inspectionResults", "type": "table", "required": true, "columns": ["Work Item", "Status", "Quality", "Completion", "Notes"]}
+    ]
+  }
+}
