@@ -185,4 +185,4 @@ Enable debug logging by adding `console.log` statements in the Netlify function 
 
 ## License
 
-This project is proprietary software for Claim Navigator.
+This project is proprietary software for Water Claim Navigator (downstream clone of Claim Navigator).
