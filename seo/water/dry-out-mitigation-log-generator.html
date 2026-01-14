@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dry-Out & Mitigation Log Generator - Free Water Damage Tool</title>
+  <meta name="description" content="Free dry-out and mitigation log generator for water damage claims. Document emergency response, equipment usage, and mitigation efforts professionally.">
+  
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --primary: #0EA5E9;
+      --primary-dark: #0F172A;
+      --accent: #38BDF8;
+      --success: #22C55E;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      color: #1f2937;
+      background: #ffffff;
+    }
+    
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    header {
+      background: #ffffff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      border-bottom: 1px solid #e5e7eb;
+    }
+    
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #0B2545;
+      text-decoration: none;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    
+    .nav-links a {
+      color: #4b5563;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+    
+    .nav-links a:hover {
+      color: #0EA5E9;
+    }
+    
+    .btn-primary {
+      background: #0EA5E9;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: inline-block;
+      transition: background 0.2s;
+    }
+    
+    .btn-primary:hover {
+      background: #0284c7;
+    }
+    
+    .hero-section {
+      background: linear-gradient(135deg, #0EA5E9 0%, #38BDF8 45%, #0F172A 100%);
+      color: white;
+      padding: 4rem 0;
+      text-align: center;
+    }
+    
+    .hero-section h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: white;
+    }
+    
+    .hero-section p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      color: rgba(255,255,255,0.95);
+    }
+    
+    .content-section {
+      padding: 4rem 0;
+    }
+    
+    .content-section h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: #1f2937;
+    }
+    
+    .content-section h3 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      color: #1f2937;
+    }
+    
+    .content-section p {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+      color: #4b5563;
+    }
+    
+    .content-section ul {
+      margin: 1rem 0 1.5rem 2rem;
+    }
+    
+    .content-section li {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 0.5rem;
+      color: #4b5563;
+    }
+    
+    .cta-section {
+      background: #f8fafc;
+      padding: 3rem 0;
+      text-align: center;
+    }
+    
+    .cta-section h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #1f2937;
+    }
+    
+    .cta-section p {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      color: #4b5563;
+    }
+    
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .btn-large {
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+    }
+    
+    footer {
+      background: #0F172A;
+      color: white;
+      padding: 2rem 0;
+      text-align: center;
+    }
+    
+    footer a {
+      color: #38BDF8;
+      text-decoration: none;
+    }
+    
+    footer a:hover {
+      color: #0EA5E9;
+    }
+    
+    @media (max-width: 768px) {
+      .hero-section h1 {
+        font-size: 1.8rem;
+      }
+      
+      .hero-section p {
+        font-size: 1rem;
+      }
+      
+      .content-section h2 {
+        font-size: 1.5rem;
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <nav>
+        <a href="/" class="logo">Water Claim Navigator</a>
+        <div class="nav-links">
+          <a href="/">Home</a>
+          <a href="/" class="btn-primary">Get Started</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero-section">
+    <div class="container">
+      <h1>Dry-Out & Mitigation Log Generator</h1>
+      <p>Document your emergency water damage response professionally</p>
+      <a href="/" class="btn-primary btn-large">Access Mitigation Log Tool</a>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+      <h2>Professional Mitigation Documentation</h2>
+      <p>Documenting your emergency mitigation efforts is critical to your water damage claim. Insurance companies require proof that you took immediate, reasonable steps to prevent further damage. Our dry-out and mitigation log generator helps you create professional documentation that insurers accept.</p>
+      
+      <h3>Why Mitigation Logs Matter</h3>
+      <ul>
+        <li><strong>Duty to Mitigate:</strong> Your policy requires you to prevent further damage</li>
+        <li><strong>Coverage Protection:</strong> Proper mitigation documentation protects your claim</li>
+        <li><strong>Cost Recovery:</strong> Detailed logs support reimbursement for mitigation costs</li>
+        <li><strong>Timeline Proof:</strong> Demonstrates you acted promptly and reasonably</li>
+        <li><strong>Professional Presentation:</strong> Shows organized, responsible claim management</li>
+      </ul>
+
+      <h3>What to Document in Mitigation Logs</h3>
+      <p>Comprehensive mitigation documentation includes:</p>
+      <ul>
+        <li><strong>Initial Response:</strong> Actions taken immediately upon discovery</li>
+        <li><strong>Water Extraction:</strong> Methods and equipment used to remove standing water</li>
+        <li><strong>Dry-Out Equipment:</strong> Dehumidifiers, air movers, fans deployed</li>
+        <li><strong>Equipment Placement:</strong> Location and number of each device</li>
+        <li><strong>Runtime Logs:</strong> Daily equipment operation times and settings</li>
+        <li><strong>Moisture Readings:</strong> Daily moisture levels in affected materials</li>
+        <li><strong>Environmental Conditions:</strong> Temperature and humidity readings</li>
+        <li><strong>Costs and Receipts:</strong> All expenses for mitigation efforts</li>
+      </ul>
+
+      <h3>Critical Mitigation Steps to Log</h3>
+      <p>Document each of these emergency response actions:</p>
+      <ul>
+        <li><strong>Stop the Source:</strong> Shutting off water supply or repairing the leak</li>
+        <li><strong>Remove Standing Water:</strong> Extraction methods and volumes removed</li>
+        <li><strong>Remove Wet Materials:</strong> Carpets, padding, or damaged materials removed</li>
+        <li><strong>Deploy Drying Equipment:</strong> Dehumidifiers and air movers placed</li>
+        <li><strong>Protect Unaffected Areas:</strong> Steps taken to prevent spread of damage</li>
+        <li><strong>Monitor Progress:</strong> Daily checks and moisture readings</li>
+        <li><strong>Professional Services:</strong> Any restoration companies hired</li>
+      </ul>
+
+      <h3>Common Mitigation Documentation Mistakes</h3>
+      <ul>
+        <li><strong>No Written Records:</strong> Relying on memory instead of contemporaneous logs</li>
+        <li><strong>Missing Timestamps:</strong> Not recording dates and times of actions</li>
+        <li><strong>Incomplete Equipment Logs:</strong> Failing to track all equipment usage</li>
+        <li><strong>No Moisture Readings:</strong> Not documenting drying progress</li>
+        <li><strong>Missing Receipts:</strong> Losing proof of mitigation expenses</li>
+        <li><strong>Delayed Documentation:</strong> Creating logs after the fact</li>
+      </ul>
+
+      <h3>Dry-Out Log Generator Features</h3>
+      <p>Water Claim Navigator's mitigation log tool provides:</p>
+      <ul>
+        <li><strong>Daily Log Templates:</strong> Structured forms for consistent documentation</li>
+        <li><strong>Equipment Tracking:</strong> Record all dehumidifiers, fans, and air movers</li>
+        <li><strong>Moisture Monitoring:</strong> Track moisture levels over time</li>
+        <li><strong>Photo Integration:</strong> Link photos to specific log entries</li>
+        <li><strong>Cost Tracking:</strong> Document all mitigation expenses</li>
+        <li><strong>Professional Reports:</strong> Generate insurer-ready mitigation reports</li>
+        <li><strong>Timeline Integration:</strong> Sync with your overall claim timeline</li>
+      </ul>
+
+      <h3>What Insurers Look For</h3>
+      <p>Insurance adjusters evaluate mitigation logs for:</p>
+      <ul>
+        <li><strong>Prompt Action:</strong> Evidence you responded immediately</li>
+        <li><strong>Reasonable Efforts:</strong> Appropriate mitigation for the damage level</li>
+        <li><strong>Continuous Monitoring:</strong> Daily attention to drying progress</li>
+        <li><strong>Professional Methods:</strong> Proper equipment and techniques used</li>
+        <li><strong>Complete Documentation:</strong> Thorough records of all actions</li>
+        <li><strong>Cost Justification:</strong> Reasonable expenses for mitigation efforts</li>
+      </ul>
+
+      <h3>When to Start Mitigation Logging</h3>
+      <p>Begin documentation immediately:</p>
+      <ul>
+        <li><strong>At Discovery:</strong> Start logging from the moment you discover water damage</li>
+        <li><strong>During Emergency Response:</strong> Record all initial actions taken</li>
+        <li><strong>Throughout Dry-Out:</strong> Daily logs until materials are completely dry</li>
+        <li><strong>Until Restoration:</strong> Continue until repairs begin or claim settles</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2>Start Your Professional Mitigation Log</h2>
+      <p>Protect your water damage claim with proper mitigation documentation. Create professional logs that insurance companies accept.</p>
+      <div class="cta-buttons">
+        <a href="/" class="btn-primary btn-large">Access Dry-Out Log Generator</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section" style="background: #f8fafc;">
+    <div class="container" style="text-align: center;">
+      <p style="font-size: 1rem; color: #6b7280;">
+        <a href="/" style="color: #0EA5E9; text-decoration: none; font-weight: 600;">← Back to Water Claim Navigator Home</a>
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Water Claim Navigator. All rights reserved.</p>
+      <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #94a3b8;">Documentation tools only – not legal advice or adjusting.</p>
+      <p style="margin-top: 1rem;">
+        <a href="/">Home</a> | 
+        <a href="/privacy.html">Privacy</a> | 
+        <a href="/terms.html">Terms</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Water Damage Assessment Tool - Free Evaluation & Documentation</title>
+  <meta name="description" content="Free water damage assessment tool. Evaluate extent of damage, document properly, and get professional guidance for your insurance claim.">
+  
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --primary: #0EA5E9;
+      --primary-dark: #0F172A;
+      --accent: #38BDF8;
+      --success: #22C55E;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      color: #1f2937;
+      background: #ffffff;
+    }
+    
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    header {
+      background: #ffffff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      border-bottom: 1px solid #e5e7eb;
+    }
+    
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #0B2545;
+      text-decoration: none;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    
+    .nav-links a {
+      color: #4b5563;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+    
+    .nav-links a:hover {
+      color: #0EA5E9;
+    }
+    
+    .btn-primary {
+      background: #0EA5E9;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: inline-block;
+      transition: background 0.2s;
+    }
+    
+    .btn-primary:hover {
+      background: #0284c7;
+    }
+    
+    .hero-section {
+      background: linear-gradient(135deg, #0EA5E9 0%, #38BDF8 45%, #0F172A 100%);
+      color: white;
+      padding: 4rem 0;
+      text-align: center;
+    }
+    
+    .hero-section h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: white;
+    }
+    
+    .hero-section p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      color: rgba(255,255,255,0.95);
+    }
+    
+    .content-section {
+      padding: 4rem 0;
+    }
+    
+    .content-section h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: #1f2937;
+    }
+    
+    .content-section h3 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      color: #1f2937;
+    }
+    
+    .content-section p {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+      color: #4b5563;
+    }
+    
+    .content-section ul {
+      margin: 1rem 0 1.5rem 2rem;
+    }
+    
+    .content-section li {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 0.5rem;
+      color: #4b5563;
+    }
+    
+    .cta-section {
+      background: #f8fafc;
+      padding: 3rem 0;
+      text-align: center;
+    }
+    
+    .cta-section h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #1f2937;
+    }
+    
+    .cta-section p {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      color: #4b5563;
+    }
+    
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .btn-large {
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+    }
+    
+    footer {
+      background: #0F172A;
+      color: white;
+      padding: 2rem 0;
+      text-align: center;
+    }
+    
+    footer a {
+      color: #38BDF8;
+      text-decoration: none;
+    }
+    
+    footer a:hover {
+      color: #0EA5E9;
+    }
+    
+    @media (max-width: 768px) {
+      .hero-section h1 {
+        font-size: 1.8rem;
+      }
+      
+      .hero-section p {
+        font-size: 1rem;
+      }
+      
+      .content-section h2 {
+        font-size: 1.5rem;
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <nav>
+        <a href="/" class="logo">Water Claim Navigator</a>
+        <div class="nav-links">
+          <a href="/">Home</a>
+          <a href="/" class="btn-primary">Get Started</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero-section">
+    <div class="container">
+      <h1>Water Damage Assessment Tool</h1>
+      <p>Evaluate and document your water damage properly for insurance claims</p>
+      <a href="/" class="btn-primary btn-large">Access Assessment Tool</a>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+      <h2>Professional Water Damage Assessment</h2>
+      <p>Properly assessing and documenting water damage is critical to getting a fair insurance settlement. Insurance adjusters use systematic evaluation methods—you should too. Our water damage assessment tool guides you through professional-grade documentation.</p>
+      
+      <h3>Why Proper Assessment Matters</h3>
+      <ul>
+        <li><strong>Accurate Valuation:</strong> Ensure all damage is identified and valued correctly</li>
+        <li><strong>Prevent Denials:</strong> Complete documentation reduces denial risk</li>
+        <li><strong>Support Your Claim:</strong> Professional assessment strengthens your position</li>
+        <li><strong>Track Hidden Damage:</strong> Identify moisture and damage not immediately visible</li>
+        <li><strong>Document Mitigation:</strong> Show you took proper steps to prevent further damage</li>
+      </ul>
+
+      <h3>What to Assess for Water Damage</h3>
+      <p>A comprehensive water damage assessment includes:</p>
+      <ul>
+        <li><strong>Source Identification:</strong> Document the cause and location of water intrusion</li>
+        <li><strong>Affected Areas:</strong> Map all rooms, walls, floors, and ceilings with damage</li>
+        <li><strong>Moisture Levels:</strong> Record moisture readings in affected materials</li>
+        <li><strong>Structural Damage:</strong> Assess damage to framing, drywall, flooring, and ceilings</li>
+        <li><strong>Contents Damage:</strong> Inventory all personal property affected by water</li>
+        <li><strong>Secondary Damage:</strong> Identify mold, warping, staining, or odors</li>
+        <li><strong>Mitigation Efforts:</strong> Document all emergency response and dry-out activities</li>
+      </ul>
+
+      <h3>Critical Documentation Elements</h3>
+      <p>For each affected area, document:</p>
+      <ul>
+        <li><strong>Photos and Videos:</strong> Multiple angles showing extent of damage</li>
+        <li><strong>Measurements:</strong> Square footage of affected areas</li>
+        <li><strong>Moisture Readings:</strong> If available, use moisture meter readings</li>
+        <li><strong>Material Types:</strong> Identify affected materials (hardwood, carpet, drywall, etc.)</li>
+        <li><strong>Damage Severity:</strong> Classify as light, moderate, or severe</li>
+        <li><strong>Timestamps:</strong> Date and time of discovery and documentation</li>
+      </ul>
+
+      <h3>Common Assessment Mistakes to Avoid</h3>
+      <ul>
+        <li><strong>Incomplete Documentation:</strong> Missing photos or failing to document all areas</li>
+        <li><strong>Delayed Assessment:</strong> Waiting too long to document initial damage</li>
+        <li><strong>Ignoring Hidden Damage:</strong> Not checking behind walls, under flooring, or in ceilings</li>
+        <li><strong>Poor Photo Quality:</strong> Dark, blurry, or unclear images</li>
+        <li><strong>Lack of Context:</strong> Not showing the full scope of damage</li>
+        <li><strong>Missing Mitigation Records:</strong> Not documenting emergency response efforts</li>
+      </ul>
+
+      <h3>Water Damage Assessment Tool Features</h3>
+      <p>Water Claim Navigator's assessment tool helps you:</p>
+      <ul>
+        <li><strong>Guided Evaluation:</strong> Step-by-step process for complete assessment</li>
+        <li><strong>Photo Organization:</strong> Systematically organize and label damage photos</li>
+        <li><strong>Damage Mapping:</strong> Create visual maps of affected areas</li>
+        <li><strong>Moisture Tracking:</strong> Record and track moisture levels over time</li>
+        <li><strong>Contents Inventory:</strong> Document all water-damaged personal property</li>
+        <li><strong>Professional Reports:</strong> Generate comprehensive assessment reports</li>
+        <li><strong>Timeline Integration:</strong> Link assessment to your claim timeline</li>
+      </ul>
+
+      <h3>When to Conduct Assessments</h3>
+      <p>Perform water damage assessments at these critical times:</p>
+      <ul>
+        <li><strong>Immediately After Discovery:</strong> Document initial damage before any cleanup</li>
+        <li><strong>During Mitigation:</strong> Track progress of dry-out and emergency response</li>
+        <li><strong>After Mitigation:</strong> Document final extent of damage once dry</li>
+        <li><strong>Before Repairs:</strong> Final assessment before contractor work begins</li>
+        <li><strong>After Repairs:</strong> Document completed restoration work</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2>Start Your Professional Water Damage Assessment</h2>
+      <p>Don't rely on guesswork. Use professional assessment tools to document your water damage correctly and maximize your claim.</p>
+      <div class="cta-buttons">
+        <a href="/" class="btn-primary btn-large">Access Water Damage Assessment Tool</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section" style="background: #f8fafc;">
+    <div class="container" style="text-align: center;">
+      <p style="font-size: 1rem; color: #6b7280;">
+        <a href="/" style="color: #0EA5E9; text-decoration: none; font-weight: 600;">← Back to Water Claim Navigator Home</a>
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Water Claim Navigator. All rights reserved.</p>
+      <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #94a3b8;">Documentation tools only – not legal advice or adjusting.</p>
+      <p style="margin-top: 1rem;">
+        <a href="/">Home</a> | 
+        <a href="/privacy.html">Privacy</a> | 
+        <a href="/terms.html">Terms</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
