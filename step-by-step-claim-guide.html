@@ -451,7 +451,9 @@
       padding: 0 40px !important;
     }
 
-    .quiet-progress-text {
+    .quiet-progress-bar .quiet-progress-text,
+    .quiet-progress-text,
+    #quietProgressText {
       font-size: 0.75rem !important;
       color: #ffffff !important;
       font-weight: 500 !important;
@@ -459,19 +461,31 @@
       text-transform: uppercase !important;
       letter-spacing: 0.5px !important;
       text-align: center !important;
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
     }
 
+    .quiet-progress-bar .quiet-progress-track,
     .quiet-progress-track {
       height: 3px !important;
       background: rgba(255, 255, 255, 0.2) !important;
       border-radius: 2px !important;
       overflow: hidden !important;
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
     }
 
-    .quiet-progress-fill {
+    .quiet-progress-bar .quiet-progress-fill,
+    .quiet-progress-fill,
+    #quietProgressFill {
       height: 100% !important;
       background: #ffffff !important;
       transition: width 0.3s ease !important;
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
     }
 
     /* Upcoming Deadlines Section */
